@@ -1,0 +1,11 @@
+# Ne pas ajouter les résultats du make.
+*.out
+*.out.map
+*.o
+*.ee.hex
+*.d
+*.bin
+*.hex
+
+# Pour Windows
+CommitMessage.txt

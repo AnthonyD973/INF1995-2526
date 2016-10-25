@@ -1,0 +1,58 @@
+# ---VALIDER DES FICHIERS---
+	# 1 : Ajouter les fichier au prochain commit.
+git add [fichier1] [fichier2] ...
+	# 2 : Valider les changements.
+git commit
+
+# ---AJOUTER LES FICHIERS VALIDÉS À ORIGIN---
+git push
+
+# ---RETIRER DES FICHIERS AJOUTÉS À LA PROCHAINE VALIDATION---
+git reset HEAD [nomFichier]
+
+# ---CHANGER LA DERNIÈRE VALIDATION EFFECTUÉE---
+get commit --amend [optionsDeCommit] # [optionsDeCommit, par exemple --no-edit, ou -m "Commit message"]
+
+
+
+# ---CRÉER UNE NOUVELLE BRANCHE---
+	# 1 : Créer une branche locale.
+git branch [nomBranche]
+	# 2 : Se déplacer vers la branche créée.
+git checkout [nomBranche]
+	# 3 : Créer une branche sur origin vers laquelle la branche locale courante sera uploadée.
+git push --set-upstream origin testBranch
+
+# ---CHANGER DE BRANCHE COURANTE---
+git checkout [nomBranche]
+
+# ---FUSIONNER DEUX BRANCHES---
+	# 1 : Se déplacer vers la branche réceptrice.
+git checkout [brancheRéceptrice]
+	# 2 : Fusionner les branches.
+git merge [brancheÉmettrice]
+
+# ---SUPPRIMER UNE BRANCHE---
+	# 1 : Supprimer la branche locale.
+git branch --delete [nomBranche]
+	# 2 : Supprimer la branche sur origin.
+git push origin :[nomBranche] # Attention aux espaces autour du ':'!!
+
+
+
+# ---CRÉÉER L'ALIAS D'HISTORIQUE DES VALIDATIONS---
+git config --global alias.hist "[alias à utiliser]" # [alias à utiliser], par exemple : "log --graph --decorate --oneline"
+
+# ---VOIR L'HISTORIQUE DE CHANGEMENT---
+git hist
+
+
+# ---CHANGER L'ÉDITEUR POUR LES MESSAGES DE COMMIT---
+git config --global core.editor "\"Path\Vers\L'éditeur\À\Utiliser\""
+
+
+# ---CHANGER LES PROPRIÉTÉS DE L'UTILISATEUR---
+	# 1 : Nom d'utilisateur
+git config --global user.name "Prénom Nom"
+	# 2 : E-Mail d'utilisateur
+git config --global user.email "e.mail@mailbox.com"
