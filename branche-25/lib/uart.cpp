@@ -91,8 +91,8 @@ inline volatile uint8_t UART::_tra_pop(void) {
 void UART::transmit(uint8_t data) {
     _tra_push_back(data);
     UCSR0B |= _BV(UDRIE0); // On démarre les interruptions qui s'executes
-                           // lorsque le tampon de transmission est près à
-                           // transmettre de nouvelles données.
+                           // lorsque le tampon de transmission (matériel) est
+                           // près à transmettre de nouvelles données.
 }
 
 /**
@@ -104,8 +104,8 @@ void UART::transmit(const uint8_t* data, size_t n) {
     for (size_t i = 0; i < n; ++i)
         _tra_push_back(data[i]);
     UCSR0B |= _BV(UDRIE0); // On démarre les interruptions qui s'executes
-                           // lorsque le tampon de transmission est près à
-                           // transmettre de nouvelles données.
+                           // lorsque le tampon de transmission (matériel) est
+                           // près à transmettre de nouvelles données.
 }
 
 /**
