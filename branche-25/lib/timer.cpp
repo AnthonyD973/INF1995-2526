@@ -134,6 +134,42 @@ void Timer0::modeFastPWM(uint16_t ocr0a, uint16_t ocr0b) {
     sei();
 }
 
+
+/**
+ * @brief   Change la réaction du signal de OC0A lors d'une une égalité entre OCR0A et TCNT0.
+ * @param[in] com0a Valeur du COM à utiliser pour le canal A.
+ */
+void Timer0::setComNA(ComNX com0a) {
+    _MASK(TCCR0A, com0a << COM0A0, 0x3 << COM0A0);
+}
+
+/**
+ * @brief   Change la réaction du signal de OC0B lors d'une une égalité entre OCR0B et TCNT0.
+ * @param[in] com0b Valeur du COM à utiliser pour le canal B.
+ */
+void Timer0::setComNB(ComNX com0b) {
+    _MASK(TCCR0A, com0b << COM0B0, 0x3 << COM0B0);
+}
+
+
+/**
+ * @brief   Change la valeur de OCR0A.
+ * @param[in] ocr0a    Nouvelle valeur de OCR0A.
+ */
+void Timer0::setOcrNA(uint16_t ocr0a) {
+    OCR0A = (uint8_t)ocr0a;
+}
+
+/**
+ * @brief   Change la valeur de OCR0B.
+ * @param[in] ocr0b    Nouvelle valeur de OCR0B.
+ */
+void Timer0::setOcrNB(uint16_t ocr0b) {
+    OCR0B = (uint8_t)ocr0b;
+}
+
+
+
 /**
  * @brief Permet l'interruption TOV0 (voir doc. p. 103).
  * NOTE: L'interruption TOV0 est permise par défaut dans le constructeur.
@@ -179,39 +215,6 @@ void Timer0::denyOCIB() {
     _MASK(TIMSK0, 0 << OCIE0B, _BV(OCIE0B));
 }
 
-
-/**
- * @brief   Change la réaction du signal de OC0A lors d'une une égalité entre OCR0A et TCNT0.
- * @param[in] com0a Valeur du COM à utiliser pour le canal A.
- */
-void Timer0::setComNA(ComNX com0a) {
-    _MASK(TCCR0A, com0a << COM0A0, 0x3 << COM0A0);
-}
-
-/**
- * @brief   Change la réaction du signal de OC0B lors d'une une égalité entre OCR0B et TCNT0.
- * @param[in] com0b Valeur du COM à utiliser pour le canal B.
- */
-void Timer0::setComNB(ComNX com0b) {
-    _MASK(TCCR0A, com0b << COM0B0, 0x3 << COM0B0);
-}
-
-
-/**
- * @brief   Change la valeur de OCR0A.
- * @param[in] ocr0a    Nouvelle valeur de OCR0A.
- */
-void Timer0::setOcrNA(uint16_t ocr0a) {
-    OCR0A = (uint8_t)ocr0a;
-}
-
-/**
- * @brief   Change la valeur de OCR0B.
- * @param[in] ocr0b    Nouvelle valeur de OCR0B.
- */
-void Timer0::setOcrNB(uint16_t ocr0b) {
-    OCR0B = (uint8_t)ocr0b;
-}
 
 // ===========================
 // =         TIMER 1         =
@@ -310,6 +313,41 @@ void Timer1::modeFastPWM(uint16_t ocr1a, uint16_t ocr1b) {
 
 
 /**
+ * @brief   Change la réaction du signal de OC1A lors d'une une égalité entre OCR1A et TCNT1.
+ * @param[in] com1a Valeur du COM à utiliser pour le canal A.
+ */
+void Timer1::setComNA(ComNX com1a) {
+    _MASK(TCCR1A, com1a << COM1A0, 0x3 << COM1A0);
+}
+
+/**
+ * @brief   Change la réaction du signal de OC1B lors d'une une égalité entre OCR1B et TCNT1.
+ * @param[in] com1b Valeur du COM à utiliser pour le canal B.
+ */
+void Timer1::setComNB(ComNX com1b) {
+    _MASK(TCCR1A, com1b << COM1B0, 0x3 << COM1B0);
+}
+
+
+/**
+ * @brief   Change la valeur de OCR1A.
+ * @param[in] ocr1a    Nouvelle valeur de OCR1A.
+ */
+void Timer1::setOcrNA(uint16_t ocr1a) {
+    OCR1A = ocr1a;
+}
+
+/**
+ * @brief   Change la valeur de OCR0B.
+ * @param[in] ocr0b    Nouvelle valeur de OCR0B.
+ */
+void Timer1::setOcrNB(uint16_t ocr1b) {
+    OCR1B = ocr1b;
+}
+
+
+
+/**
  * @brief Permet l'interruption TOV1 (voir doc. p. 130).
  * NOTE: L'interruption TOV1 est permise par défaut dans le constructeur.
  */
@@ -352,38 +390,4 @@ void Timer1::denyOCIA() {
  */
 void Timer1::denyOCIB() {
     _MASK(TIMSK1, 0 << OCIE1B, _BV(OCIE1B));
-}
-
-
-/**
- * @brief   Change la réaction du signal de OC1A lors d'une une égalité entre OCR1A et TCNT1.
- * @param[in] com1a Valeur du COM à utiliser pour le canal A.
- */
-void Timer1::setComNA(ComNX com1a) {
-    _MASK(TCCR1A, com1a << COM1A0, 0x3 << COM1A0);
-}
-
-/**
- * @brief   Change la réaction du signal de OC1B lors d'une une égalité entre OCR1B et TCNT1.
- * @param[in] com1b Valeur du COM à utiliser pour le canal B.
- */
-void Timer1::setComNB(ComNX com1b) {
-    _MASK(TCCR1A, com1b << COM1B0, 0x3 << COM1B0);
-}
-
-
-/**
- * @brief   Change la valeur de OCR1A.
- * @param[in] ocr1a    Nouvelle valeur de OCR1A.
- */
-void Timer1::setOcrNA(uint16_t ocr1a) {
-    OCR1A = ocr1a;
-}
-
-/**
- * @brief   Change la valeur de OCR0B.
- * @param[in] ocr0b    Nouvelle valeur de OCR0B.
- */
-void Timer1::setOcrNB(uint16_t ocr1b) {
-    OCR1B = ocr1b;
 }

@@ -40,7 +40,7 @@ private:
     const PinPosition _pinPos;
     volatile LedColor _color;
     
-    const LedColor _GREEN, _RED;
+    const uint8_t _GREEN, _RED;
     const uint8_t _THIS_MASK;
     volatile uint8_t* const _PORT;
 };

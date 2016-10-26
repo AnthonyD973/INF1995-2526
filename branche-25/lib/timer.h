@@ -45,6 +45,12 @@ public:
     
     virtual void modeCTC    (uint16_t ocr0a, uint16_t ocr0b) { UART::transmitCStr("Timer::modeCTC"); };
     virtual void modeFastPWM(uint16_t ocr0a, uint16_t ocr0b) { UART::transmitCStr("Timer::modeFastPWM"); };
+    
+    virtual void setComNA(ComNX comNa) { UART::transmitCStr("Timer::setComNA"); };
+    virtual void setComNB(ComNX comNb) { UART::transmitCStr("Timer::setComNB"); };
+    
+    virtual void setOcrNA(uint16_t ocrNa) { UART::transmitCStr("Timer::setOcrNA"); };
+    virtual void setOcrNB(uint16_t ocrNb) { UART::transmitCStr("Timer::setOcrNB"); };
   
     virtual void allowOVFI() { UART::transmitCStr("Timer::allowOVFI"); };
     virtual void allowOCIA() { UART::transmitCStr("Timer::allowOCIA"); };
@@ -55,12 +61,6 @@ public:
     virtual void denyOCIB() { UART::transmitCStr("Timer::denyOCIB"); };
     
     inline virtual bool is8BitClock() { UART::transmitCStr("Timer::is8BitClock"); return false;};
-    
-    virtual void setComNA(ComNX comNa) { UART::transmitCStr("Timer::setComNA"); };
-    virtual void setComNB(ComNX comNb) { UART::transmitCStr("Timer::setComNB"); };
-    
-    virtual void setOcrNA(uint16_t ocrNa) { UART::transmitCStr("Timer::setOcrNA"); };
-    virtual void setOcrNB(uint16_t ocrNb) { UART::transmitCStr("Timer::setOcrNB"); };
     
     volatile uint16_t getAmberLeds();
 
@@ -89,6 +89,12 @@ public:
     void modeCTC    (uint16_t ocr0a, uint16_t ocr0b);
     void modeFastPWM(uint16_t ocr0a, uint16_t ocr0b);
     
+    void setComNA(ComNX com0a);
+    void setComNB(ComNX com0b);
+    
+    void setOcrNA(uint16_t ocrNa);
+    void setOcrNB(uint16_t ocrNb);
+    
     
     void allowOVFI();
     void allowOCIA();
@@ -99,12 +105,6 @@ public:
     void denyOCIB();
     
     inline bool is8BitClock() { return true; }
-    
-    void setComNA(ComNX com0a);
-    void setComNB(ComNX com0b);
-    
-    void setOcrNA(uint16_t ocrNa);
-    void setOcrNB(uint16_t ocrNb);
 };
 
 // ===========================
@@ -121,6 +121,12 @@ public:
     void modeCTC    (uint16_t ocr1a, uint16_t ocr1b);
     void modeFastPWM(uint16_t ocr1a, uint16_t ocr1b);
     
+    void setComNA(ComNX com1a);
+    void setComNB(ComNX com1b);
+    
+    void setOcrNA(uint16_t ocr1a);
+    void setOcrNB(uint16_t ocr1b);
+    
     
     void allowOVFI();
     void allowOCIA();
@@ -131,12 +137,6 @@ public:
     void denyOCIB();
     
     inline bool is8BitClock() { return false; }
-    
-    void setComNA(ComNX com1a);
-    void setComNB(ComNX com1b);
-    
-    void setOcrNA(uint16_t ocr1a);
-    void setOcrNB(uint16_t ocr1b);
 };
 
 #endif // TIMER_H

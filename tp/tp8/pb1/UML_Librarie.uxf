@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.2">
+  <zoom_level>8</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>296</x>
+      <y>512</y>
+      <w>208</w>
+      <h>112</h>
+    </coordinates>
+    <panel_attributes>Timer0
+--
+/+ modeCTC(uint8_t, uint8_t) : void/
+/+ modeFastPWM(uint8_t, uint8_t) : void/
+/+ setComNA(ComNX) : void/
+/+ setComNB(ComNX) : void/
+/+ setOcrNA(uint8_t) : void/
+/+ setOcrNB(uint8_t) : void/
+style=autoresize</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>408</x>
+      <y>280</y>
+      <w>208</w>
+      <h>168</h>
+    </coordinates>
+    <panel_attributes>Timer
+--
+- _comNA : ComNX
+- _comNB : ComNX
+- _amberLeds : volatile uint8_t
+- _nAmberLeds : uint8_t
+--
+/+ modeCTC(uint8_t, uint8_t) : void/
+/+ modeFastPWM(uint8_t, uint8_t) : void/
+/+ setComNA(ComNX) : void/
+/+ setComNB(ComNX) : void/
+/+ setOcrNA(uint8_t) : void/
+/+ setOcrNB(uint8_t) : void/
+style=autoresize</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>520</x>
+      <y>512</y>
+      <w>208</w>
+      <h>112</h>
+    </coordinates>
+    <panel_attributes>Timer1
+--
+/+ modeCTC(uint8_t, uint8_t) : void/
+/+ modeFastPWM(uint8_t, uint8_t) : void/
+/+ setComNA(ComNX) : void/
+/+ setComNB(ComNX) : void/
+/+ setOcrNA(uint8_t) : void/
+/+ setOcrNB(uint8_t) : void/
+style=autoresize</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>80</x>
+      <y>280</y>
+      <w>184</w>
+      <h>168</h>
+    </coordinates>
+    <panel_attributes>LED
+--
+- _pinPos : PinPosition
+- _color : volatile LedColor
+- _GREEN : uint8_t
+- _RED : uint8_t
+- _THIS_MASK : uint8_t
+- _PORT : volatile uint8_t* const
+--
++ setColor(volatile LedColor) : void
++ setTimer(Timer*) : void
+- _setColorAmber() : void
+- _unsetColorAmber() : void
+style=autoresize</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>760</x>
+      <y>280</y>
+      <w>216</w>
+      <h>144</h>
+    </coordinates>
+    <panel_attributes>Engine
+--
+- _isOnChannelA : bool
+- _FORWARD : const uint8_t
+- _BACKWARD : const uint8_t
+- _THIS_MASK : const uint8_t
+- _PORT : volatile uint8_t* const
+--
++ setPower(EngineMode, uint16_t) : void
++ setMode(EngineMode) : void
++ getTimer() : Timer*
+style=autoresize</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>424</x>
+      <y>440</y>
+      <w>24</w>
+      <h>88</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;90.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>584</x>
+      <y>440</y>
+      <w>24</w>
+      <h>88</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;90.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>608</x>
+      <y>352</y>
+      <w>168</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
+m1=1..*
+m2=1</panel_attributes>
+    <additional_attributes>190.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>256</x>
+      <y>352</y>
+      <w>168</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
+m1=1..*
+m2=1</panel_attributes>
+    <additional_attributes>10.0;10.0;190.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>568</x>
+      <y>8</y>
+      <w>240</w>
+      <h>152</h>
+    </coordinates>
+    <panel_attributes>UART
+{All-Static}
+--
+_+ init(uint16_t) : void_
+_+ transmit(uint8_t data) : void_
+_+ transmit(const uint8_t* data, size_t n) : void_
+_+ transmitCStr(const char* str) : void_
+_+ transmitBin(uint8_t data) : void_
+_+ receive() : uint8_t_
+_+ receive(uint8_t* data, size_t n) : void_
+_+ emptyRecBuffer() : void_
+style=autoresize</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>584</x>
+      <y>152</y>
+      <w>24</w>
+      <h>144</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;160.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>776</x>
+      <y>152</y>
+      <w>24</w>
+      <h>144</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;160.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>168</x>
+      <y>120</y>
+      <w>216</w>
+      <h>48</h>
+    </coordinates>
+    <panel_attributes>fontsize=18
+Les classes LED et Engine sont
+friend de la classe Timer.
+style=autoresize</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>
