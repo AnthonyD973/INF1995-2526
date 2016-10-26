@@ -11,7 +11,7 @@
  */
 Timer::Timer() :_nAmberLeds(0)
 {
- Uart::transmissionCString("Timer::Timer\n");
+ UART::transmitCStr("Timer::Timer\n");
 }
 
 

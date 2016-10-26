@@ -68,43 +68,43 @@ void testerSetMode(Engine& engL, Engine& engR) {
 }
 
 void testerPower(Engine& engL, Engine& engR) {
-//     Uart::transmissionCString("\n---OFF---");
+//     UART::transmitCStr("\n---OFF---");
 //     engL.power(ENG_OFF, 0x00FF);
 //     engR.power(ENG_OFF, 0x00FF);
-//     Uart::transmissionBin(PORTB); Uart::transmission('\n');
+//     UART::transmitBin(PORTB); UART::transmit('\n');
 //     _delay_ms(5000.0); // Les moteurs devraient être éteints pendant 5s.
  
  
  
-    Uart::transmissionCString("\n---FORW---\n");
+    UART::transmitCStr("\n---FORW---\n");
     engL.setPower(ENG_FORWARD, 0x00FF);
     engR.setPower(ENG_FORWARD, 0x00FF);
-    Uart::transmissionCString("PORTB:"); Uart::transmissionBin(PORTB); Uart::transmission('\n');
+    UART::transmitCStr("PORTB:"); UART::transmitBin(PORTB); UART::transmit('\n');
     _delay_ms(5000.0); // Les moteurs devraient tourner à 100% pendant 5s.
  
     
     
-    Uart::transmissionCString("\n---OFF---\n");
+    UART::transmitCStr("\n---OFF---\n");
     engL.setPower(ENG_OFF, 0x00FF);
     engR.setPower(ENG_OFF, 0x00FF);
-    Uart::transmissionCString("PORTB:"); Uart::transmissionBin(PORTB); Uart::transmission('\n');
+    UART::transmitCStr("PORTB:"); UART::transmitBin(PORTB); UART::transmit('\n');
     _delay_ms(1000.0); // Pour éviter d'abîmer les moteurs en changeant bursquement de direction. 1s.
     
-    Uart::transmissionCString("\n---BACK---\n");
+    UART::transmitCStr("\n---BACK---\n");
     engL.setPower(ENG_BACKWARD, 0x00FF);
     engR.setPower(ENG_BACKWARD, 0x00FF);
-    Uart::transmissionCString("PORTB:"); Uart::transmissionBin(PORTB); Uart::transmission('\n');
+    UART::transmitCStr("PORTB:"); UART::transmitBin(PORTB); UART::transmit('\n');
     _delay_ms(5000.0); // Les moteurs devraient tourner en sens inverse à 100% pendant 5s.
  
-    Uart::transmissionCString("\n---OFF---\n");
+    UART::transmitCStr("\n---OFF---\n");
     engL.setPower(ENG_OFF, 0x00FF);
     engR.setPower(ENG_OFF, 0x00FF);
-    Uart::transmissionCString("PORTB:"); Uart::transmissionBin(PORTB); Uart::transmission('\n');
+    UART::transmitCStr("PORTB:"); UART::transmitBin(PORTB); UART::transmit('\n');
     _delay_ms(1000.0); // Pour éviter d'abîmer les moteurs en changeant bursquement de direction. 1s.
     
     
     
-    Uart::transmissionCString("\n---FORW GRADUEL---\n\n");
+    UART::transmitCStr("\n---FORW GRADUEL---\n\n");
     for (uint16_t i = 0; i < 0x00FF; ++i) {
         engL.setPower(ENG_FORWARD, i);
         engR.setPower(ENG_FORWARD, i);
@@ -112,25 +112,25 @@ void testerPower(Engine& engL, Engine& engR) {
     }
     
     
-    Uart::transmissionCString("\n---OFF---\n\n");
+    UART::transmitCStr("\n---OFF---\n\n");
     engL.setPower(ENG_OFF, 0x00FF);
     engR.setPower(ENG_OFF, 0x00FF);
     _delay_ms(5000.0); // Les moteurs devraient être éteints pendant 5s.
     
     
-    Uart::transmissionCString("\n---BACK GRADUEL---\n\n");
+    UART::transmitCStr("\n---BACK GRADUEL---\n\n");
     for (uint16_t i = 0; i < 0x00FF; ++i) {
         engL.setPower(ENG_BACKWARD, i);
         engR.setPower(ENG_BACKWARD, i);
         _delay_ms(39.0625); // Le moteurs devraient aller graduellement plus vite en sens inverse, de 0% à 100%, en 10s.
     }
     
-    Uart::transmissionCString("\n---INVALID SET_POWER---\n\n");
+    UART::transmitCStr("\n---INVALID SET_POWER---\n\n");
     engL.setPower(12, 0); // Le PC devrait recevoir la chaîne "Engine::power : mauvaise valeur de 'mode'." et le moteur gauche devrait s'éteindre. 5s.
     _delay_ms(5000.0);
     
     
-    Uart::transmissionCString("\n---OFF---\n\n");
+    UART::transmitCStr("\n---OFF---\n\n");
     engL.setPower(ENG_OFF, 0x00FF);
     engR.setPower(ENG_OFF, 0x00FF);
 }
@@ -141,8 +141,8 @@ void testerPower(Engine& engL, Engine& engR) {
 int main() {
     DDRA = DDRB = DDRC = DDRD = 0xFF;
     
-    Uart::initialization();
-    Uart::transmissionCString("test l. 117\n");
+    UART::init(2400);
+    UART::transmitCStr("test l. 117\n");
     
     // timer0.modeNormal(0x7f, 0x00);
     // timer0.modePhaseCorrectPWM(0x7f, 0x00);
@@ -154,23 +154,23 @@ int main() {
     Engine engR(T0CB);
     
     
-    Uart::transmissionCString("Setter LED vert.\n");
+    UART::transmitCStr("Setter LED vert.\n");
     led.setColor(LED_GREEN);
-    //Uart::transmissionCString("testerSetMode\n");
+    //UART::transmitCStr("testerSetMode\n");
     //testerSetMode(engL, engR); // Test de 38s.
     
      // Mettre la LED rouge pour signaler la fin du test.
-    Uart::transmissionCString("Setter LED rouge.\n");
+    UART::transmitCStr("Setter LED rouge.\n");
     led.setColor(LED_RED);
     
-    Uart::transmissionCString("testerPower\n");
+    UART::transmitCStr("testerPower\n");
     testerPower(engL, engR); // Test de 47s.
     
     
      // Mettre la LED verte pour signaler la fin des tests.
-    Uart::transmissionCString("Setter LED vert.\n");
+    UART::transmitCStr("Setter LED vert.\n");
     led.setColor(LED_GREEN);
-    Uart::transmissionCString("PORTB FINAL:"); Uart::transmissionBin(PORTB); Uart::transmission('\n');
+    UART::transmitCStr("PORTB FINAL:"); UART::transmitBin(PORTB); UART::transmit('\n');
     
     
     for EVER {

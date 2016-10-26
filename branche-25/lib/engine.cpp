@@ -87,7 +87,7 @@ Engine::Engine(TimerChannelUsed tcu)
     _THIS_MASK(getThisMaskFromTCU(tcu)),
     _PORT(getPortPtrFromTCU(tcu))
 {
-    Uart::transmissionCString("---CONSTRUCTION ENGINE---\n");
+    UART::transmitCStr("---CONSTRUCTION ENGINE---\n");
     setMode(ENG_OFF);
     _timer->modeFastPWM(0x00FF, 0x00FF);
 }
@@ -108,7 +108,7 @@ void Engine::setPower(EngineMode mode, uint16_t occrNX) {
      case ENG_FORWARD:  _MASK(*_PORT, _FORWARD,  _THIS_MASK); break;
      case ENG_BACKWARD: _MASK(*_PORT, _BACKWARD, _THIS_MASK); break;
      case ENG_OFF: setMode(ENG_OFF); break;
-     default: Uart::transmissionCString("Engine::power : mauvaise valeur de 'mode'.\n"); setMode(ENG_OFF);
+     default: UART::transmitCStr("Engine::power : mauvaise valeur de 'mode'.\n"); setMode(ENG_OFF);
     }
     
 }

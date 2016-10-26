@@ -43,24 +43,24 @@ public:
     
     virtual void setPrescale(Prescale01 prescale) {};
     
-    virtual void modeCTC    (uint16_t ocr0a, uint16_t ocr0b) { Uart::transmissionCString("Timer::modeCTC"); };
-    virtual void modeFastPWM(uint16_t ocr0a, uint16_t ocr0b) { Uart::transmissionCString("Timer::modeFastPWM"); };
+    virtual void modeCTC    (uint16_t ocr0a, uint16_t ocr0b) { UART::transmitCStr("Timer::modeCTC"); };
+    virtual void modeFastPWM(uint16_t ocr0a, uint16_t ocr0b) { UART::transmitCStr("Timer::modeFastPWM"); };
   
-    virtual void allowOVFI() { Uart::transmissionCString("Timer::allowOVFI"); };
-    virtual void allowOCIA() { Uart::transmissionCString("Timer::allowOCIA"); };
-    virtual void allowOCIB() { Uart::transmissionCString("Timer::allowOCIB"); };
+    virtual void allowOVFI() { UART::transmitCStr("Timer::allowOVFI"); };
+    virtual void allowOCIA() { UART::transmitCStr("Timer::allowOCIA"); };
+    virtual void allowOCIB() { UART::transmitCStr("Timer::allowOCIB"); };
     
-    virtual void denyOVFI() { Uart::transmissionCString("Timer::denyOVFI"); };
-    virtual void denyOCIA() { Uart::transmissionCString("Timer::denyOCIA"); };
-    virtual void denyOCIB() { Uart::transmissionCString("Timer::denyOCIB"); };
+    virtual void denyOVFI() { UART::transmitCStr("Timer::denyOVFI"); };
+    virtual void denyOCIA() { UART::transmitCStr("Timer::denyOCIA"); };
+    virtual void denyOCIB() { UART::transmitCStr("Timer::denyOCIB"); };
     
-    inline virtual bool is8BitClock() { Uart::transmissionCString("Timer::is8BitClock"); return false;};
+    inline virtual bool is8BitClock() { UART::transmitCStr("Timer::is8BitClock"); return false;};
     
-    virtual void setComNA(ComNX comNa) { Uart::transmissionCString("Timer::setComNA"); };
-    virtual void setComNB(ComNX comNb) { Uart::transmissionCString("Timer::setComNB"); };
+    virtual void setComNA(ComNX comNa) { UART::transmitCStr("Timer::setComNA"); };
+    virtual void setComNB(ComNX comNb) { UART::transmitCStr("Timer::setComNB"); };
     
-    virtual void setOcrNA(uint16_t ocrNa) { Uart::transmissionCString("Timer::setOcrNA"); };
-    virtual void setOcrNB(uint16_t ocrNb) { Uart::transmissionCString("Timer::setOcrNB"); };
+    virtual void setOcrNA(uint16_t ocrNa) { UART::transmitCStr("Timer::setOcrNA"); };
+    virtual void setOcrNB(uint16_t ocrNb) { UART::transmitCStr("Timer::setOcrNB"); };
     
     volatile uint16_t getAmberLeds();
 
