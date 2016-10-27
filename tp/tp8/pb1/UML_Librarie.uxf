@@ -4,8 +4,8 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>256</x>
-      <y>504</y>
+      <x>280</x>
+      <y>520</y>
       <w>208</w>
       <h>112</h>
     </coordinates>
@@ -15,16 +15,16 @@
 /+ modeFastPWM(uint8_t, uint8_t) : void/
 /+ setComNA(ComNX) : void/
 /+ setComNB(ComNX) : void/
-/+ setOcrNA(uint8_t) : void/
-/+ setOcrNB(uint8_t) : void/
+/+ setOcrNA(uint16_t) : void/
+/+ setOcrNB(uint16_t) : void/
 style=autoresize</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>368</x>
-      <y>272</y>
+      <x>392</x>
+      <y>288</y>
       <w>208</w>
       <h>168</h>
     </coordinates>
@@ -32,23 +32,23 @@ style=autoresize</panel_attributes>
 --
 - _comNA : ComNX
 - _comNB : ComNX
-- _amberLeds : volatile uint8_t
+- _amberLeds : volatile uint16_t
 - _nAmberLeds : uint8_t
 --
 /+ modeCTC(uint8_t, uint8_t) : void/
 /+ modeFastPWM(uint8_t, uint8_t) : void/
 /+ setComNA(ComNX) : void/
 /+ setComNB(ComNX) : void/
-/+ setOcrNA(uint8_t) : void/
-/+ setOcrNB(uint8_t) : void/
+/+ setOcrNA(uint16_t) : void/
+/+ setOcrNB(uint16_t) : void/
 style=autoresize</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>480</x>
-      <y>504</y>
+      <x>504</x>
+      <y>520</y>
       <w>208</w>
       <h>112</h>
     </coordinates>
@@ -58,16 +58,16 @@ style=autoresize</panel_attributes>
 /+ modeFastPWM(uint8_t, uint8_t) : void/
 /+ setComNA(ComNX) : void/
 /+ setComNB(ComNX) : void/
-/+ setOcrNA(uint8_t) : void/
-/+ setOcrNB(uint8_t) : void/
+/+ setOcrNA(uint16_t) : void/
+/+ setOcrNB(uint16_t) : void/
 style=autoresize</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>40</x>
-      <y>272</y>
+      <x>64</x>
+      <y>288</y>
       <w>184</w>
       <h>168</h>
     </coordinates>
@@ -90,8 +90,8 @@ style=autoresize</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>720</x>
-      <y>272</y>
+      <x>744</x>
+      <y>288</y>
       <w>216</w>
       <h>144</h>
     </coordinates>
@@ -112,19 +112,8 @@ style=autoresize</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>384</x>
-      <y>432</y>
-      <w>24</w>
-      <h>88</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;90.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>544</x>
-      <y>432</y>
+      <x>408</x>
+      <y>448</y>
       <w>24</w>
       <h>88</h>
     </coordinates>
@@ -135,7 +124,18 @@ style=autoresize</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>568</x>
-      <y>344</y>
+      <y>448</y>
+      <w>24</w>
+      <h>88</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;90.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>592</x>
+      <y>360</y>
       <w>168</w>
       <h>32</h>
     </coordinates>
@@ -148,8 +148,8 @@ fontsize=20</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>216</x>
-      <y>344</y>
+      <x>240</x>
+      <y>360</y>
       <w>168</w>
       <h>32</h>
     </coordinates>
@@ -162,8 +162,8 @@ fontsize=20</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>528</x>
-      <y>0</y>
+      <x>552</x>
+      <y>16</y>
       <w>240</w>
       <h>152</h>
     </coordinates>
@@ -184,8 +184,8 @@ style=autoresize</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>544</x>
-      <y>144</y>
+      <x>568</x>
+      <y>160</y>
       <w>24</w>
       <h>144</h>
     </coordinates>
@@ -195,8 +195,8 @@ style=autoresize</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>736</x>
-      <y>144</y>
+      <x>760</x>
+      <y>160</y>
       <w>24</w>
       <h>144</h>
     </coordinates>
@@ -206,15 +206,30 @@ style=autoresize</panel_attributes>
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>128</x>
+      <x>160</x>
       <y>112</y>
       <w>216</w>
       <h>48</h>
     </coordinates>
-    <panel_attributes>fontsize=18
-Les classes LED et Engine sont
+    <panel_attributes>Les classes LED et Engine sont
 friend de la classe Timer.
-style=autoresize</panel_attributes>
+style=autoresize
+fontsize=18</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>792</x>
+      <y>504</y>
+      <w>168</w>
+      <h>64</h>
+    </coordinates>
+    <panel_attributes>ComNX, PinPosition,
+LedColor et EngineMode
+sont des alias de uint8_t.
+style=autoresize
+fontsize=18</panel_attributes>
     <additional_attributes/>
   </element>
 </diagram>
