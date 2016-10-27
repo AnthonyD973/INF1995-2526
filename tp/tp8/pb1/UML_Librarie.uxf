@@ -4,16 +4,16 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>248</x>
+      <x>240</x>
       <y>488</y>
-      <w>208</w>
+      <w>224</w>
       <h>120</h>
     </coordinates>
     <panel_attributes>Timer0
 --
 /+ setPrescale(Prescale01)/
-/+ modeCTC(uint8_t, uint8_t) : void/
-/+ modeFastPWM(uint8_t, uint8_t) : void/
+/+ modeCTC(uint16_t, uint16_t) : void/
+/+ modeFastPWM(uint16_t, uint16_t) : void/
 /+ setComNA(ComNX) : void/
 /+ setComNB(ComNX) : void/
 /+ setOcrNA(uint16_t) : void/
@@ -24,9 +24,9 @@ style=autoresize</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>360</x>
+      <x>368</x>
       <y>256</y>
-      <w>208</w>
+      <w>224</w>
       <h>176</h>
     </coordinates>
     <panel_attributes>/Timer/
@@ -37,8 +37,8 @@ style=autoresize</panel_attributes>
 - _nAmberLeds : uint8_t
 --
 /+ setPrescale(Prescale01)/
-/+ modeCTC(uint8_t, uint8_t) : void/
-/+ modeFastPWM(uint8_t, uint8_t) : void/
+/+ modeCTC(uint16_t, uint16_t) : void/
+/+ modeFastPWM(uint16_t, uint16_t) : void/
 /+ setComNA(ComNX) : void/
 /+ setComNB(ComNX) : void/
 /+ setOcrNA(uint16_t) : void/
@@ -49,16 +49,16 @@ style=autoresize</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>472</x>
+      <x>496</x>
       <y>488</y>
-      <w>208</w>
+      <w>224</w>
       <h>120</h>
     </coordinates>
     <panel_attributes>Timer1
 --
 /+ setPrescale(Prescale01)/
-/+ modeCTC(uint8_t, uint8_t) : void/
-/+ modeFastPWM(uint8_t, uint8_t) : void/
+/+ modeCTC(uint16_t, uint16_t) : void/
+/+ modeFastPWM(uint16_t, uint16_t) : void/
 /+ setComNA(ComNX) : void/
 /+ setComNB(ComNX) : void/
 /+ setOcrNA(uint16_t) : void/
@@ -69,7 +69,7 @@ style=autoresize</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>64</x>
+      <x>72</x>
       <y>256</y>
       <w>184</w>
       <h>168</h>
@@ -93,7 +93,7 @@ style=autoresize</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>680</x>
+      <x>688</x>
       <y>256</y>
       <w>216</w>
       <h>144</h>
@@ -115,7 +115,7 @@ style=autoresize</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>376</x>
+      <x>400</x>
       <y>424</y>
       <w>24</w>
       <h>80</h>
@@ -126,7 +126,7 @@ style=autoresize</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>536</x>
+      <x>544</x>
       <y>424</y>
       <w>24</w>
       <h>80</h>
@@ -137,21 +137,21 @@ style=autoresize</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>560</x>
+      <x>584</x>
       <y>328</y>
-      <w>136</w>
+      <w>120</w>
       <h>32</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;-
 m1=*
 m2=2
 fontsize=20</panel_attributes>
-    <additional_attributes>150.0;10.0;10.0;10.0</additional_attributes>
+    <additional_attributes>130.0;10.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>240</x>
+      <x>248</x>
       <y>328</y>
       <w>136</w>
       <h>32</h>
@@ -165,21 +165,21 @@ fontsize=20</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>504</x>
-      <y>40</y>
-      <w>240</w>
+      <x>544</x>
+      <y>48</y>
+      <w>200</w>
       <h>152</h>
     </coordinates>
     <panel_attributes>UART
 {All-Static}
 --
 _+ init(uint16_t) : void_
-_+ transmit(uint8_t data) : void_
-_+ transmit(const uint8_t* data, size_t n) : void_
-_+ transmitCStr(const char* str) : void_
-_+ transmitBin(uint8_t data) : void_
+_+ transmit(uint8_t) : void_
+_+ transmit(const uint8_t*, size_t) : void_
+_+ transmitCStr(const char*) : void_
+_+ transmitBin(uint8_t) : void_
 _+ receive() : uint8_t_
-_+ receive(uint8_t* data, size_t n) : void_
+_+ receive(uint8_t*, size_t) : void_
 _+ emptyRecBuffer() : void_
 style=autoresize</panel_attributes>
     <additional_attributes/>
@@ -187,29 +187,29 @@ style=autoresize</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>528</x>
-      <y>184</y>
+      <x>560</x>
+      <y>192</y>
       <w>24</w>
-      <h>88</h>
+      <h>80</h>
     </coordinates>
     <panel_attributes>lt=-</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;90.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;80.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>704</x>
-      <y>184</y>
+      <x>712</x>
+      <y>192</y>
       <w>24</w>
-      <h>88</h>
+      <h>80</h>
     </coordinates>
     <panel_attributes>lt=-</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;90.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;80.0</additional_attributes>
   </element>
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>128</x>
+      <x>136</x>
       <y>80</y>
       <w>216</w>
       <h>48</h>
@@ -223,7 +223,7 @@ fontsize=18</panel_attributes>
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>744</x>
+      <x>752</x>
       <y>464</y>
       <w>208</w>
       <h>64</h>
