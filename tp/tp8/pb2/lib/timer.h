@@ -36,7 +36,7 @@ class Timer {
     friend class LED;
     friend class Engine;
     
-    friend void intTimerChgAmberLedsColor(Timer* timer);
+    friend void switchAmberLedsColor(Timer* timer);
     
 public:
     Timer();

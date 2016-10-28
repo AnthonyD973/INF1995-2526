@@ -9,19 +9,9 @@
 
 #include "uart.h"
 
-#define _MASK(reg, value, mask) (reg = ((reg) & ~(mask)) | ((value) & (mask)))
+#define _MASK(reg, value, mask) (reg = ((reg) & ~(mask)) | ((value) & (mask))) // Change la valeur de certains bits d'un registre.
 
-// inline void changeRegisterFromMask(volatile uint8_t& reg, uint8_t value, uint8_t mask) {
-//   uint8_t notToChange = reg   & ~mask;
-//   uint8_t changed     = value & mask;
-//   reg = notToChange | changed;
-// }
-// 
-// inline void changeRegisterFromMask(volatile uint16_t& reg, uint16_t value, uint16_t mask) {
-//   uint16_t notToChange = reg   & ~mask;
-//   uint16_t changed     = value & mask;
-//   reg = notToChange | changed;
-// }
+#define EVER (;;) // for EVER { ... }
 
 /**
  * @brief Détection de fronts montants d'un port avec antirebond.

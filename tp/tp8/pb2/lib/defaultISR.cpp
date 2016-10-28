@@ -6,7 +6,7 @@
  *      préécrite que l'on peut utiliser, par exemple dans les routines d'interruption.
  * @param[in] timer Compteur impliqué.
  */
-void intTimerChgAmberLedsColor(Timer* timer) {
+void switchAmberLedsColor(Timer* timer) {
     // Test fréquemment vrai, alors effectué au début.
     if (timer->_nAmberLeds == 0) {
         return;

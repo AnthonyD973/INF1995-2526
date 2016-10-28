@@ -9,6 +9,6 @@
 
 class Timer; // Déclaration nécessaire pour résoudre la dépendance circulaire.
 
-void intTimerChgAmberLedsColor(Timer* timer);
+void switchAmberLedsColor(Timer* timer);
 
 #endif // DEFAULT_ISR_H

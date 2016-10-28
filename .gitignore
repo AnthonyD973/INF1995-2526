@@ -1,0 +1,12 @@
+# Ne pas ajouter les résultats du make.
+*.out
+*.out.map
+*.o
+*.ee.hex
+*.d
+*.bin
+*.hex
+*.a
+
+# Pour KDevelop
+*.kdev_include_paths

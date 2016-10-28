@@ -8,6 +8,7 @@
 #include "engine.h"
 #include "timer.h"
 #include "defaultISR.h"
+#include "ram.h"
 #include "uart.h" // Utile pour le debug
 
 #define EVER (;;)
@@ -15,8 +16,8 @@
 Timer0 timer0(P01_CLK8);
 Timer1 timer1(P01_CLK8);
 
-ISR(TIMER0_OVF_vect) { intTimerChgAmberLedsColor(&timer0); }
-ISR(TIMER1_OVF_vect) { intTimerChgAmberLedsColor(&timer1); }
+ISR(TIMER0_OVF_vect) { switchAmberLedsColor(&timer0); }
+ISR(TIMER1_OVF_vect) { switchAmberLedsColor(&timer1); }
 ISR(TIMER0_COMPA_vect) { }
 
 void testerSetMode(Engine& engL, Engine& engR) {
@@ -68,11 +69,11 @@ void testerSetMode(Engine& engL, Engine& engR) {
 }
 
 void testerPower(Engine& engL, Engine& engR) {
-//     UART::transmitCStr("\n---OFF---");
-//     engL.power(ENG_OFF, 0x00FF);
-//     engR.power(ENG_OFF, 0x00FF);
-//     UART::transmitBin(PORTB); UART::transmit('\n');
-//     _delay_ms(5000.0); // Les moteurs devraient être éteints pendant 5s.
+     UART::transmitCStr("\n---OFF---");
+     engL.setPower(ENG_OFF, 0x00FF);
+     engR.setPower(ENG_OFF, 0x00FF);
+     UART::transmitBin(PORTB); UART::transmit('\n');
+     _delay_ms(5000.0); // Les moteurs devraient être éteints pendant 5s.
  
  
  
@@ -143,6 +144,8 @@ int main() {
     
     UART::init(2400);
     UART::transmitCStr("test l. 117\n");
+    
+    RAM::init();
     
     // timer0.modeNormal(0x7f, 0x00);
     // timer0.modePhaseCorrectPWM(0x7f, 0x00);
