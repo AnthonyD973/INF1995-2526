@@ -17,9 +17,10 @@
 #####      Details specifique a la cible       #####
 #####  Vous devez les adapter a votre projet   #####
 
-# Nom du microcontroleur cible
-# (exemple: 'at90s8515')
-MCU=atmega324pa
+# Les variables qui suivent vont etre différentes si c'est pour generer une 
+# librairie que si c'est pour generer un executable.
+
+### Variables utilisees pour generer une librairie et pour generer un executable
 
 # Nom de votre projet
 # (utilisez un seul mot, exemple: 'monprojet')
@@ -31,6 +32,7 @@ PROJECTNAME=robot
 PRJSRC=defaultISR.cpp engine.cpp led.cpp lib.cpp pinPosition.cpp timer.cpp uart.cpp ram.cpp
 
 # Emplacement ou se trouve les fichiers sources (ex: ../src ./main . )
+# Par defaut, c'est le dossier courant (".")
 SRCDIR=.
 
 # Emplacement de stockage temporaire des fichiers generes
@@ -43,6 +45,8 @@ GENDIR=gen
 # (ex: /path/to/mydir /path/to/dir2) (utilisation avec le prefix -I)
 INC=
 
+### Variables spécifiques à la production d'un executable
+
 # Librairies a lier (ex: mylib) (utilisation avec le prefix -l dans
 # la generation de l'executable final)
 LIBS=
@@ -51,14 +55,6 @@ LIBS=
 # (ex: /path/to/libdir) (utilisation avec le prefix -L dans
 # la generation de l'executable final)
 LIBS_PATHS=
-
-# Niveau d'optimization
-# Utilisez s (size opt), 1, 2, 3 ou 0 (off)
-OPTLEVEL=s
-
-# Programmer ID - Ne pas changer 
-# Liste complete des IDs disponible avec avrdude
-AVRDUDE_PROGRAMMERID=usbasp
 
 
 

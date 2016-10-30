@@ -1,3 +1,36 @@
+########       AVR Project Makefile   	  ########
+#####                                        #####
+#####	   Makefile produit et ecrit par     #####
+#####	Simon Barrette & Jerome Collin pour  #####
+#####		 INF1995 - 2016		     #####
+#####					     #####
+#####	      Inspire de Pat Deegan -        #####
+#####  Psychogenic Inc (www.psychogenic.com) #####
+##################################################
+
+# Ce Makefile vous permet de compiler des projets
+# pour les microcontroleurs Atmel AVR sur 
+# Linux ou Unix, en utilisant l'outil AVR-GCC. 
+# Ce Makefile supporte C & C++
+
+
+#####      Details specifique a la cible       #####
+#####  Vous devez les adapter a votre projet   #####
+
+# Nom du microcontroleur cible
+# (exemple: 'at90s8515')
+MCU=atmega324pa
+
+# Niveau d'optimization
+# Utilisez s (size opt), 1, 2, 3 ou 0 (off)
+OPTLEVEL=s
+
+# Programmer ID - Ne pas changer 
+# Liste complete des IDs disponible avec avrdude
+AVRDUDE_PROGRAMMERID=usbasp
+
+
+
 ####################################################
 #####         Configuration terminee           #####
 #####                                          #####
