@@ -1,0 +1,7 @@
+Exécuter les commandes ci-dessous dans le terminal dans le dossier courant (c.-à.-d. /SoundCar):
+
+$ make auto
+$ make clearLoad
+$ make load
+
+Il devrait y avoir un 7 à la fin de l'execution de la dernière commande.
