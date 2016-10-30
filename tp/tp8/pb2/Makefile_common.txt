@@ -93,7 +93,7 @@ ARFLAGS=-crs
 TRG=$(GENDIR)/$(PROJECTNAME).out
 HEXROMTRG=$(GENDIR)/$(PROJECTNAME).hex
 HEXTRG=$(HEXROMTRG) $(GENDIR)/$(PROJECTNAME).ee.hex
-LIBTRG=$(addprefix lib, $(addsuffix .a, $(PROJECTNAME)))
+LIBTRG=$(addprefix lib, $(PROJECTNAME).a)
 
 
 
@@ -121,7 +121,7 @@ OBJDEPS=$(patsubst %.c,$(GENDIR)/%.o,$(strip $(filter %.c, $(PRJSRC)))) \
 # En plus de la commande make qui permet de compiler
 # votre projet, vous pouvez utilisez les commandes
 # make all, make install et make clean
-.PHONY: all install clean auto lib
+.PHONY: all install clean auto lib libauto
 
 # Make all permet simplement de compiler le projet
 #
@@ -145,7 +145,7 @@ $(GENDIR)/%.o: $(SRCDIR)/%.cpp $(GENDIR)
 	$(CC) $(CFLAGS) $(CXXFLAGS) -c $< -o $@
 
 # Verification des dependances (header dependencies)
--include $(GENDIR)/*.d
+-include *.d
 
 # Pour plus d'information sur cette section, consulter:
 # http://bit.ly/2580FU8
