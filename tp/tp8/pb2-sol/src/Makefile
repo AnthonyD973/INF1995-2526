@@ -25,16 +25,6 @@ EXT = -o
 
 SUFF = out
 
-# Make all permet simplement de compiler le projet
-#
-#all: $(TRG)
-
-# Implementation de la cible
-#$(TRG): $(PRJSRC)
-#	$(CC) $(INC) -o $@ $< $(LIBS)
-
-
-
 -include ../Makefile_common.txt
 
 
