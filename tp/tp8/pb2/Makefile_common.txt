@@ -151,7 +151,7 @@ $(GENDIR)/%.o: $(SRCDIR)/%.cpp $(GENDIR)
 # http://bit.ly/2580FU8
 
 # Production des fichiers hex a partir des fichiers elf
-$(GENDIR)/%.hex: $(GENDIR) $(GENDIR)/%.out
+$(GENDIR)/%.hex: $(GENDIR)/%.out $(GENDIR)
 	$(OBJCOPY) -j .text -j .data \
 		-O $(HEXFORMAT) $< $@
 
