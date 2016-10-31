@@ -26,11 +26,6 @@
 # (utilisez un seul mot, exemple: 'monprojet')
 PROJECTNAME=robot
 
-# Fichiers sources
-# (Listez tous les fichiers a compiler, ex: 'tp1.c tp2.cpp'):
-# Utilisez le suffixe .cpp pour les fichiers C++
-PRJSRC=main.cpp
-
 # Emplacement ou se trouve les fichiers sources (ex: ../src ./main . )
 SRCDIR=.
 
