@@ -13,6 +13,10 @@
 # Linux ou Unix, en utilisant l'outil AVR-GCC. 
 # Ce Makefile supporte C & C++
 
+# Ce fichier Makefile peut etre transporte dans le dossier d'une librairie
+# pour produire une librairie statique .a (en utilisant la cible "lib")
+# ou dans le dossier d'un projet destiner a produire un executable (en
+# en utilisant les cibles "all" et/ou "auto").
 
 #####      Details specifique a la cible       #####
 #####  Vous devez les adapter a votre projet   #####
@@ -27,6 +31,7 @@
 PROJECTNAME=robot
 
 # Emplacement ou se trouve les fichiers sources (ex: ../src ./main . )
+# Par defaut, c'est le dossier courant (".")
 SRCDIR=.
 
 # Emplacement de stockage temporaire des fichiers generes
