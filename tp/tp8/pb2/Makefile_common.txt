@@ -1,10 +1,10 @@
-########       AVR Project Makefile   	  ########
+########       AVR Project Makefile       ########
 #####                                        #####
-#####	   Makefile produit et ecrit par     #####
-#####	Simon Barrette & Jerome Collin pour  #####
-#####		 INF1995 - 2016		     #####
-#####					     #####
-#####	      Inspire de Pat Deegan -        #####
+#####      Makefile produit et ecrit par     #####
+#####   Simon Barrette & Jerome Collin pour  #####
+#####             INF1995 - 2016             #####
+#####                                        #####
+#####         Inspire de Pat Deegan -        #####
 #####  Psychogenic Inc (www.psychogenic.com) #####
 ##################################################
 
@@ -13,9 +13,25 @@
 # Linux ou Unix, en utilisant l'outil AVR-GCC. 
 # Ce Makefile supporte C & C++
 
+# Le makefile dans le dossier 'pb2' est une extention du
+# makefile original qui ajoute la cible 'make lib'
+# qui permet de creer des librairies.
+# Les cibles de base du makefile 'all', 'install' et
+# 'clean' ont ete etendues pour pouvoir accepter des
+# librairies externes.
+# Ainsi, le makefile dans les sous-dossiers peut se transporter dans un dossier
+# contenant uniquement des fichiers sources pour produire un executable,
+# ou dans le dossier d'une librairie pour produire un fichier .a
+
 
 #####      Details specifique a la cible       #####
 #####  Vous devez les adapter a votre projet   #####
+
+
+# Fichiers sources
+# (Liste tous les fichiers a compiler, ex: 'tp1.c tp2.cpp'):
+# Utilisation du suffixe .c pour les fichiers C et .cpp pour les fichiers C++
+PRJSRC=$(filter %.cpp, $(shell echo *)) $(filter %.c, $(shell echo *))
 
 # Nom du microcontroleur cible
 # (exemple: 'at90s8515')
@@ -93,7 +109,7 @@ ARFLAGS=-crs
 TRG=$(GENDIR)/$(PROJECTNAME).out
 HEXROMTRG=$(GENDIR)/$(PROJECTNAME).hex
 HEXTRG=$(HEXROMTRG) $(GENDIR)/$(PROJECTNAME).ee.hex
-LIBTRG=$(addprefix lib, $(PROJECTNAME).a)
+LIBTRG=lib$(PROJECTNAME).a
 
 
 
@@ -126,7 +142,6 @@ OBJDEPS=$(patsubst %.c,$(GENDIR)/%.o,$(strip $(filter %.c, $(PRJSRC)))) \
 # Make all permet simplement de compiler le projet
 #
 all: $(TRG)
-	echo $(TRG);
 
 # Implementation de la cible
 $(TRG): $(GENDIR) $(OBJDEPS)
@@ -172,7 +187,7 @@ install: $(HEXROMTRG)
 # Make clean permet d'effacer tout les fichiers generes
 # lors de la compilation
 clean:
-	$(REMOVE) $(TRG) $(TRG).map $(OBJDEPS) $(HEXTRG) $(GENDIR)/*.d $(GENDIR)/* $(GENDIR)
+	$(REMOVE) $(TRG) $(TRG).map $(OBJDEPS) $(HEXTRG) $(GENDIR)/*.d $(GENDIR)/* $(GENDIR) $(LIBTRG)
 	
 
 # Execute, dans l'ordre, un 'make all' pour compiler ce qu'il
@@ -180,9 +195,6 @@ clean:
 # compiles et un 'make clean' pour que les ficher generes ne
 # soient pas transferes dans l'entrepot git par erreur.
 auto: all install clean
-
-# Construit la librairie puis nettoie
-libauto: lib clean
 
 # Pour plus d'information sur les phony target, consulter:
 # http://bit.ly/1WBQe61
