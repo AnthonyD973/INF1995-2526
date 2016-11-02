@@ -67,8 +67,8 @@ volatile uint8_t* getPortPtrFromTCU (TimerChannelUsed tcu) {
      case T0CB: return &PORTB;
      case T1CA: return &PORTD;
      case T1CB: return &PORTD;
-//      case T2CA: return PORTD;
-//      case T2CB: return PORTD;
+//      case T2CA: return &PORTD;
+//      case T2CB: return &PORTD;
      default: return 0;
     }
 }
@@ -88,8 +88,10 @@ Engine::Engine(TimerChannelUsed tcu)
     _PORT(getPortPtrFromTCU(tcu))
 {
     UART::transmitCStr("---CONSTRUCTION ENGINE---\n");
-    setMode(ENG_OFF);
-    _timer->modeFastPWM(0x00FF, 0x00FF);
+    if (_timer != 0) {
+        setMode(ENG_FORWARD);
+        _timer->modeFastPWM(0x00FF, 0x00FF);
+    }
 }
 
 void Engine::setPower(EngineMode mode, uint16_t occrNX) {

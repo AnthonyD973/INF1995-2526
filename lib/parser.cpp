@@ -45,21 +45,21 @@ void _unitaryParse(uint16_t instr) {
     uint8_t data = _DATA(instr);
     
     switch (op) {
-     case DBT:  dbt(); break;
+     case DBT:  dbt();     break;
      case ATT:  att(data); break;
      case DAL:  dal(data); break;
      case DET:  det(data); break;
      case SGO:  sgo(data); break;
-     case SAR:  sar(); break;
+     case SAR:  sar();     break;
      case MAR1: // fallthrough
-     case MAR2: mar(); break;
+     case MAR2: mar();     break;
      case MAV:  mav(data); break;
      case MRE:  mre(data); break;
-     case TRD:  trd(); break;
-     case TRG:  trg(); break;
+     case TRD:  trd();     break;
+     case TRG:  trg();     break;
      case DBC:  dbc(data); break;
-     case FBC:  fbc(); break;
-     case FIN:  fin(); break;
+     case FBC:  fbc();     break;
+     case FIN:  fin();     break;
      default: UART::transmitCStr("_unitaryParse : mauvaise valeur de l'opcode(");
               UART::transmit((op%16)|0x20);
               UART::transmit((op/16)|0x20);

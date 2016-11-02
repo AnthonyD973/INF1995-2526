@@ -42,8 +42,8 @@ private:
     Timer* _timer;
     bool _isOnChannelA;
     
-    const uint8_t _FORWARD, _BACKWARD;
-    const uint8_t _THIS_MASK;
-    volatile uint8_t* const _PORT;
+    uint8_t _FORWARD, _BACKWARD;
+    uint8_t _THIS_MASK;
+    volatile uint8_t* _PORT;
 };
 #endif // ENGINE_H
