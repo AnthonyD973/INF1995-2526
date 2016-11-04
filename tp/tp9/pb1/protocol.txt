@@ -1,4 +1,4 @@
-deb;
+dbt;
 
 # SÉQUENCE DÉBUT
 
@@ -81,6 +81,10 @@ att 20;
 
 sgo 61;
 att 20;
+
+dal 1;
+att 10;
+det 1;
 
 fbc;
 

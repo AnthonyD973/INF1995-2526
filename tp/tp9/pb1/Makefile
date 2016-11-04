@@ -55,6 +55,13 @@ LIBS=robot
 # la generation de l'executable final)
 LIBS_PATHS=../../../lib
 
+.PHONY: danse
 
+danse:
+	./progmem -o protocol.bin protocol.txt
+	cd transfert/; make -C ../../../../lib lib; make all install; cd ..;
+	sleep 1.0; ./serieViaUSB -e -h -s 8 -f protocol.bin;
+	sleep 1.0; make -C ./transfert/ clean; make all install clean;
+	make -C ../../../lib clean;
 
 -include ../../../Makefile_common.txt

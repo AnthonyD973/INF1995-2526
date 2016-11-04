@@ -4,7 +4,7 @@
 #define _DATA(op)   ((uint8_t)((op)&0xFF))
 #define _PORT       PORTB
 
-uint16_t Parser::ROT_TIME_CST = 0x7FFF;
+uint16_t Parser::ROT_TIME_CST = 0x007F;
 uint16_t Parser::_curAddr = 0x0002;
 
 uint16_t Parser::_loopBegAddr = 0;
@@ -29,9 +29,9 @@ const Opcode
     FIN  = 0xFF;
 
 void Parser::init() {
-    DDRB = 0x03;
+    DDRB = 0x3F;
     Buzzer::init();
-    Drive::init(T0CA, T0CB, 127, 255);
+    Drive::init(T0CB, T0CA, 127, 255);
 }
 
 void Parser::parse() {
