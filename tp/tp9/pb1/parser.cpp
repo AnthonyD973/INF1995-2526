@@ -2,6 +2,7 @@
 
 #define _OP(op)     ((Opcode)((op)>>8))
 #define _DATA(op)   ((uint8_t)((op)&0xFF))
+#define _PORT       PORTB
 
 typedef uint8_t Opcode;
 const Opcode
@@ -20,6 +21,12 @@ const Opcode
     DBC  = 0xC0,
     FBC  = 0xC1,
     FIN  = 0xFF;
+
+void Parser::init() {
+    DDRB = 0x03;
+    Buzzer::init();
+    Drive::init(T0CA, T0CB, 127, 255);
+}
 
 void Parser::parse(uint16_t addrBeg) {}
 
@@ -49,43 +56,52 @@ void Parser::_unitaryParse(uint16_t instr) {
 }
 
 void Parser::att(uint8_t data) {
-    
+    for (uint8_t i = 0; i < data; ++i) {
+        _delay_ms(25.0);
+    }
 }
 
 void Parser::dal(uint8_t data) {
-    
+    if (data & 0x01)
+        _PORT = LED_GREEN;
 }
 
 void Parser::det(uint8_t data) {
-    
+    if (data & 0x01)
+        _PORT = LED_OFF;
 }
 
 void Parser::sgo(uint8_t data) {
-    
+    if (data >= 45 && data <= 81) {
+        Buzzer::setTone(data);
+    }
 }
 
 void Parser::sar() {
-    
+    Buzzer::clearTone();
 }
 
 void Parser::mar() {
-    
+    Drive::setMovement(ENG_OFF, 0);
 }
 
 void Parser::mav(uint8_t data) {
-    
+    Drive::setMovement(ENG_FORWARD, data);
 }
 
 void Parser::mre(uint8_t data) {
-    
+    Drive::setMovement(ENG_BACKWARD, data);
 }
 
 void Parser::trd() {
-    
+    Drive::setRotation(DIR_RIGHT, 255);
+    for (uint16_t i = 0; i < ROT_TIME_CST; ++i) {
+        _delay_ms(25);
+    }
 }
 
 void Parser::trg() {
-    
+    Drive::setRotation(DIR_LEFT, 255);
 }
 
 void Parser::dbc(uint8_t data) {

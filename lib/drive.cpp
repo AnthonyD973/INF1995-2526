@@ -10,9 +10,12 @@ Engine Drive::_engR(0xFF);
  * @param[in] tcuRight  Sert à définir sur quelles broches le moteur droit est
  *      branché. Voir engine.h.
  */
-void Drive::init(TimerChannelUsed tcuLeft, TimerChannelUsed tcuRight) {
+void Drive::init(TimerChannelUsed tcuLeft, TimerChannelUsed tcuRight,
+                 uint8_t right, uint8_t left) {
     _engL = Engine(tcuLeft);
     _engR = Engine(tcuRight);
+    CONST_R = right;
+    CONST_L = left;
 }
 
 /**
@@ -21,18 +24,30 @@ void Drive::init(TimerChannelUsed tcuLeft, TimerChannelUsed tcuRight) {
  * @param[in] mode  Mode des moteurs à mettre. Voir engine.h.
  * @param[in] power Puissance à transmette aux moteurs. Entre 0 et 255.
  */
-void Drive::setPower(EngineMode mode, uint8_t power) {
-    if (mode == ENG_FORWARD) {
-        _forward(power);
-    }
-    
-}
-
-
-void Drive::_forward(uint8_t power) {
-    uint16_t tmpPwrL = power;
+void Drive::setMovement(EngineMode mode, uint8_t power) {
+    uint16_t tmpPwrL = power*CONST_L/0xFF;
     _engL.setPower(ENG_FORWARD, (uint8_t)tmpPwrL);
     
-    uint16_t tmpPwrR = power*127/255;
+    uint16_t tmpPwrR = power*CONST_R/0xFF;
     _engR.setPower(ENG_FORWARD, (uint8_t)tmpPwrR);
+}
+
+void Drive::setRotation(DriveDir dir, uint8_t power) {
+    EngineMode
+        modeR = ENG_OFF,
+        modeL = ENG_OFF;
+    if (dir == DIR_RIGHT) {
+        modeR = ENG_BACKWARD;
+        modeL = ENG_FORWARD;
+    }
+    if (dir == DIR_LEFT) {
+        modeR = ENG_FORWARD;
+        modeL = ENG_BACKWARD;
+    }
+
+    uint16_t tmpPwrL = power*CONST_L/0xFF;
+    _engL.setPower(modeL, (uint8_t)tmpPwrL);
+    
+    uint16_t tmpPwrR = power*CONST_R/0xFF;
+    _engR.setPower(modeR, (uint8_t)tmpPwrR);
 }

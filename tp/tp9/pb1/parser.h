@@ -5,9 +5,12 @@
 #include "timer.h"
 #include "led.h"
 #include "engine.h"
+#include "buzzer.h"
+#include "drive.h"
 
 class Parser {
 public:
+    static void init();
     static void parse(uint16_t addrBeg);
 
 private:
@@ -25,6 +28,8 @@ private:
     static void trg();
     static void dbc(uint8_t data);
     static void fbc();
+    
+    static uint16_t ROT_TIME_CST = 0x7FFF;
 };
 
 #endif // PARSER_H

@@ -11,13 +11,15 @@ public:
     /**
      * @brief   Fonction permettant d'initialiser
      */
-    static void init();
+    static void init(/* Timer timer */);
     
     static void setTone(uint8_t midiTone);
     static void clearTone();
 
 private:
     static uint16_t FREQS_[37];
-}
+};
+
+uint16_t Buzzer::FREQS_[37];
 
 #endif
