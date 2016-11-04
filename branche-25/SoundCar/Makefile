@@ -175,8 +175,18 @@ auto: clean all install
 # micro controleur puisse sauvegarder les données acquises dans la RAM et vider
 # ses tampons de réception.
 load: cleanload $(SONG_FILE)
-	for f in $(SONG_FILE)._out/*; do sleep .01; if hash serieViaUSB 2>/dev/null; then serieViaUSB -e -s 4 -h -f $$f; serieViaUSB -l -h -nb 1; else ./serieViaUSB -e -s 4 -h -f $$f; ./serieViaUSB -l -h -nb 1; fi; done
-	./serieViaUSB -l -nb 1 -h; ./serieViaUSB -e -nb 1 -h -f $(SONG_FILE)._out/$(SONG_FILE)._0.bit
+	for f in $(SONG_FILE)._out/*; do \
+		sleep .01; \
+		if hash serieViaUSB 2>/dev/null; then \
+			serieViaUSB -e -s 4 -h -f $$f; \
+			serieViaUSB -l -h -nb 1; \
+		else \
+			./serieViaUSB -e -s 4 -h -f $$f; \
+			./serieViaUSB -l -h -nb 1; \
+		fi; \
+	done
+	./serieViaUSB -l -nb 1 -h; \
+	./serieViaUSB -e -nb 1 -h -f $(SONG_FILE)._out/$(SONG_FILE)._0.bit;
 
 $(SONG_FILE): song2bin fileSpliter
 	./song2bin $(SONG_FILE)

@@ -21,31 +21,13 @@ const Opcode
     FBC  = 0xC1,
     FIN  = 0xFF;
 
-void _unitaryParse(uint16_t instr);
+void Parser::parse(uint16_t addrBeg) {}
 
-void parse(uint16_t addrBeg) {}
-
-inline void dbt();
-inline void att(uint8_t data);
-inline void dal(uint8_t data);
-inline void det(uint8_t data);
-inline void sgo(uint8_t data);
-inline void sar();
-inline void mar();
-inline void mav(uint8_t data);
-inline void mre(uint8_t data);
-inline void trd();
-inline void trg();
-inline void dbc(uint8_t data);
-inline void fbc();
-inline void fin();
-
-void _unitaryParse(uint16_t instr) {
+void Parser::_unitaryParse(uint16_t instr) {
     Opcode op = _OP(instr);
     uint8_t data = _DATA(instr);
     
     switch (op) {
-     case DBT:  dbt();     break;
      case ATT:  att(data); break;
      case DAL:  dal(data); break;
      case DET:  det(data); break;
@@ -59,7 +41,6 @@ void _unitaryParse(uint16_t instr) {
      case TRG:  trg();     break;
      case DBC:  dbc(data); break;
      case FBC:  fbc();     break;
-     case FIN:  fin();     break;
      default: UART::transmitCStr("_unitaryParse : mauvaise valeur de l'opcode(");
               UART::transmit((op%16)|0x20);
               UART::transmit((op/16)|0x20);
@@ -67,58 +48,50 @@ void _unitaryParse(uint16_t instr) {
     }
 }
 
-inline void dbt() {
+void Parser::att(uint8_t data) {
     
 }
 
-inline void att(uint8_t data) {
+void Parser::dal(uint8_t data) {
     
 }
 
-inline void dal(uint8_t data) {
+void Parser::det(uint8_t data) {
     
 }
 
-inline void det(uint8_t data) {
+void Parser::sgo(uint8_t data) {
     
 }
 
-inline void sgo(uint8_t data) {
+void Parser::sar() {
     
 }
 
-inline void sar() {
+void Parser::mar() {
     
 }
 
-inline void mar() {
+void Parser::mav(uint8_t data) {
     
 }
 
-inline void mav(uint8_t data) {
+void Parser::mre(uint8_t data) {
     
 }
 
-inline void mre(uint8_t data) {
+void Parser::trd() {
     
 }
 
-inline void trd() {
+void Parser::trg() {
     
 }
 
-inline void trg() {
+void Parser::dbc(uint8_t data) {
     
 }
 
-inline void dbc(uint8_t data) {
-    
-}
-
-inline void fbc() {
-    
-}
-
-inline void fin() {
+void Parser::fbc() {
     
 }
