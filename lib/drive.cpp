@@ -1,5 +1,7 @@
 #include "drive.h"
 
+uint8_t Drive::CONST_R = 0xFF, Drive::CONST_L = 0xFF;
+
 Engine Drive::_engL(0xFF);
 Engine Drive::_engR(0xFF);
 

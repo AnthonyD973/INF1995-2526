@@ -20,6 +20,4 @@ private:
     static uint16_t FREQS_[37];
 };
 
-uint16_t Buzzer::FREQS_[37];
-
 #endif

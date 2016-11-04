@@ -4,6 +4,12 @@
 #define _DATA(op)   ((uint8_t)((op)&0xFF))
 #define _PORT       PORTB
 
+uint16_t Parser::ROT_TIME_CST = 0x7FFF;
+uint16_t Parser::_curAddr = 0x0002;
+
+uint16_t Parser::_loopBegAddr = 0;
+uint8_t  Parser::_iterator = 0, Parser::_iteratorMax = 0;
+
 typedef uint8_t Opcode;
 const Opcode
     DBT  = 0x01,
@@ -28,7 +34,35 @@ void Parser::init() {
     Drive::init(T0CA, T0CB, 127, 255);
 }
 
-void Parser::parse(uint16_t addrBeg) {}
+void Parser::parse() {
+    _curAddr = 0x0002;
+    uint8_t curOp, curData;
+    
+    do {
+        RAM::read(_curAddr, &curOp);
+        _curAddr += 2;
+    } while(curOp != DBT);
+    
+    _curAddr += 2;
+    
+    
+    
+    for EVER {
+        RAM::read(_curAddr++, &curOp);
+        RAM::read(_curAddr++, &curData);
+        
+        if(curOp == FIN) {
+            break;
+        }
+        
+        uint16_t instr = (curOp << 8) + curData;
+        _unitaryParse(instr);
+    }
+    
+    sar();
+    mar();
+    
+}
 
 void Parser::_unitaryParse(uint16_t instr) {
     Opcode op = _OP(instr);
@@ -105,9 +139,14 @@ void Parser::trg() {
 }
 
 void Parser::dbc(uint8_t data) {
-    
+    _loopBegAddr = _curAddr + 2;
+    _iteratorMax = data;
+    _iterator = 0;
 }
 
 void Parser::fbc() {
-    
+    if (_iterator <= _iteratorMax) {
+        _curAddr = _loopBegAddr;
+    }
+    ++_iterator;
 }

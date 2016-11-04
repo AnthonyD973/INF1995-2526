@@ -29,6 +29,4 @@ private:
     static uint8_t CONST_R, CONST_L;
 };
 
-uint8_t Drive::CONST_R = 0xFF, Drive::CONST_L = 0xFF;
-
 #endif // DRIVE_H

@@ -2,6 +2,7 @@
 #define PARSER_H
 
 #include "lib.h"
+#include "ram.h"
 #include "timer.h"
 #include "led.h"
 #include "engine.h"
@@ -11,7 +12,7 @@
 class Parser {
 public:
     static void init();
-    static void parse(uint16_t addrBeg);
+    static void parse();
 
 private:
     static void _unitaryParse(uint16_t instr);
@@ -29,7 +30,11 @@ private:
     static void dbc(uint8_t data);
     static void fbc();
     
-    static uint16_t ROT_TIME_CST = 0x7FFF;
+    static uint16_t ROT_TIME_CST;
+    static uint16_t _curAddr;
+    
+    static uint16_t _loopBegAddr;
+    static uint8_t  _iterator, _iteratorMax;
 };
 
 #endif // PARSER_H

@@ -1,0 +1,87 @@
+deb;
+
+# SÉQUENCE DÉBUT
+
+dal 1;
+sgo 67;
+att 10;
+
+det 1;
+sgo 66;
+att 10;
+
+dal 1;
+sgo 63;
+att 10;
+
+det 1;
+sgo 57;
+att 10;
+
+dal 1;
+sgo 56;
+att 10;
+
+det 1;
+sgo 64;
+att 10;
+
+dal 1;
+sgo 68;
+att 10;
+
+det 1;
+sgo 72;
+att 10;
+
+det 1;
+sar;
+
+
+# AVANCER, RECULER ET S'ARRÊTER
+
+mav 255;
+att 40;
+
+mre 255;
+att 40;
+
+mar;
+
+
+# AVANCER ET REVENIR À LA TRAJECTOIRE INITIALE
+
+mav 128;
+att 80;
+
+trg;
+
+mre 128;
+att 80;
+
+trd;
+
+mre 128;
+att 80;
+
+trg;
+
+mav 128;
+att 80;
+
+trd;
+
+
+# JOUER UN SON PLUSIEURS FOIS
+
+dbc 3;
+
+sgo 60;
+att 20;
+
+sgo 61;
+att 20;
+
+fbc;
+
+fin;
