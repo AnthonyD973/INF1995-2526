@@ -46,6 +46,9 @@ void Parser::parse() {
         _unitaryParse(instr);
     }
     
+    sar();
+    mar();
+    
 }
 
 void Parser::_unitaryParse(uint16_t instr) {
