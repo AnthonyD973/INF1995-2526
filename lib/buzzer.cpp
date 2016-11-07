@@ -37,7 +37,6 @@ const uint8_t Buzzer::_PRESCALER[52]={ // Optimisation de la mémoire
 
 void Buzzer::init() {
     DDRD |= _BV(PD4) | _BV(PD5);
-    PORTD |= _BV(PD5);
     timer1.setPrescale(P01_CLK8);
     timer1.setMode(WGM1_PWM_PFC2);
     timer1.setComNA(TOGGLE);
@@ -48,7 +47,6 @@ void Buzzer::init() {
 }
 
 void Buzzer::setTone(uint8_t midiTone) {
-    PORTD ^= (_BV(PD4) | _BV(PD5));
     if (midiTone >= 24 && midiTone < 128) {
         TCNT1 = 0x0000;
         //timer1.setPrescale(0x0F & (_PRESCALER[(midiTone - 24)>>2] >> (((~(midiTone - 24))&0x01) << 2)));
@@ -65,7 +63,6 @@ void Buzzer::setTone(uint8_t midiTone) {
 }
 
 void Buzzer::clearTone() {
-    PORTD ^= (_BV(PD4) | _BV(PD5));
     timer1.setMode(WGM1_PWM_PFC2);
     timer1.setPrescale(P01_NO_CLK);
     timer1.setOcrNA(0x00);//*/
