@@ -30,8 +30,12 @@ const Opcode
 
 void Parser::init() {
     DDRB = 0x3F;
+    RAM::init();
+    Drive::init(T0CA, T0CB, 127, 255);
     Buzzer::init();
-    Drive::init(T0CB, T0CA, 127, 255);
+    
+    Buzzer::setTone(24);
+    //Buzzer::clearTone();
 }
 
 void Parser::parse() {
@@ -82,10 +86,11 @@ void Parser::_unitaryParse(uint16_t instr) {
      case TRG:  trg();     break;
      case DBC:  dbc(data); break;
      case FBC:  fbc();     break;
-     default: UART::transmitCStr("_unitaryParse : mauvaise valeur de l'opcode(");
-              UART::transmit((op%16)|0x20);
-              UART::transmit((op/16)|0x20);
-              UART::transmitCStr(").\n");
+     default: /*UART::transmitCStr("_unitaryParse : mauvaise valeur de l'opcode(");
+              UART::transmit((op%10)|0x30);
+              UART::transmit(((op/10)%100)|0x30);
+              UART::transmit((op/100)|0x30);
+              UART::transmitCStr(").\n")*/;
     }
 }
 

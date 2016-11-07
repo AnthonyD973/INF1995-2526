@@ -14,6 +14,18 @@
 #define EVER (;;) // for EVER { ... }
 
 /**
+ * @brief Interrompt l'execution du programme pour un certain temps.
+ * @param[in] t100us Temps à attendre (* 100 µs).
+ */
+void delay100MicroSeconds(const uint16_t& t100us);
+
+/**
+ * @brief Interrompt l'execution du programme pour un certain temps.
+ * @param[in] t100us Temps à attendre (* 100 µs).
+ */
+void delay10MiliSeconds(const uint16_t& t10ms);
+
+/**
  * @brief Détection de fronts montants d'un port avec antirebond.
  *        Change previousPin si le front montant est détecté.
  * @param[in]     pin État du port.

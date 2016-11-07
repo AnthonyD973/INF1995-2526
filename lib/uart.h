@@ -1,14 +1,9 @@
 #ifndef UART_H_
 #define UART_H_ // INCLUDE GUARD
+#ifdef  DEBUG
 
-#ifndef F_CPU
-#define F_CPU 8000000UL
-#endif
-
-#include <avr/io.h>
-#include <util/delay.h>
-#include <avr/interrupt.h>
 #include <string.h>
+#include "lib.h"
 
 /**
  * @brief   Puisque c'est une classe qui agit comme interface de communication
@@ -24,7 +19,7 @@ public:
     /**
      * @brief   Taille maximale des buffer de réception et de transmission.
      */
-    static const size_t BUFFER_SIZE = 256;
+    static const size_t BUFFER_SIZE = 128;
     
     /**
      * @brief   Cette fonction doit être appelée avant de pouvoir transmettre
@@ -89,7 +84,7 @@ public:
      */
     static void emptyRecBuffer(void);
     
-    static void    _rec_push_back(uint8_t data);
+    static void    _rec_push_back(volatile uint8_t data);
     static bool    _rec_full(void) { return _recBufferDataCount >= BUFFER_SIZE; }
     static size_t  _rec_size(void) { return _recBufferDataCount; }
     static volatile uint8_t _tra_pop(void);// "pop" le premier élément du tampon
@@ -98,12 +93,16 @@ public:
 
 private:
     static volatile uint8_t _recBuffer[BUFFER_SIZE];
+    static volatile uint8_t  _recBufferDataBeg;
     static volatile size_t  _recBufferDataCount;
     static volatile uint8_t _traBuffer[BUFFER_SIZE];
+    static volatile uint8_t  _traBufferDataBeg;
     static volatile size_t  _traBufferDataCount;
     
+    static bool _initialized;
+    
     static volatile uint8_t _rec_pop(void);// "pop" le premier élément du tampon
-    static void    _tra_push_back(uint8_t data);
+    static void    _tra_push_back(volatile uint8_t data);
 };
 
 /*
@@ -112,4 +111,27 @@ void transmissionUART ( uint8_t donnee );
 uint8_t receptionUART ( );
 void viderTamponDeReceptionUART();//*/
 
+#else
+#include <string.h>
+// Définition d'une classe UART qui ne fait rien pour optimiser la mémoire.
+class UART {
+public:
+    static const uint8_t BUFFER_SIZE = 0;
+    static void init(uint16_t baud) { }
+    static void transmit(uint8_t data) { }
+    static void transmit(const uint8_t* data, uint8_t n) { }
+    static void transmitCStr(const char* str) { }
+    static void transmitBin(uint8_t data) { }
+    static uint8_t receive(void) { return 0; }
+    static void receive(uint8_t* data, uint8_t n) { }
+    static void emptyRecBuffer(void) { }
+    
+    static void    _rec_push_back(volatile uint8_t data) { }
+    static bool    _rec_full(void) { return true; }
+    static uint8_t _rec_size(void) { return 0; }
+    static volatile uint8_t _tra_pop(void) { return 0; }
+    static bool    _tra_empty(void) { return true; }
+    static uint8_t _tra_size(void) { return 0; }
+};
+#endif
 #endif // END OF INCLUDE GUARD

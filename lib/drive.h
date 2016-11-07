@@ -4,11 +4,17 @@
 #include "lib.h"
 #include "engine.h"
 
+/* 
+ * RegEx   : (\s*[A-Z0-9_]*\s*)=\s*(0x[0-9a-fA-F]+)[,;]
+ * Pattern : #define\1\2
+ * 
+ */
+
 typedef uint8_t DriveDir;
-const DriveDir
-    DIR_OFF = 0x00,
-    DIR_RIGHT = 0x01,
-    DIR_LEFT = 0x02;
+//const DriveDir
+#define    DIR_OFF 0x00
+#define    DIR_RIGHT 0x01
+#define    DIR_LEFT 0x02
 
 class Drive {
 public:

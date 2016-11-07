@@ -5,23 +5,23 @@
 
 
 typedef uint8_t PinPosition;
-const PinPosition
-    A0_A1 = 0,
-    A2_A3 = 2,
-    A4_A5 = 4,
-    A6_A7 = 6,
-    B0_B1 = 8,
-    B2_B3 = 10,
-    B4_B5 = 12,
-    B6_B7 = 14,
-    C0_C1 = 16,
-    C2_C3 = 18,
-    C4_C5 = 20,
-    C6_C7 = 22,
-    D0_D1 = 24,
-    D2_D3 = 26,
-    D4_D5 = 28,
-    D6_D7 = 30;
+//const PinPosition
+#define    A0_A1 0
+#define    A2_A3 2
+#define    A4_A5 4
+#define    A6_A7 6
+#define    B0_B1 8
+#define    B2_B3 10
+#define    B4_B5 12
+#define    B6_B7 14
+#define    C0_C1 16
+#define    C2_C3 18
+#define    C4_C5 20
+#define    C6_C7 22
+#define    D0_D1 24
+#define    D2_D3 26
+#define    D4_D5 28
+#define    D6_D7 30
 
 volatile uint8_t* getPortPtr(PinPosition pinPos);
 volatile uint8_t getPinVal(PinPosition pinPos);

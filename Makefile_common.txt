@@ -73,6 +73,10 @@ REMOVE=rm -rf
 # HEXFORMAT -- format pour les fichiers produient .hex
 HEXFORMAT=ihex
 
+# Pour savoir si c'est un make pour débugger ou si c'est
+# un make pour la 'production'. (optimisation potentielle de la mémoire)
+DEBUG?=-UDEBUG
+export DEBUG
 
 	
 ####### Variables pour la creation d'une librairie #######
@@ -90,7 +94,7 @@ CFLAGS=-I. -MMD $(patsubst %,-I%,$(INC)) \
 	-g -mmcu=$(MCU) -O$(OPTLEVEL) \
 	-fpack-struct -fshort-enums \
 	-funsigned-bitfields -funsigned-char \
-	-Wall
+	-Wall $(DEBUG)
 
 # Flags pour le compilateur en C++
 CXXFLAGS=-fno-exceptions
@@ -187,7 +191,8 @@ install: $(HEXROMTRG)
 # Make clean permet d'effacer tout les fichiers generes
 # lors de la compilation
 clean:
-	$(REMOVE) $(TRG) $(TRG).map $(OBJDEPS) $(HEXTRG) $(GENDIR)/*.d $(GENDIR)/* $(GENDIR) $(LIBTRG)
+	$(REMOVE) $(TRG) $(TRG).map $(OBJDEPS) $(HEXTRG) $(GENDIR)/*.d \
+	$(GENDIR)/* $(GENDIR) $(LIBTRG) *.bin
 	
 
 # Execute, dans l'ordre, un 'make all' pour compiler ce qu'il

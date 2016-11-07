@@ -13,11 +13,11 @@ typedef uint8_t LedColor;
 /**
  * @brief Constantes pour la DEL.
  */
-const LedColor
-    LED_OFF   = 0x00,
-    LED_GREEN = 0x01,
-    LED_RED   = 0x02,
-    LED_AMBER = 0xFF;
+//const LedColor
+#define    LED_OFF   0x00
+#define    LED_GREEN 0x01
+#define    LED_RED   0x02
+#define    LED_AMBER 0xFF
 
 
 class LED {

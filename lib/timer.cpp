@@ -71,6 +71,31 @@ void Timer0::setPrescale(Prescale01 prescale) {
 }
 
 /**
+ * @brief   Met le timer au mode Passé en paramètre.
+ * @param[in]   mode0   Mode auquel on veut mettre le timer.
+ *                      Le mode doit être une des constantes préfixé par WGM0_.
+ */
+void Timer0::setMode(WGMode mode0) {
+    cli();
+    
+    // On sépare le bit 2 des bit 1 et 0
+    uint8_t wgm02  = ((mode0 & 0x04) >> 2) << WGM02;
+    uint8_t wgm010 =  (mode0 & 0x03)       << WGM00;
+    
+    // Ne pas forcer la comparaison.
+    uint8_t foc0ab = 0 << FOC0A | 0 << FOC0B;
+    
+    // Écrire aux position apropriées.
+    uint8_t tccr0b_mask = _BV(WGM02) | _BV(FOC0A) | _BV(FOC0B);
+    
+    // On met les valeurs voulues dans les registres
+    _MASK(TCCR0A, wgm010, _BV(WGM01) | _BV(WGM00));
+    _MASK(TCCR0B, wgm02 | foc0ab, tccr0b_mask);
+    
+    sei();
+}
+
+/**
  * @brief   Met le timer en mode Clear Timer Counter (CTC).
  * @param[in] ocr0a Valeur à mettre dans le registre corresondant.
  * @param[in] ocr0b Valeur à mettre dans le registre corresondant.
@@ -245,6 +270,30 @@ void Timer1::setPrescale(Prescale01 prescale) {
 }
 
 /**
+ * @brief   Met le timer au mode passé en paramètre.
+ * @param[in]   mode1   Mode auquel on veut mettre le timer.
+ *                      Le mode doit être une des constantes préfixé par WGM1_.
+ */
+void Timer1::setMode(WGMode mode1) {
+    cli();
+    
+    // On sépare les bits 2 et 3 des bit 1 et 0
+    uint8_t wgm132 = ((mode1 & 0x0C) >> 2) << WGM12;
+    uint8_t wgm110 =  (mode1 & 0x03)       << WGM10;
+    
+    // Ne pas forcer la comparaison.
+    uint8_t foc1ab = 0 << FOC1A | 0 << FOC1B;
+    
+    // On met les valeurs voulues dans les registres
+    _MASK(TCCR1A, wgm110, _BV(WGM11) | _BV(WGM10));
+    _MASK(TCCR1B, wgm132, _BV(WGM13) | _BV(WGM12));
+    
+    TCCR1C = foc1ab;
+    
+    sei();
+}
+
+/**
  * @brief   Met le timer en mode Clear Timer Counter (CTC).
  *      ATTENTION : les broches PD4 et PD5 seront gérées par le compteur.
  *      Pour éviter cela, mettre com1a et/ou com1b en mode DISCONNECTED.
@@ -390,4 +439,200 @@ void Timer1::denyOCIA() {
  */
 void Timer1::denyOCIB() {
     _MASK(TIMSK1, 0 << OCIE1B, _BV(OCIE1B));
+}
+
+// ===========================
+// =         TIMER 2         =
+// ===========================
+
+// PUBLIC:
+
+/**
+ * @brief   Construit un Timer2 avec une certaine division d'horloge.
+ * @param prescale  Valeur de la divison de l'horloge.
+ */
+Timer2::Timer2(Prescale2 prescale)
+{
+    setPrescale(prescale);
+}
+
+
+/**
+ * @brief   Change la valeur du diviseur d'horloge.
+ * @param prescale  Valeur de la divison de l'horloge.
+ */
+void Timer2::setPrescale(Prescale2 prescale) {
+    cli();
+    
+    _MASK(TCCR2B, (prescale & 0x07) << CS20, _BV(CS22) | _BV(CS21) | _BV(CS20));
+    
+    sei();
+}
+
+/**
+ * @brief   Met le timer au mode Passé en paramètre.
+ * @param[in]   mode2   Mode auquel on veut mettre le timer.
+ *                      Le mode doit être une des constantes préfixé par WGM2_.
+ */
+void Timer2::setMode(WGMode mode2) {
+    cli();
+    
+    // On sépare le bit 2 des bit 1 et 0
+    uint8_t wgm22  = ((mode2 & 0x04) >> 2) << WGM22;
+    uint8_t wgm210 =  (mode2 & 0x03)       << WGM20;
+    
+    // Ne pas forcer la comparaison.
+    uint8_t foc2ab = 0 << FOC2A | 0 << FOC2B;
+    
+    // Écrire aux position apropriées.
+    uint8_t tccr2b_mask = _BV(WGM22) | _BV(FOC2A) | _BV(FOC2B);
+    
+    // On met les valeurs voulues dans les registres
+    _MASK(TCCR2A, wgm210, _BV(WGM21) | _BV(WGM20));
+    _MASK(TCCR2B, wgm22 | foc2ab, tccr2b_mask);
+    
+    sei();
+}
+
+/**
+ * @brief   Met le timer en mode Clear Timer Counter (CTC).
+ * @param[in] ocr2a Valeur à mettre dans le registre corresondant.
+ * @param[in] ocr2b Valeur à mettre dans le registre corresondant.
+ */
+void Timer2::modeCTC(uint16_t ocr2a, uint16_t ocr2b) {
+    cli();
+   
+    // Se mettre en mode CTC (WGM22:0 = 2).
+    uint8_t wgm210 = 0x02 << WGM20;
+    
+    _MASK(TCCR2A, wgm210, _BV(WGM21) | _BV(WGM20));
+    
+    
+    // Se mettre en mode CTC (WGM22:0 = 2).
+     uint8_t wgm22 = 0 << WGM22;
+    
+    // Ne pas forcer la comparaison.
+    uint8_t foc2ab = 0 << FOC2A | 0 << FOC2B;
+    
+    // Écrire aux position apropriées.
+    uint8_t tccr2b_mask = _BV(WGM22) | _BV(FOC2A) | _BV(FOC2B);
+    
+    _MASK(TCCR2B, wgm22 | foc2ab, tccr2b_mask);
+    
+    // Changer les valeurs de ocr2a et ocr2b.
+    setOcrNA(ocr2a);
+    setOcrNB(ocr2b);
+    
+    sei();
+}
+
+/**
+ * @brief   Met le timer en mode Fast-Pulse Width Modulation (Fast-PWM).
+ * @param[in] ocr2a Valeur à mettre dans le registre corresondant.
+ * @param[in] ocr2b Valeur à mettre dans le registre corresondant.
+ */
+void Timer2::modeFastPWM(uint16_t ocr2a, uint16_t ocr2b) {
+    cli();
+   
+    // Se mettre en mode Fast-PWM (WGM21:0 = 3).
+    uint8_t wgm210 = 0x03 << WGM20;
+    
+    _MASK(TCCR2A, wgm210, _BV(WGM21) | _BV(WGM20));
+    
+    
+    // TOP = 0xFF
+     uint8_t wgm22 = 0 << WGM22;
+    
+    // Assurer que FOC2A et FOC2B soient à 0 (voir doc p. 104).
+    uint8_t foc2ab = 0 << FOC2A | 0 << FOC2B;
+    
+    // Écrire aux position apropriées.
+    uint8_t tccr2b_mask = _BV(WGM22) | _BV(FOC2A) | _BV(FOC2B);
+    
+    _MASK(TCCR2B, wgm22 | foc2ab, tccr2b_mask);
+    
+    // Changer les valeurs de ocr2a et ocr2b.
+    setOcrNA(ocr2a);
+    setOcrNB(ocr2b);
+    
+    sei();
+}
+
+
+/**
+ * @brief   Change la réaction du signal de OC2A lors d'une une égalité entre OCR2A et TCNT2.
+ * @param[in] com2a Valeur du COM à utiliser pour le canal A.
+ */
+void Timer2::setComNA(ComNX com2a) {
+    _MASK(TCCR2A, com2a << COM2A0, 0x3 << COM2A0);
+}
+
+/**
+ * @brief   Change la réaction du signal de OC2B lors d'une une égalité entre OCR2B et TCNT2.
+ * @param[in] com2b Valeur du COM à utiliser pour le canal B.
+ */
+void Timer2::setComNB(ComNX com2b) {
+    _MASK(TCCR2A, com2b << COM2B0, 0x3 << COM2B0);
+}
+
+
+/**
+ * @brief   Change la valeur de OCR2A.
+ * @param[in] ocr2a    Nouvelle valeur de OCR2A.
+ */
+void Timer2::setOcrNA(uint16_t ocr2a) {
+    OCR2A = (uint8_t)ocr2a;
+}
+
+/**
+ * @brief   Change la valeur de OCR2B.
+ * @param[in] ocr2b    Nouvelle valeur de OCR2B.
+ */
+void Timer2::setOcrNB(uint16_t ocr2b) {
+    OCR2B = (uint8_t)ocr2b;
+}
+
+
+
+/**
+ * @brief Permet l'interruption TOV2 (voir doc. p. 103).
+ */
+void Timer2::allowOVFI() {
+    _MASK(TIMSK2, _BV(TOIE2), _BV(TOIE2));
+}
+
+/**
+ * @brief Permet l'interruption lors de l'égalité du OCR2A et TCNT2.
+ */
+void Timer2::allowOCIA() {
+    _MASK(TIMSK2, _BV(OCIE2A), _BV(OCIE2A));
+}
+
+/**
+ * @brief Permet l'interruption lors de l'égalité du OCR2B et TCNT2.
+ */
+void Timer2::allowOCIB() {
+    _MASK(TIMSK2, _BV(OCIE2B), _BV(OCIE2B));
+}
+
+
+/**
+ * @brief Empêche l'interruption TOV2 (voir doc. p. 103).
+ */
+void Timer2::denyOVFI() {
+    _MASK(TIMSK2, 0 << TOIE2, _BV(TOIE2));
+}
+
+/**
+ * @brief Empêche l'interruption lors de l'égalité du OCR2A et TCNT2.
+ */
+void Timer2::denyOCIA() {
+    _MASK(TIMSK2, 0 << OCIE2A, _BV(OCIE2A));
+}
+
+/**
+ * @brief Empêche l'interruption lors de l'égalité du OCR2B et TCNT2.
+ */
+void Timer2::denyOCIB() {
+    _MASK(TIMSK2, 0 << OCIE2B, _BV(OCIE2B));
 }

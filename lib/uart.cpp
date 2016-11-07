@@ -1,19 +1,29 @@
+#ifdef DEBUG
 #include "uart.h"
 
+volatile uint8_t  UART::_recBufferDataBeg = 0;
+volatile uint8_t  UART::_traBufferDataBeg = 0;
 volatile size_t  UART::_recBufferDataCount = 0;
 volatile size_t  UART::_traBufferDataCount = 0;
 volatile uint8_t UART::_recBuffer[UART::BUFFER_SIZE];
 volatile uint8_t UART::_traBuffer[UART::BUFFER_SIZE];
 
-ISR (USART0_RX_vect) {
-    uint8_t buff;
+bool UART::_initialized = false;
+
+//ISR (USART0_RX_vect) {
+    /*
+    volatile uint8_t buff;
     while (UCSR0A & (1<<RXC0)) {
         buff = UDR0;
         UART::_rec_push_back(buff);
-    }
-}
+    }//*/
+//}
 
-ISR (USART0_UDRE_vect) {
+//ISR (USART0_UDRE_vect) {
+    /*
+    while ( !( UCSR0A & (1<<UDRE0)) );
+    UDR0 = UART::_tra_size();
+    while ( !( UCSR0A & (1<<UDRE0)) );//*/ /*
     // S'il n'y a plus rien à transmettre...
     if (UART::_tra_empty()) {
         UCSR0B &= ~_BV(UDRIE0);// On arrête les interruptions de ce type-ci
@@ -21,43 +31,46 @@ ISR (USART0_UDRE_vect) {
         return;
     }
     else
-        UDR0 = UART::_tra_pop();
-}
+        UDR0 = UART::_tra_pop();//*/
+//}
 
 void UART::init(uint16_t baud) {//*
     UBRR0H = (F_CPU / (16*baud) - 1)>>8 & 0x0f; // Voir manuel p.170
-    UBRR0L = (F_CPU / (16*baud) - 1);//*/
+    UBRR0L = (F_CPU / (16*baud) - 1);
     // permettre la reception et la transmission par le UART0
     UCSR0A = 0;
     UCSR0B = _BV(RXEN0) | _BV(TXEN0)   // TXEN0: Transfer ENable on the channel 0
-                        | _BV(RXCIE0); // RXCIE0: Receive Complet Interrupt Enable on the channel 0
+                        ;//| _BV(RXCIE0); // RXCIE0: Receive Complet Interrupt Enable on the channel 0
                                        // RXEN0: Receive ENable on the channel 0
     // Format des trames: 8 bits, 1 stop bits, none parity
     UCSR0C = _BV(UCSZ01) | _BV(UCSZ00);
+    DDRD |= 0x02;
+    _recBufferDataBeg = 0;
+    _recBufferDataCount = 0;
+    _initialized = true;
 }
 
 /**
  * @brief   Utilisée dans les routine ISR de réception.
  */
-inline void UART::_rec_push_back(uint8_t data) {
+inline void UART::_rec_push_back(volatile uint8_t data) {/*
     // Si on recoit une donnée mais que l'on a plus de place...
-    if (_rec_full()) 
+    if (_rec_full())
         return; // On la jette.
-    _recBuffer[_recBufferDataCount++] = data; // Sinon, on l'enregistre à la fin du buffer.
+    _recBuffer[(_recBufferDataBeg + _recBufferDataCount++) % BUFFER_SIZE] = data; // Sinon, on l'enregistre à la fin du buffer.//*/
 }
 
 /**
  * @brief   Utilisée dans les fonctions de récupération des données reçus.
  */
 inline volatile uint8_t UART::_rec_pop(void) {
+    volatile uint8_t ret = 0;/*
     // On attend qu'une donnée soit reçue...
     while(_recBufferDataCount == 0);
-    volatile uint8_t ret = _recBuffer[0];
+    ret = _recBuffer[_recBufferDataBeg];
     // Implémentation de type queue (FIFO)
-    _recBufferDataCount--;
-    for (volatile size_t i = 0; i < _recBufferDataCount; ++i) {
-        _recBuffer[i] = _recBuffer[i + 1];
-    }
+    --_recBufferDataCount;
+    ++_recBufferDataBeg %= BUFFER_SIZE;//*/
     
     return ret;
 }
@@ -65,34 +78,41 @@ inline volatile uint8_t UART::_rec_pop(void) {
 /**
  * @brief   Utilisée dans les fonctions de transmission de données.
  */
-inline void UART::_tra_push_back(uint8_t data) {
+inline void UART::_tra_push_back(volatile uint8_t data) {/*
     // On attend d'avoir de l'espace pour y placer les données.
     while (_traBufferDataCount >= BUFFER_SIZE);
-    _traBuffer[_traBufferDataCount++] = data;
+    _traBuffer[(_traBufferDataBeg + _traBufferDataCount++) % BUFFER_SIZE] = data;//*/
 }
 
 /**
  * @brief   Utilisée dans les routine ISR de transmission.
  */
 inline volatile uint8_t UART::_tra_pop(void) {
+    volatile uint8_t ret = 0;/*
+    while ( !( UCSR0A & (1<<UDRE0)) );
+    UDR0 = _traBufferDataCount;
+    while ( !( UCSR0A & (1<<UDRE0)) );//*/ /*
     // S'il n'y a plus rien à transmettre...
-    if (_tra_empty())
-        return -1; // On lui transmet une valeur par défault! [Erreur]
-    volatile uint8_t ret = _traBuffer[0];
-    // Implémentation de type queue (FIFO)
-    _traBufferDataCount--;
-    for (volatile size_t i = 0; i < _traBufferDataCount; ++i) {
-        _traBuffer[i] = _traBuffer[i + 1];
+    if (_tra_empty()) {
+        UCSR0B &= ~_BV(UDRIE0); // On arrête la routine d'envoie et...
+        return uint8_t(-1); // On transmet une valeur par défault! [Erreur]
     }
+    ret = _traBuffer[_traBufferDataBeg];
+    // Implémentation de type queue (FIFO)
+    --_traBufferDataCount;
+    ++_traBufferDataBeg %= BUFFER_SIZE;//*/
     
     return ret;
 }
 
-void UART::transmit(uint8_t data) {
+void UART::transmit(uint8_t data) {/*
     _tra_push_back(data);
-    UCSR0B |= _BV(UDRIE0); // On démarre les interruptions qui s'executes
+    UCSR0B |= _BV(UDRIE0);/*/ // On démarre les interruptions qui s'executes
                            // lorsque le tampon de transmission (matériel) est
-                           // près à transmettre de nouvelles données.
+                           // près à transmettre de nouvelles données.*/
+    if (!_initialized) return;
+    while ( !( UCSR0A & (1<<UDRE0)) );
+    UDR0 = data;//*/
 }
 
 /**
@@ -100,12 +120,16 @@ void UART::transmit(uint8_t data) {
  * @param[in]  data    
  * @param[in]   n       
  */
-void UART::transmit(const uint8_t* data, size_t n) {
+void UART::transmit(const uint8_t* data, size_t n) {/*
     for (size_t i = 0; i < n; ++i)
         _tra_push_back(data[i]);
-    UCSR0B |= _BV(UDRIE0); // On démarre les interruptions qui s'executes
+    UCSR0B |= _BV(UDRIE0);/*/ // On démarre les interruptions qui s'exécutes
                            // lorsque le tampon de transmission (matériel) est
                            // près à transmettre de nouvelles données.
+    if (!_initialized) return;
+    while ( !( UCSR0A & (1<<UDRE0)) );
+    for (size_t i = 0; i < n; ++i)
+        UDR0 = data[i];//*/
 }
 
 /**
@@ -128,8 +152,11 @@ void UART::transmitBin(uint8_t data) {
 }
 
 
-uint8_t UART::receive(void) {
-    return _rec_pop();
+uint8_t UART::receive(void) {/*
+    return _rec_pop();/*/
+    if (!_initialized) return 0;
+    while ( !(UCSR0A & (1<<RXC0)) );
+    return UDR0;//*/
 }
 
 /**
@@ -137,9 +164,14 @@ uint8_t UART::receive(void) {
  * @param[out]  data    
  * @param[in]   n       
  */
-void UART::receive(uint8_t* data, size_t n) {
+void UART::receive(uint8_t* data, size_t n) {/*
     for (size_t i = 0; i < n; ++i)
-        data[i] = _rec_pop();
+        data[i] = _rec_pop();/*/
+    if (!_initialized) return;
+    for (size_t i = 0; i < n; ++i) {
+        while ( !(UCSR0A & (1<<RXC0)) );
+        data[i] = UDR0;
+    }//*/
 }
 
 void UART::emptyRecBuffer(void) {
@@ -149,3 +181,4 @@ void UART::emptyRecBuffer(void) {
     volatile unsigned char dummy;
     while ( UCSR0A & (1<<RXC0) ) dummy = UDR0;
 }
+#endif
