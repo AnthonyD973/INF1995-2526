@@ -27,11 +27,14 @@
 #####      Details specifique a la cible       #####
 #####  Vous devez les adapter a votre projet   #####
 
+# Si le répertoire des fichiers sources n'est pas défini, mettre le 
+# dossier courant comme dossier des fichiers sources.
+SRCDIR?=.
 
 # Fichiers sources
 # (Liste tous les fichiers a compiler, ex: 'tp1.c tp2.cpp'):
 # Utilisation du suffixe .c pour les fichiers C et .cpp pour les fichiers C++
-PRJSRC=$(filter %.cpp, $(shell echo *)) $(filter %.c, $(shell echo *))
+PRJSRC=$(filter %.cpp, $(shell echo $(SRCDIR)/*)) $(filter %.c, $(shell echo $(SRCDIR)/*))
 
 # Nom du microcontroleur cible
 # (exemple: 'at90s8515')
@@ -45,6 +48,8 @@ OPTLEVEL=s
 # Liste complete des IDs disponible avec avrdude
 AVRDUDE_PROGRAMMERID=usbasp
 
+# Le chemin vers le dossier racine de l'entrepot git (Peut s'avérer utile)
+REPO_ROOT_PATH=$(shell git rev-parse --show-toplevel)
 
 
 ####################################################
@@ -113,7 +118,7 @@ ARFLAGS=-crs
 TRG=$(GENDIR)/$(PROJECTNAME).out
 HEXROMTRG=$(GENDIR)/$(PROJECTNAME).hex
 HEXTRG=$(HEXROMTRG) $(GENDIR)/$(PROJECTNAME).ee.hex
-LIBTRG=lib$(PROJECTNAME).a
+LIBTRG=$(SRCDIR)/lib$(PROJECTNAME).a
 
 
 

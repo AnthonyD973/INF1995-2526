@@ -42,7 +42,7 @@ GENDIR=gen
 # Inclusions additionnels separes par des espaces
 # (L'emplacement des fichiers .h utilises dans les fichers sources)
 # (ex: /path/to/mydir /path/to/dir2) (utilisation avec le prefix -I)
-INC=../../../../lib
+INC=$(REPO_ROOT_PATH)/lib
 
 ### Variables spécifiques à la production d'un executable
 
@@ -53,8 +53,8 @@ LIBS=robot
 # Chemins vers les dossiers contenants les librairies
 # (ex: /path/to/libdir) (utilisation avec le prefix -L dans
 # la generation de l'executable final)
-LIBS_PATHS=../../../../lib
+LIBS_PATHS=$(REPO_ROOT_PATH)/lib
 
 
 
--include ../../../../Makefile_common.txt
+-include $(shell git rev-parse --show-toplevel)/Makefile_common.txt

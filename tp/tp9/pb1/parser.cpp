@@ -122,20 +122,14 @@ void Parser::mar() {
 }
 
 void Parser::mav(uint8_t data) {
-    Drive::setMovement(ENG_OFF, 0);
-    _delay_ms(500.0);
     Drive::setMovement(ENG_FORWARD, data);
 }
 
 void Parser::mre(uint8_t data) {
-    Drive::setMovement(ENG_OFF, 0);
-    _delay_ms(500.0);
     Drive::setMovement(ENG_BACKWARD, data);
 }
 
 void Parser::trd() {
-    Drive::setMovement(ENG_OFF, 0);
-    _delay_ms(500.0);
     Drive::setRotation(DIR_RIGHT, 255);
     for (uint16_t i = 0; i < ROT_TIME_CST_RIGHT; ++i) {
         _delay_ms(25);
@@ -144,8 +138,6 @@ void Parser::trd() {
 }
 
 void Parser::trg() {
-    Drive::setMovement(ENG_OFF, 0);
-    _delay_ms(500.0);
     Drive::setRotation(DIR_LEFT, 255);
     for (uint16_t i = 0; i < ROT_TIME_CST_LEFT; ++i) {
         _delay_ms(25);

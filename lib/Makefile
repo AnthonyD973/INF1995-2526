@@ -57,4 +57,4 @@ LIBS_PATHS=
 
 
 
--include ../Makefile_common.txt
+-include $(shell git rev-parse --show-toplevel)/Makefile_common.txt

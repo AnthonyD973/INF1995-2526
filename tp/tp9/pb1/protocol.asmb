@@ -43,32 +43,48 @@ sar;
 mav 255;
 att 40;
 
+mar;
+att 20;
 mre 255;
 att 40;
 
 mar;
-
+att 20;
 
 # AVANCER ET REVENIR À LA TRAJECTOIRE INITIALE
 
 mav 255;
 att 80;
 
+mar;    # Ces arrêts sont fait pour que le robot ait le temps
+att 20; # de se stabiliser avant le prochain mouvement.
 trg;
 
+mar;
+att 20;
 mre 255;
 att 80;
 
+mar;
+att 20;
 trd;
 
+mar;
+att 20;
 mre 255;
 att 80;
 
+mar;
+att 20;
 trg;
 
+mar;
+att 20;
 mav 255;
 att 80;
 
+mar;
+att 20;
 trd;
 
 

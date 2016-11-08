@@ -42,7 +42,7 @@ GENDIR=gen
 # Inclusions additionnels separes par des espaces
 # (L'emplacement des fichiers .h utilises dans les fichers sources)
 # (ex: /path/to/mydir /path/to/dir2) (utilisation avec le prefix -I)
-INC=../../../lib
+INC=$(REPO_ROOT_PATH)/lib
 
 ### Variables spécifiques à la production d'un executable
 
@@ -53,29 +53,26 @@ LIBS=robot
 # Chemins vers les dossiers contenants les librairies
 # (ex: /path/to/libdir) (utilisation avec le prefix -L dans
 # la generation de l'executable final)
-LIBS_PATHS=../../../lib
+LIBS_PATHS=$(REPO_ROOT_PATH)/lib
 
 .PHONY: danse
 
 danse: protocol.bin
-
 	@echo "+--------------------------------------+";
 	@echo "| CHARGEMENT DU MICROPROGRAMME SUR RAM |";
 	@echo "+--------------------------------------+";
-	${MAKE} -C ${LIBS_PATHS} lib DEBUG=-DDEBUG;
+	${MAKE} -C ${LIBS_PATHS} clean lib DEBUG=-DDEBUG;
 	${MAKE} -C ${SRCDIR}/transfert all install DEBUG=-DDEBUG;
-	../../../serieViaUSB_ubuntu -e -h -s 8 -f $<;
-	${MAKE} -C ${LIBS_PATHS} clean lib; #${MAKE} -C ${SRCDIR}/transfert clean;
-	
+	$(REPO_ROOT_PATH)/serieViaUSB_ubuntu -e -h -s 8 -f $<;
+	${MAKE} -C ${LIBS_PATHS} clean lib; ${MAKE} -C ${SRCDIR}/transfert clean;
 	@echo "+-----------------------------------+";
 	@echo "| CHARGEMENT DU PROGRAMME PRINCIPAL |";
 	@echo "+-----------------------------------+";
 	${MAKE} all install;
-	${MAKE} -C ${LIBS_PATHS} clean;
 
 %.bin: %.asmb
-	../../../progmem_ubuntu -o $@ $<
+	$(REPO_ROOT_PATH)/progmem_ubuntu -o $@ $<
 
 
 
--include ../../../Makefile_common.txt
+-include $(shell git rev-parse --show-toplevel)/Makefile_common.txt
