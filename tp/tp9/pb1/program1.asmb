@@ -1,8 +1,0 @@
-dbt; # Début du programme
-### Séquence de démarrage ###
-att 0; # ne fait rien pour le moment
-###    Début du corps     ###
-sgo 45; # de 45 à 81
-sgo 200;
-sar;
-fin; # fin du programme

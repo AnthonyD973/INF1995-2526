@@ -19,7 +19,7 @@ typedef uint8_t DriveDir;
 class Drive {
 public:
     static void init(TimerChannelUsed tcuLeft, TimerChannelUsed tcuRight,
-                     uint8_t right, uint8_t left);
+                     uint8_t left, uint8_t right);
     
     /**
      * @brief   Fait avancer/reculer le robot.

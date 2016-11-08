@@ -12,10 +12,6 @@ Timer1 timer1(P01_NO_CLK);
 int main() {
     DDRB = DDRD = 0xFF;
     Parser::init();
-    for(uint8_t i = 45; i < 82; ++i) {
-        Buzzer::setTone(i);
-        _delay_ms(25);
-    }
     Parser::parse();
     
     for EVER {

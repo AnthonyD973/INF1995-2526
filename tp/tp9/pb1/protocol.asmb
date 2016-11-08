@@ -51,22 +51,22 @@ mar;
 
 # AVANCER ET REVENIR À LA TRAJECTOIRE INITIALE
 
-mav 128;
+mav 255;
 att 80;
 
 trg;
 
-mre 128;
+mre 255;
 att 80;
 
 trd;
 
-mre 128;
+mre 255;
 att 80;
 
 trg;
 
-mav 128;
+mav 255;
 att 80;
 
 trd;
@@ -74,17 +74,13 @@ trd;
 
 # JOUER UN SON PLUSIEURS FOIS
 
-dbc 3;
+dbc 4;
 
 sgo 60;
 att 20;
 
 sgo 61;
 att 20;
-
-dal 1;
-att 10;
-det 1;
 
 fbc;
 

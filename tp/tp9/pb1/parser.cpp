@@ -4,7 +4,8 @@
 #define _DATA(op)   ((uint8_t)((op)&0xFF))
 #define _PORT       PORTB
 
-uint16_t Parser::ROT_TIME_CST = 0x007F;
+const uint16_t ROT_TIME_CST_LEFT  = 26;
+const uint16_t ROT_TIME_CST_RIGHT = 26;
 uint16_t Parser::_curAddr = 0x0002;
 
 uint16_t Parser::_loopBegAddr = 0;
@@ -31,10 +32,10 @@ const Opcode
 void Parser::init() {
     DDRB = 0x3F;
     RAM::init();
-    Drive::init(T0CA, T0CB, 127, 255);
+    Drive::init(T0CA, T0CB, 255, 255);
     Buzzer::init();
     
-    Buzzer::setTone(24);
+    //Buzzer::setTone(24);
     //Buzzer::clearTone();
 }
 
@@ -46,10 +47,6 @@ void Parser::parse() {
         RAM::read(_curAddr, &curOp);
         _curAddr += 2;
     } while(curOp != DBT);
-    
-    _curAddr += 2;
-    
-    
     
     for EVER {
         RAM::read(_curAddr++, &curOp);
@@ -125,32 +122,45 @@ void Parser::mar() {
 }
 
 void Parser::mav(uint8_t data) {
+    Drive::setMovement(ENG_OFF, 0);
+    _delay_ms(500.0);
     Drive::setMovement(ENG_FORWARD, data);
 }
 
 void Parser::mre(uint8_t data) {
+    Drive::setMovement(ENG_OFF, 0);
+    _delay_ms(500.0);
     Drive::setMovement(ENG_BACKWARD, data);
 }
 
 void Parser::trd() {
+    Drive::setMovement(ENG_OFF, 0);
+    _delay_ms(500.0);
     Drive::setRotation(DIR_RIGHT, 255);
-    for (uint16_t i = 0; i < ROT_TIME_CST; ++i) {
+    for (uint16_t i = 0; i < ROT_TIME_CST_RIGHT; ++i) {
         _delay_ms(25);
     }
+    Drive::setMovement(ENG_OFF, 0);
 }
 
 void Parser::trg() {
+    Drive::setMovement(ENG_OFF, 0);
+    _delay_ms(500.0);
     Drive::setRotation(DIR_LEFT, 255);
+    for (uint16_t i = 0; i < ROT_TIME_CST_LEFT; ++i) {
+        _delay_ms(25);
+    }
+    Drive::setMovement(ENG_OFF, 0);
 }
 
 void Parser::dbc(uint8_t data) {
-    _loopBegAddr = _curAddr + 2;
+    _loopBegAddr = _curAddr;
     _iteratorMax = data;
     _iterator = 0;
 }
 
 void Parser::fbc() {
-    if (_iterator <= _iteratorMax) {
+    if (_iterator < _iteratorMax) {
         _curAddr = _loopBegAddr;
     }
     ++_iterator;

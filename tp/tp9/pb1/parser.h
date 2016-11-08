@@ -30,7 +30,6 @@ private:
     static void dbc(uint8_t data);
     static void fbc();
     
-    static uint16_t ROT_TIME_CST;
     static uint16_t _curAddr;
     
     static uint16_t _loopBegAddr;

@@ -58,15 +58,23 @@ LIBS_PATHS=../../../lib
 .PHONY: danse
 
 danse: protocol.bin
+
+	@echo "+--------------------------------------+";
+	@echo "| CHARGEMENT DU MICROPROGRAMME SUR RAM |";
+	@echo "+--------------------------------------+";
 	${MAKE} -C ${LIBS_PATHS} lib DEBUG=-DDEBUG;
 	${MAKE} -C ${SRCDIR}/transfert all install DEBUG=-DDEBUG;
-	${SRCDIR}/serieViaUSB -e -h -s 8 -f $<;
-	${MAKE} -C ${LIBS_PATHS} clean lib DEBUG=-UDEBUG; #${MAKE} -C ${SRCDIR}/transfert clean;
+	../../../serieViaUSB_ubuntu -e -h -s 8 -f $<;
+	${MAKE} -C ${LIBS_PATHS} clean lib; #${MAKE} -C ${SRCDIR}/transfert clean;
+	
+	@echo "+-----------------------------------+";
+	@echo "| CHARGEMENT DU PROGRAMME PRINCIPAL |";
+	@echo "+-----------------------------------+";
 	${MAKE} all install;
 	${MAKE} -C ${LIBS_PATHS} clean;
 
 %.bin: %.asmb
-	./progmem -o $@ $<
+	../../../progmem_ubuntu -o $@ $<
 
 
 

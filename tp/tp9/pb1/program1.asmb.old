@@ -1,0 +1,12 @@
+dbt; # Début du programme
+
+dbc 255;
+
+mav 255;
+att 40;
+
+trg;
+
+fbc;
+
+fin; # fin du programme

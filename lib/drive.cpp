@@ -13,7 +13,7 @@ Engine Drive::_engR(0xFF);
  *      branché. Voir engine.h.
  */
 void Drive::init(TimerChannelUsed tcuLeft, TimerChannelUsed tcuRight,
-                 uint8_t right, uint8_t left) {
+                 uint8_t left, uint8_t right) {
     _engL = Engine(tcuLeft);
     _engR = Engine(tcuRight);
     CONST_R = right;
@@ -28,10 +28,16 @@ void Drive::init(TimerChannelUsed tcuLeft, TimerChannelUsed tcuRight,
  */
 void Drive::setMovement(EngineMode mode, uint8_t power) {
     uint16_t tmpPwrL = power*CONST_L/0xFF;
-    _engL.setPower(ENG_FORWARD, (uint8_t)tmpPwrL);
+    if (tmpPwrL < 255/3) {
+        tmpPwrL = 255/3;
+    }
+    _engL.setPower(mode, (uint8_t)tmpPwrL);
     
     uint16_t tmpPwrR = power*CONST_R/0xFF;
-    _engR.setPower(ENG_FORWARD, (uint8_t)tmpPwrR);
+    if (tmpPwrR < 255/3) {
+        tmpPwrR = 255/3;
+    }
+    _engR.setPower(mode, (uint8_t)tmpPwrR);
 }
 
 void Drive::setRotation(DriveDir dir, uint8_t power) {
@@ -48,8 +54,14 @@ void Drive::setRotation(DriveDir dir, uint8_t power) {
     }
 
     uint16_t tmpPwrL = power*CONST_L/0xFF;
+    if (tmpPwrL < 255/3) {
+        tmpPwrL = 255/3;
+    }
     _engL.setPower(modeL, (uint8_t)tmpPwrL);
     
     uint16_t tmpPwrR = power*CONST_R/0xFF;
+    if (tmpPwrR < 255/3) {
+        tmpPwrR = 255/3;
+    }
     _engR.setPower(modeR, (uint8_t)tmpPwrR);
 }
