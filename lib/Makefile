@@ -28,7 +28,7 @@
 
 # Nom de votre projet
 # (utilisez un seul mot, exemple: 'monprojet')
-PROJECTNAME=tp9Test
+PROJECTNAME=robot
 
 # Emplacement ou se trouve les fichiers sources (ex: ../src ./main . )
 # Par defaut, c'est le dossier courant (".")
@@ -42,36 +42,18 @@ GENDIR=gen
 # Inclusions additionnels separes par des espaces
 # (L'emplacement des fichiers .h utilises dans les fichers sources)
 # (ex: /path/to/mydir /path/to/dir2) (utilisation avec le prefix -I)
-INC=$(REPO_ROOT_PATH)/lib
+INC=
 
 ### Variables spécifiques à la production d'un executable
 
 # Librairies a lier (ex: mylib) (utilisation avec le prefix -l dans
 # la generation de l'executable final)
-LIBS=robot
+LIBS=
 
 # Chemins vers les dossiers contenants les librairies
 # (ex: /path/to/libdir) (utilisation avec le prefix -L dans
 # la generation de l'executable final)
-LIBS_PATHS=$(REPO_ROOT_PATH)/lib
-
-.PHONY: danse
-
-danse: protocol.bin
-	@echo "+--------------------------------------+";
-	@echo "| CHARGEMENT DU MICROPROGRAMME SUR RAM |";
-	@echo "+--------------------------------------+";
-	${MAKE} -C ${LIBS_PATHS} clean lib DEBUG=-DDEBUG;
-	${MAKE} -C ${SRCDIR}/transfert all install DEBUG=-DDEBUG;
-	$(REPO_ROOT_PATH)/serieViaUSB_ubuntu -e -h -s 8 -f $<;
-	${MAKE} -C ${LIBS_PATHS} clean lib; ${MAKE} -C ${SRCDIR}/transfert clean;
-	@echo "+-----------------------------------+";
-	@echo "| CHARGEMENT DU PROGRAMME PRINCIPAL |";
-	@echo "+-----------------------------------+";
-	${MAKE} all install;
-
-%.bin: %.asmb
-	$(REPO_ROOT_PATH)/progmem_ubuntu -o $@ $<
+LIBS_PATHS=
 
 
 

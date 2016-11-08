@@ -1,0 +1,103 @@
+dbt;
+
+# SÉQUENCE DÉBUT
+
+dal 1;
+sgo 67;
+att 5;
+
+det 1;
+sgo 66;
+att 5;
+
+dal 1;
+sgo 63;
+att 5;
+
+det 1;
+sgo 57;
+att 5;
+
+dal 1;
+sgo 56;
+att 5;
+
+det 1;
+sgo 64;
+att 5;
+
+dal 1;
+sgo 68;
+att 5;
+
+det 1;
+sgo 72;
+att 5;
+
+det 1;
+sar;
+
+
+# AVANCER, RECULER ET S'ARRÊTER
+
+mav 255;
+att 40;
+
+mar;
+att 20;
+mre 255;
+att 40;
+
+mar;
+att 20;
+
+# AVANCER ET REVENIR À LA TRAJECTOIRE INITIALE
+
+mav 255;
+att 80;
+
+mar;    # Ces arrêts sont fait pour que le robot ait le temps
+att 20; # de se stabiliser avant le prochain mouvement.
+trg;
+
+mar;
+att 20;
+mre 255;
+att 80;
+
+mar;
+att 20;
+trd;
+
+mar;
+att 20;
+mre 255;
+att 80;
+
+mar;
+att 20;
+trg;
+
+mar;
+att 20;
+mav 255;
+att 80;
+
+mar;
+att 20;
+trd;
+
+
+# JOUER UN SON PLUSIEURS FOIS
+
+dbc 4;
+
+sgo 60;
+att 20;
+
+sgo 61;
+att 20;
+
+fbc;
+
+fin;

@@ -28,7 +28,7 @@
 
 # Nom de votre projet
 # (utilisez un seul mot, exemple: 'monprojet')
-PROJECTNAME=tp9Test
+PROJECTNAME=tp9transfert
 
 # Emplacement ou se trouve les fichiers sources (ex: ../src ./main . )
 # Par defaut, c'est le dossier courant (".")
@@ -54,24 +54,6 @@ LIBS=robot
 # (ex: /path/to/libdir) (utilisation avec le prefix -L dans
 # la generation de l'executable final)
 LIBS_PATHS=$(REPO_ROOT_PATH)/lib
-
-.PHONY: danse
-
-danse: protocol.bin
-	@echo "+--------------------------------------+";
-	@echo "| CHARGEMENT DU MICROPROGRAMME SUR RAM |";
-	@echo "+--------------------------------------+";
-	${MAKE} -C ${LIBS_PATHS} clean lib DEBUG=-DDEBUG;
-	${MAKE} -C ${SRCDIR}/transfert all install DEBUG=-DDEBUG;
-	$(REPO_ROOT_PATH)/serieViaUSB_ubuntu -e -h -s 8 -f $<;
-	${MAKE} -C ${LIBS_PATHS} clean lib; ${MAKE} -C ${SRCDIR}/transfert clean;
-	@echo "+-----------------------------------+";
-	@echo "| CHARGEMENT DU PROGRAMME PRINCIPAL |";
-	@echo "+-----------------------------------+";
-	${MAKE} all install;
-
-%.bin: %.asmb
-	$(REPO_ROOT_PATH)/progmem_ubuntu -o $@ $<
 
 
 

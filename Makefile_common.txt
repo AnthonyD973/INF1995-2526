@@ -1,10 +1,10 @@
-########       AVR Project Makefile   	  ########
+########       AVR Project Makefile       ########
 #####                                        #####
-#####	   Makefile produit et ecrit par     #####
-#####	Simon Barrette & Jerome Collin pour  #####
-#####		 INF1995 - 2016		     #####
-#####					     #####
-#####	      Inspire de Pat Deegan -        #####
+#####      Makefile produit et ecrit par     #####
+#####   Simon Barrette & Jerome Collin pour  #####
+#####             INF1995 - 2016             #####
+#####                                        #####
+#####         Inspire de Pat Deegan -        #####
 #####  Psychogenic Inc (www.psychogenic.com) #####
 ##################################################
 
@@ -13,31 +13,32 @@
 # Linux ou Unix, en utilisant l'outil AVR-GCC. 
 # Ce Makefile supporte C & C++
 
+# Le makefile dans le dossier 'pb2' est une extention du
+# makefile original qui ajoute la cible 'make lib'
+# qui permet de creer des librairies.
+# Les cibles de base du makefile 'all', 'install' et
+# 'clean' ont ete etendues pour pouvoir accepter des
+# librairies externes.
+# Ainsi, le makefile dans les sous-dossiers peut se transporter dans un dossier
+# contenant uniquement des fichiers sources pour produire un executable,
+# ou dans le dossier d'une librairie pour produire un fichier .a
+
 
 #####      Details specifique a la cible       #####
 #####  Vous devez les adapter a votre projet   #####
 
+# Si le répertoire des fichiers sources n'est pas défini, mettre le 
+# dossier courant comme dossier des fichiers sources.
+SRCDIR?=.
+
+# Fichiers sources
+# (Liste tous les fichiers a compiler, ex: 'tp1.c tp2.cpp'):
+# Utilisation du suffixe .c pour les fichiers C et .cpp pour les fichiers C++
+PRJSRC=$(filter %.cpp, $(shell echo $(SRCDIR)/*)) $(filter %.c, $(shell echo $(SRCDIR)/*))
+
 # Nom du microcontroleur cible
 # (exemple: 'at90s8515')
 MCU=atmega324pa
-
-# Nom de votre projet
-# (utilisez un seul mot, exemple: 'monprojet')
-PROJECTNAME=tp5_1
-
-# Fichiers sources
-# (Listez tous les fichiers a compiler, ex: 'tp1.c, tp2.cpp'):
-# Utilisez le suffixe .cpp pour les fichiers C++
-PRJSRC=main.cpp memoire_24.cpp Song.cpp SongFile.cpp uart.cpp
-
-# Le nom du fichier binaire contenant les chansons
-SONG_FILE=songs.bin
-
-# Inclusions additionnels (ex: -I/path/to/mydir)
-INC=
-
-# Libraires a lier (ex: -lmylib)
-LIBS=
 
 # Niveau d'optimization
 # Utilisez s (size opt), 1, 2, 3 ou 0 (off)
@@ -47,6 +48,8 @@ OPTLEVEL=s
 # Liste complete des IDs disponible avec avrdude
 AVRDUDE_PROGRAMMERID=usbasp
 
+# Le chemin vers le dossier racine de l'entrepot git (Peut s'avérer utile)
+REPO_ROOT_PATH=$(shell git rev-parse --show-toplevel)
 
 
 ####################################################
@@ -64,39 +67,58 @@ AVRDUDE_PROGRAMMERID=usbasp
 
 #compilateur utilise
 CC=avr-gcc
+#archiveur utilise
+AR=avr-ar
 #pour copier le contenu d'un fichier objet vers un autre
 OBJCOPY=avr-objcopy
 #pour permettre le transfert vers le microcontroleur
 AVRDUDE=avrdude
 #pour supprimer les fichiers lorsque l'on appel make clean
-REMOVE=rm -f
+REMOVE=rm -rf
 # HEXFORMAT -- format pour les fichiers produient .hex
 HEXFORMAT=ihex
 
+# Pour savoir si c'est un make pour débugger ou si c'est
+# un make pour la 'production'. (optimisation potentielle de la mémoire)
+DEBUG?=-UDEBUG
+export DEBUG
 
+	
+####### Variables pour la creation d'une librairie #######
+
+# Ajout du prefix -l pour l'utilisation dans les commandes
+LIBSCMD=$(patsubst %,-l%,$(LIBS))
+
+# Ajout du prefix -L pour l'utilisation dans les commandes
+LIBSPATHSCMD=$(patsubst %,-L%,$(LIBS_PATHS))
 
 ####### Options de compilation #######
 
 # Flags pour le compilateur en C
-CFLAGS=-I. -MMD $(INC) -g -mmcu=$(MCU) -O$(OPTLEVEL) \
-	-fpack-struct -fshort-enums             \
-	-funsigned-bitfields -funsigned-char    \
-	-Wall                                        
+CFLAGS=-I. -MMD $(patsubst %,-I%,$(INC)) \
+	-g -mmcu=$(MCU) -O$(OPTLEVEL) \
+	-fpack-struct -fshort-enums \
+	-funsigned-bitfields -funsigned-char \
+	-Wall $(DEBUG)
 
 # Flags pour le compilateur en C++
-CXXFLAGS=-fno-exceptions -std=c++11     
+CXXFLAGS=-fno-exceptions
 
 # Linker pour lier les librairies utilisees
 LDFLAGS=-Wl,-Map,$(TRG).map -mmcu=$(MCU)
+
+# Flags pour l'archiveur
+ARFLAGS=-crs
 
 
 
 ####### Cible (Target) #######
 
 #Nom des cibles par defaut
-TRG=$(PROJECTNAME).out
-HEXROMTRG=$(PROJECTNAME).hex
-HEXTRG=$(HEXROMTRG) $(PROJECTNAME).ee.hex
+TRG=$(GENDIR)/$(PROJECTNAME).out
+HEXROMTRG=$(GENDIR)/$(PROJECTNAME).hex
+HEXTRG=$(HEXROMTRG) $(GENDIR)/$(PROJECTNAME).ee.hex
+LIBTRG=$(SRCDIR)/lib$(PROJECTNAME).a
 
 
 
@@ -105,20 +127,18 @@ HEXTRG=$(HEXROMTRG) $(PROJECTNAME).ee.hex
 # Cette fonction permet de differencier les fichiers .c
 # des fichiers .cpp
 # Fichier C
-CFILES=$(filter %.c, $(PRJSRC))
+CFILES=$(strip $(filter %.c, $(addprefix $(SRCDIR)/,$(PRJSRC))))
 # Fichier C++
-CPPFILES=$(filter %.cpp, $(PRJSRC))
+CPPFILES=$(strip $(filter %.cpp, $(addprefix $(SRCDIR)/,$(PRJSRC))))
 
 # Liste de tout les fichiers objet que nous devons creer
-OBJDEPS=$(CFILES:.c=.o) \
-	$(CPPFILES:.cpp=.o)
+OBJDEPS=$(patsubst %.c,$(GENDIR)/%.o,$(strip $(filter %.c, $(PRJSRC)))) \
+	$(patsubst %.cpp,$(GENDIR)/%.o,$(strip $(filter %.cpp, $(PRJSRC))))
 	
 # Pour plus d'information sur cette section, consulter :
 # http://bit.ly/257R53E	
 # Les fonctions $(filter pattern…,text) &
 # $(patsubst pattern,replacement,text) sont pertinentes
-	
-
 
 ####### Creation des commandes du Makefile ####### 
 
@@ -126,24 +146,27 @@ OBJDEPS=$(CFILES:.c=.o) \
 # En plus de la commande make qui permet de compiler
 # votre projet, vous pouvez utilisez les commandes
 # make all, make install et make clean
-.PHONY: all install clean auto load cleanload
+.PHONY: all install clean auto lib libauto
 
 # Make all permet simplement de compiler le projet
 #
 all: $(TRG)
 
 # Implementation de la cible
-$(TRG): $(OBJDEPS)
+$(TRG): $(GENDIR) $(OBJDEPS)
 	$(CC) $(LDFLAGS) -o $(TRG) $(OBJDEPS) \
-	-lm $(LIBS)
+	-lm $(LIBSCMD) $(LIBSPATHSCMD)
+
+$(GENDIR):
+	mkdir $(GENDIR)
 
 # Production des fichiers object
 # De C a objet
-%.o: %.c
-	$(CC) $(CFLAGS) -c $<
+$(GENDIR)/%.o: $(SRCDIR)/%.c $(GENDIR)
+	$(CC) $(CFLAGS) -c $< -o $@
 # De C++ a objet
-%.o: %.cpp
-	$(CC) $(CFLAGS) $(CXXFLAGS) -c $<
+$(GENDIR)/%.o: $(SRCDIR)/%.cpp $(GENDIR)
+	$(CC) $(CFLAGS) $(CXXFLAGS) -c $< -o $@
 
 # Verification des dependances (header dependencies)
 -include *.d
@@ -152,54 +175,36 @@ $(TRG): $(OBJDEPS)
 # http://bit.ly/2580FU8
 
 # Production des fichiers hex a partir des fichiers elf
-%.hex: %.out
+$(GENDIR)/%.hex: $(GENDIR)/%.out $(GENDIR)
 	$(OBJCOPY) -j .text -j .data \
 		-O $(HEXFORMAT) $< $@
+
+# La cible lib permet de produire une librairie .a
+# que l'on peut reutiliser ailleur
+lib: $(LIBTRG)
+
+$(LIBTRG): $(GENDIR) $(OBJDEPS)
+	$(AR) $(ARFLAGS) $@ $(OBJDEPS)
 
 # Make install permet de compiler le projet puis
 # d'ecrire le programme en memoire flash dans votre
 # microcontroleur. Celui-ci doit etre branche par cable USB
-install: $(HEXROMTRG)				
-	$(AVRDUDE) -c $(AVRDUDE_PROGRAMMERID)   \
+install: $(HEXROMTRG)
+	$(AVRDUDE) -c $(AVRDUDE_PROGRAMMERID) \
 	-p $(MCU) -P -e -U flash:w:$(HEXROMTRG)
 
 # Make clean permet d'effacer tout les fichiers generes
 # lors de la compilation
 clean:
-	$(REMOVE) $(TRG) $(TRG).map $(OBJDEPS) $(HEXTRG) *.d
+	$(REMOVE) $(TRG) $(TRG).map $(OBJDEPS) $(HEXTRG) $(GENDIR)/*.d \
+	$(GENDIR)/* $(GENDIR) $(LIBTRG) *.bin
+	
 
-auto: clean all install
-	@make clean
-
-# La command envoi chacun des fichier séparé par 50 ms pour que le programme du
-# micro controleur puisse sauvegarder les données acquises dans la RAM et vider
-# ses tampons de réception.
-load: cleanload $(SONG_FILE)
-	for f in $(SONG_FILE)._out/*; do \
-		sleep .01; \
-		if hash serieViaUSB 2>/dev/null; then \
-			serieViaUSB -e -s 4 -h -f $$f; \
-			serieViaUSB -l -h -nb 1; \
-		else \
-			./serieViaUSB -e -s 4 -h -f $$f; \
-			./serieViaUSB -l -h -nb 1; \
-		fi; \
-	done
-	./serieViaUSB -l -nb 1 -h; \
-	./serieViaUSB -e -nb 1 -h -f $(SONG_FILE)._out/$(SONG_FILE)._0.bit;
-
-$(SONG_FILE): song2bin fileSpliter
-	./song2bin $(SONG_FILE)
-	./fileSpliter $(SONG_FILE)
-
-song2bin: song2bin.cpp
-	g++ -o $@ -I. $^ -std=c++0x
-
-fileSpliter: fileSpliter.cpp
-	g++ -o $@ -I. $^ -std=c++0x
-
-cleanload:
-	rm -f -r song2bin fileSpliter *._out;
+# Execute, dans l'ordre, un 'make all' pour compiler ce qu'il
+# y a a compiler, un 'make install' pour transferer le programme
+# compiles et un 'make clean' pour que les ficher generes ne
+# soient pas transferes dans l'entrepot git par erreur.
+auto: all install clean
 
 # Pour plus d'information sur les phony target, consulter:
 # http://bit.ly/1WBQe61
