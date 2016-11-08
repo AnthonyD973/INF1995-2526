@@ -64,7 +64,7 @@ void setPWM (const uint16_t& ratio/*, const uint8_t& prescale*/) {
     OCR1A = ratio;
     OCR1B = 0x00;
 
-	TCCR1B = (TCCR1B & (0xff-0x7)) | ((ratio == 0x00) ? 0 : 1 << CS10);
+	TCCR1B = (TCCR1B & ~(0x7)) | ((ratio == 0x00) ? 0 : 1 << CS10);
 }
 
 /**
