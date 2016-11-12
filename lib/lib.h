@@ -1,11 +1,9 @@
 #ifndef LIB_H
 #define LIB_H
 
-#define F_CPU 8000000UL
+#include "incl.h"
 
-#include <avr/io.h>
-#include <avr/interrupt.h>
-#include <util/delay.h>
+typedef uint8_t PinPosition;
 
 #include "timer.h"
 #include "drive.h"
@@ -21,23 +19,29 @@
 
 #define EVER (;;) // for EVER { ... }
 
+#ifndef BUZZER_H // Éviter l'erreur (type incomplet) lorsque buzzer.h inclut lib.h qui utilise Buzzer::init.
 /**
- * @brief Initialise les classes entièrement statiques.
+ * @brief Initialisation des classes et objets importants.
  */
 __attribute__ ((always_inline))
-inline void globalInit() {
-    Drive::init();
+inline void globalInit(Prescale01 p0, Prescale01 p1, Prescale2 p2,
+                       tcuEngLeft, TimerChannelUsed tcuEngRight,
+                       uint8_t constLeft, uint8_t constRight) {
+    timer0.setPrescale(p0);
+    timer1.setPrescale(p1);
+    timer2.setPrescale(p2);
+    
+    Drive::init(tcuEngLeft, tcuEngRight, constLeft, constRight);
     Buzzer::init();
     RAM::init();
-    UART::init();
+    UART::init(2400);
 }
+#endif // BUZZER_H
 
 // +-----------------------------+
 // | FONCTIONS UTILISABLES DANS  |
 // | LES ROUTINES D'INTERRUPTION |
 // +-----------------------------+
-
-class Timer; // Déclaration nécessaire pour résoudre la dépendance circulaire.
 
 /**
  * @brief Change la couleur des leds présentement ambres gérées par un compteur.
@@ -50,8 +54,8 @@ void switchAmberLedsColor(Timer* timer);
 // +------------------------+
 // | GESTION DE PinPosition |
 // +------------------------+
-typedef uint8_t PinPosition;
-//const PinPosition
+
+// PinPosition #define
 #define    A0_A1 0
 #define    A2_A3 2
 #define    A4_A5 4

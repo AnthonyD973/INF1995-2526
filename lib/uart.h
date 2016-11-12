@@ -1,5 +1,5 @@
-#ifndef UART_H_
-#define UART_H_ // INCLUDE GUARD
+#ifndef UART_H
+#define UART_H
 #ifdef  DEBUG
 
 #include <string.h>
@@ -112,7 +112,6 @@ uint8_t receptionUART ( );
 void viderTamponDeReceptionUART();//*/
 
 #else
-#include <string.h>
 // Définition d'une classe UART qui ne fait rien pour optimiser la mémoire.
 class UART {
 public:
@@ -134,4 +133,4 @@ public:
     static uint8_t _tra_size(void) { return 0; }
 };
 #endif
-#endif // END OF INCLUDE GUARD
+#endif // UART_H
