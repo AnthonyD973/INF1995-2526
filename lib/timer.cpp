@@ -1,5 +1,9 @@
 #include "timer.h"
 
+Timer0 timer0;
+Timer1 timer1;
+Timer2 timer2;
+
 // ===========================
 // =          TIMER          =
 // ===========================

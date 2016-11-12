@@ -2,7 +2,6 @@
 #define LED_H
 
 #include "lib.h"
-#include "pinPosition.h"
 #include "timer.h"
 
 class Timer;    // Nécessaire pour résoudre la dépendance circulaire.

@@ -1,71 +1,55 @@
 #include "lib.h"
 
-/**
- * @brief Interrompt l'execution du programme pour un certain temps.
- * @param[in] t100us Temps à attendre (* 100 µs).
- */
-void delay100MicroSeconds(const uint16_t& t100us)
-{
-    for (uint16_t i = 0; i < t100us; ++i) {
-        //n_delay_to_perform = t*f(Hz)/4
-        _delay_loop_2(F_CPU/40000); // 100µs
-    }
-}
+// +-----------------------------+
+// | FONCTIONS UTILISABLES DANS  |
+// | LES ROUTINES D'INTERRUPTION |
+// +-----------------------------+
 
-/**
- * @brief Interrompt l'execution du programme pour un certain temps.
- * @param[in] t100us Temps à attendre (* 100 µs).
- */
-void delay10MiliSeconds(const uint16_t& t10ms)
-{
-    for (uint16_t i = 0; i < t10ms; ++i) {
-        for (uint16_t j = 0; j < 100; ++j) {
-            //n_delay_to_perform = t*f(Hz)/4
-            _delay_loop_2(F_CPU/40000); // 100µs
+void switchAmberLedsColor(Timer* timer) {
+    // Test fréquemment vrai, alors effectué au début.
+    if (timer->_nAmberLeds == 0) {
+        return;
+    }
+    
+    uint16_t curAmberLeds = timer->_amberLeds;
+    uint8_t nAmberLedsLeft = timer->_nAmberLeds;
+    volatile uint8_t* curPort;
+    for (PinPosition portBeginNum = 0; portBeginNum < 32 && nAmberLedsLeft != 0; portBeginNum += 8) {
+        curPort = getPortPtr(portBeginNum);
+        uint8_t amberLedsMask = 0;
+        
+        for (uint8_t pinNumberOnPortDiv2 = 0; pinNumberOnPortDiv2 < 4 && nAmberLedsLeft != 0; ++pinNumberOnPortDiv2) {
+            bool isThisLedAmber = (curAmberLeds & 1) == 1;
+            if (isThisLedAmber) {
+                --nAmberLedsLeft;
+                amberLedsMask |= getMask(portBeginNum + 2*pinNumberOnPortDiv2);
+            }
+            curAmberLeds >>= 1;
         }
+        
+        _MASK(*curPort, ~(*curPort), amberLedsMask);
     }
 }
 
-/**
- * @brief Détection de fronts montants d'un port avec antirebond.
- *        Change previousPin si le front montant est détecté.
- * @param[in]     pin État du port.
- * @param[in,out] previousPin État précédent du port.
- * @return true si sur front montant, false sinon.
- */
-bool risingEdge(const uint8_t& pin, uint8_t& previousPin)
-{
-    return anyEdge(pin, previousPin) && pin != 0x00;
-}
 
+// +------------------------+
+// | GESTION DE PinPosition |
+// +------------------------+
 
-/**
- * @brief Détection de fronts descendants d'un port avec antirebond.
- *        Change previousPin si le front descendant est détecté.
- * @param[in]     pin État du port.
- * @param[in,out] previousPin État précédent du port.
- * @return true si sur front descendant, false sinon.
- */
-bool fallingEdge(const uint8_t& pin, uint8_t& previousPin)
-{
-    return anyEdge(pin, previousPin) && pin != 0x00;
-}
-
-/**
- * @brief Détection de fronts descendents d'un port avec antirebont.
- *        Change previousPin si un front est détecté.
- * @param[in]     pin État du port.
- * @param[in,out] previousPin État précédent du port.
- * @return true si sur front, false sinon.
- */
-bool anyEdge(const uint8_t& pin, uint8_t& previousPin)
-{
-    if (pin != previousPin) {
-        _delay_ms(1.0);
-        if (pin == 0x00) {
-            previousPin = pin;
-            return true;
-        }
+volatile uint8_t* getPortPtr(PinPosition pinPos) {
+    switch (pinPos / 8) {
+        case 0:  return &PORTA; break;
+        case 1:  return &PORTB; break;
+        case 2:  return &PORTB; break;
+        default: return &PORTD; break;
     }
-    return false;
+}
+
+uint8_t getPinVal(PinPosition pinPos) {
+    switch (pinPos / 8) {
+        case 0:  return PINA; break;
+        case 1:  return PINB; break;
+        case 2:  return PINB; break;
+        default: return PIND; break;
+    }
 }

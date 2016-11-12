@@ -1,5 +1,5 @@
 #ifndef LIB_H
-#define LIB_H 1
+#define LIB_H
 
 #define F_CPU 8000000UL
 
@@ -7,49 +7,93 @@
 #include <avr/interrupt.h>
 #include <util/delay.h>
 
+#include "timer.h"
+#include "drive.h"
+#include "buzzer.h"
+#include "ram.h"
 #include "uart.h"
+
+// +-------------------------+
+// | SYMBOLES GLOBAUX DIVERS |
+// +-------------------------+
 
 #define _MASK(reg, value, mask) (reg = ((reg) & ~(mask)) | ((value) & (mask))) // Change la valeur de certains bits d'un registre.
 
 #define EVER (;;) // for EVER { ... }
 
 /**
- * @brief Interrompt l'execution du programme pour un certain temps.
- * @param[in] t100us Temps à attendre (* 100 µs).
+ * @brief Initialise les classes entièrement statiques.
  */
-void delay100MicroSeconds(const uint16_t& t100us);
+__attribute__ ((always_inline))
+inline void globalInit() {
+    Drive::init();
+    Buzzer::init();
+    RAM::init();
+    UART::init();
+}
+
+// +-----------------------------+
+// | FONCTIONS UTILISABLES DANS  |
+// | LES ROUTINES D'INTERRUPTION |
+// +-----------------------------+
+
+class Timer; // Déclaration nécessaire pour résoudre la dépendance circulaire.
 
 /**
- * @brief Interrompt l'execution du programme pour un certain temps.
- * @param[in] t100us Temps à attendre (* 100 µs).
+ * @brief Change la couleur des leds présentement ambres gérées par un compteur.
+ *      NOTE: Cette fonction n'est utilisée nulle part dans les libraires ; c'est une fonction
+ *      préécrite que l'on peut utiliser, par exemple dans les routines d'interruption.
+ * @param[in] timer Compteur impliqué.
  */
-void delay10MiliSeconds(const uint16_t& t10ms);
+void switchAmberLedsColor(Timer* timer);
+
+// +------------------------+
+// | GESTION DE PinPosition |
+// +------------------------+
+typedef uint8_t PinPosition;
+//const PinPosition
+#define    A0_A1 0
+#define    A2_A3 2
+#define    A4_A5 4
+#define    A6_A7 6
+#define    B0_B1 8
+#define    B2_B3 10
+#define    B4_B5 12
+#define    B6_B7 14
+#define    C0_C1 16
+#define    C2_C3 18
+#define    C4_C5 20
+#define    C6_C7 22
+#define    D0_D1 24
+#define    D2_D3 26
+#define    D4_D5 28
+#define    D6_D7 30
 
 /**
- * @brief Détection de fronts montants d'un port avec antirebond.
- *        Change previousPin si le front montant est détecté.
- * @param[in]     pin État du port.
- * @param[in,out] previousPin État précédent du port.
- * @return true si sur front montant, false sinon.
+ * @brief   Détermine à quel port correspond une position.
+ * @param[in] pinPos    Position sur les broches.
+ * @return  Un pointeur vers le port correspondant à la position spécifiée.
  */
-bool risingEdge(const uint8_t& pin, uint8_t& previousPin);
-
+volatile uint8_t* getPortPtr(PinPosition pinPos);
 /**
- * @brief Détection de fronts descendants d'un port avec antirebond.
- *        Change previousPin si le front descendant est détecté.
- * @param[in]     pin État du port.
- * @param[in,out] previousPin État précédent du port.
- * @return true si sur front descendant, false sinon.
+ * @brief   Détermine la valeur courante sur le port correspondant à une position.
+ * @param[in] pinPos    Position sur les broches.
+ * @return  La valeur présentement sur le port correspondant à la position spécifiée.
  */
-bool fallingEdge(const uint8_t& pin, uint8_t& previousPin);
-
+uint8_t getPinVal(PinPosition pinPos);
 /**
- * @brief Détection de fronts descendents d'un port avec antirebont.
- *        Change previousPin si un front est détecté.
- * @param[in]     pin État du port.
- * @param[in,out] previousPin État précédent du port.
- * @return true si sur front, false sinon.
+ * @brief   Détermine le numéro de broche correspondant à une position.
+ * @param[in] pinPos    Position sur les broches.
+ * @return  Le numéro de broche correspondant à une position. Ex : C4_C5 -> 4 ; D2_D3 -> 2.
  */
-bool anyEdge(const uint8_t& pin, uint8_t& previousPin);
+__attribute__ ((always_inline))
+inline uint8_t getPinNumber(PinPosition pinPos) { return pinPos % 8; }
+/**
+ * @brief   Détermine le masque compatible avec la macro '_MASK'.
+ * @param[in] pinPos    Position sur les broches.
+ * @return  Masque compatible avec la macro '_MASK' Ex : _MASK(*port, val, getMask(D4_D5))
+ */
+__attribute__ ((always_inline))
+inline uint8_t getMask(PinPosition pinPos) { return 0x3 << getPinNumber(pinPos); }
 
 #endif // LIB_H

@@ -53,6 +53,7 @@ void UART::init(uint16_t baud) {//*
 /**
  * @brief   Utilisée dans les routine ISR de réception.
  */
+__attribute__ ((always_inline))
 inline void UART::_rec_push_back(volatile uint8_t data) {/*
     // Si on recoit une donnée mais que l'on a plus de place...
     if (_rec_full())
@@ -63,6 +64,7 @@ inline void UART::_rec_push_back(volatile uint8_t data) {/*
 /**
  * @brief   Utilisée dans les fonctions de récupération des données reçus.
  */
+__attribute__ ((always_inline))
 inline volatile uint8_t UART::_rec_pop(void) {
     volatile uint8_t ret = 0;/*
     // On attend qu'une donnée soit reçue...
@@ -78,6 +80,7 @@ inline volatile uint8_t UART::_rec_pop(void) {
 /**
  * @brief   Utilisée dans les fonctions de transmission de données.
  */
+__attribute__ ((always_inline))
 inline void UART::_tra_push_back(volatile uint8_t data) {/*
     // On attend d'avoir de l'espace pour y placer les données.
     while (_traBufferDataCount >= BUFFER_SIZE);
@@ -87,6 +90,7 @@ inline void UART::_tra_push_back(volatile uint8_t data) {/*
 /**
  * @brief   Utilisée dans les routine ISR de transmission.
  */
+__attribute__ ((always_inline))
 inline volatile uint8_t UART::_tra_pop(void) {
     volatile uint8_t ret = 0;/*
     while ( !( UCSR0A & (1<<UDRE0)) );
