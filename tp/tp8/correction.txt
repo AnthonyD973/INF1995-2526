@@ -1,0 +1,54 @@
+Polytechnique Montréal
+
+Département de génie informatique et génie logiciel
+
+INF1995: Projet initial en ingénierie informatique 
+         et travail en équipe
+
+Grille de correction des programmes:
+
+Identification:
+  Travail Pratique # : 8
+  Section #  : 01
+  Équipe #   : 2526
+  Correcteur : Frédéric Fortier
+
+
+Qualité: 9.5/10
+  Et pertinence des portions de code choisies      (5 points): 4.5
+  Des modifications au Makefiles                   (5 points): 5
+
+        
+Rapport:  7/7
+  Explications cohérentes par rapport au code  
+  retenu pour former la librairie                  (2 points): 2
+  Explications cohérentes par rapport aux Makefiles
+  modifiés                                         (2 points): 2
+  Explications claires avec un bon niveau de 
+  détails                                          (2 points): 2
+  Bon français                                     (1 point) : 1
+  
+Soumission:  3/3
+  Bonne soumission de l'ensemble du code 
+  (compilation sans erreurs, …) et du rapport
+  selon le format demandé                          (3 points): 3
+
+
+
+Total:   19.5/20
+
+
+Commentaires du correcteur:
+En général, on préfère que "make" dans le répertoire de la librairie compile
+celle-ci normalement, plutôt que de retourner une erreur et d'avoir à faire
+make lib.
+Notez aussi que le terme "RAM" est généralement réservé à la mémoire vive, ce que
+n'est pas l'EEPROM sur votre robot.
+
+Vos fichiers lib.{h,cpp} ont un nom peu descriptif et lib.cpp contient des 
+fonctions qui ne sont pas déclarées dans le .h -0.5
+
+
+
+
+
