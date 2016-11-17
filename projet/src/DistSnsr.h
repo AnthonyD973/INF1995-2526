@@ -21,12 +21,14 @@ typedef uint8_t PinAPos;
 #include <incl.h>
 #include <can.h>
 
+#include <lib.h>
+
 /**
  * @class   DistSnsr
  * 
  * @brief   Classe à utiliser pour obtenir la valeur de distance lue par le
  *          capteur de distance GP2D12. La classe se charge de l'interprétation
- *          de la valeur analogique que fourni le capteur et donne une valeur
+ *          de la valeur analogique que fournit le capteur et donne une valeur
  *          normalisée de la distance (voir <DistSnsr::read>).
  */
 class DistSnsr {

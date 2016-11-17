@@ -19,6 +19,9 @@ typedef uint8_t PinPosition;
 
 #define EVER (;;) // for EVER { ... }
 
+#define NULL 0
+#define nullptr 0
+
 #ifndef BUZZER_H // Éviter l'erreur (type incomplet) lorsque buzzer.h inclut lib.h qui utilise Buzzer::init.
 /**
  * @brief Initialisation des classes et objets importants.
