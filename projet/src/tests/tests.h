@@ -3,6 +3,8 @@
 
 #include <incl.h>
 #include <lib.h>
+#include <timer.h>
+#include <uart.h>
 
 void testColorSensor();
 

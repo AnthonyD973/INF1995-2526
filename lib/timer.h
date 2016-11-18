@@ -13,14 +13,14 @@ typedef uint8_t Prescale2;
 typedef uint8_t ComNX;
 typedef uint8_t WGMode; // Waveform Generation Mode
 
+extern Timer0 timer0;
+extern Timer1 timer1;
+extern Timer2 timer2;
+
 #include "lib.h"
 #include "led.h"
 #include "engine.h"
 #include "uart.h"
-
-extern Timer0 timer0;
-extern Timer1 timer1;
-extern Timer2 timer2;
 
 
 // ---Prescale01---
@@ -104,6 +104,14 @@ public:
     
     virtual void setOcrNA(uint16_t ocrNa) { while (true) {} };
     virtual void setOcrNB(uint16_t ocrNb) { while (true) {} };
+    
+    virtual void setTcntN(uint16_t tcntN) { while (true) {} };
+    
+    virtual uint16_t getOcrNA() { while (true) {} };
+    virtual uint16_t getOcrNb() { while (true) {} };
+    
+    virtual uint16_t getTcntN() { while (true) {} };
+    
   
     virtual void allowOVFI() { while (true) {} };
     virtual void allowOCIA() { while (true) {} };
@@ -143,8 +151,15 @@ public:
     virtual void setComNA(ComNX com0a);
     virtual void setComNB(ComNX com0b);
     
-    virtual void setOcrNA(uint16_t ocrNa);
-    virtual void setOcrNB(uint16_t ocrNb);
+    virtual void setOcrNA(uint16_t ocr0a);
+    virtual void setOcrNB(uint16_t ocr0b);
+    
+    virtual void setTcntN(uint16_t tcnt0);
+    
+    virtual uint16_t getOcrNA();
+    virtual uint16_t getOcrNb();
+    
+    virtual uint16_t getTcntN();
     
     
     virtual void allowOVFI();
@@ -177,6 +192,13 @@ public:
     virtual void setOcrNA(uint16_t ocr1a);
     virtual void setOcrNB(uint16_t ocr1b);
     
+    virtual void setTcntN(uint16_t tcnt1);
+    
+    virtual uint16_t getOcrNA();
+    virtual uint16_t getOcrNb();
+    
+    virtual uint16_t getTcntN();
+    
     
     virtual void allowOVFI();
     virtual void allowOCIA();
@@ -207,6 +229,13 @@ public:
     
     virtual void setOcrNA(uint16_t ocr2a);
     virtual void setOcrNB(uint16_t ocr2b);
+    
+    virtual void setTcntN(uint16_t tcnt2);
+    
+    virtual uint16_t getOcrNA();
+    virtual uint16_t getOcrNb();
+    
+    virtual uint16_t getTcntN();
     
     
     virtual void allowOVFI();

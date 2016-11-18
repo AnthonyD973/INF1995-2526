@@ -1,8 +1,8 @@
 #include "timer.h"
 
-Timer0 timer0(P01_CLK1);
-Timer1 timer1(P01_CLK1);
-Timer2 timer2(P2_CLK1);
+Timer0 timer0(P01_NO_CLK);
+Timer1 timer1(P01_NO_CLK);
+Timer2 timer2(P2_NO_CLK);
 
 // ===========================
 // =          TIMER          =
@@ -114,6 +114,28 @@ void Timer0::setOcrNA(uint16_t ocr0a) {
  */
 void Timer0::setOcrNB(uint16_t ocr0b) {
     OCR0B = (uint8_t)ocr0b;
+}
+
+/**
+ * @brief   Change la valeur de TCNT0.
+ * @param[in] tcnt0    Nouvelle valeur de TCNT0.
+ */
+void Timer0::setTcntN(uint16_t tcnt0) {
+    TCNT0 = tcnt0;
+}
+
+
+uint16_t Timer0::getOcrNA() {
+    return OCR0A;
+}
+
+uint16_t Timer0::getOcrNb() {
+    return OCR0B;
+}
+
+
+uint16_t Timer0::getTcntN() {
+    return TCNT0;
 }
 
 
@@ -249,6 +271,28 @@ void Timer1::setOcrNB(uint16_t ocr1b) {
     OCR1B = ocr1b;
 }
 
+/**
+ * @brief   Change la valeur de TCNT1.
+ * @param[in] tcnt1    Nouvelle valeur de TCNT1.
+ */
+void Timer1::setTcntN(uint16_t tcnt1) {
+    TCNT1 = tcnt1;
+}
+
+
+uint16_t Timer1::getOcrNA() {
+    return OCR1A;
+}
+
+uint16_t Timer1::getOcrNb() {
+    return OCR1B;
+}
+
+
+uint16_t Timer1::getTcntN() {
+    return TCNT1;
+}
+
 
 
 /**
@@ -382,6 +426,28 @@ void Timer2::setOcrNA(uint16_t ocr2a) {
  */
 void Timer2::setOcrNB(uint16_t ocr2b) {
     OCR2B = (uint8_t)ocr2b;
+}
+
+/**
+ * @brief   Change la valeur de TCNT2.
+ * @param[in] tcnt2    Nouvelle valeur de TCNT2.
+ */
+void Timer2::setTcntN(uint16_t tcnt2) {
+    TCNT2 = tcnt2;
+}
+
+
+uint16_t Timer2::getOcrNA() {
+    return OCR2A;
+}
+
+uint16_t Timer2::getOcrNb() {
+    return OCR2B;
+}
+
+
+uint16_t Timer2::getTcntN() {
+    return TCNT2;
 }
 
 

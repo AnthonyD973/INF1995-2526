@@ -3,7 +3,7 @@
 #include <buzzer.h>
 #include <uart.h>
 
-#include <tests.h>
+#include "tests/tests.h"
 
 int main() {
  

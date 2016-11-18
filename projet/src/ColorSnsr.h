@@ -31,8 +31,8 @@ typedef uint8_t ColorFilter;
 
 // ---ColorFilter---
 #define FILTER_RED	 0x0
-#define FILTER_BLUE  0x1
-#define FILTER_CLEAR 0x2
+#define FILTER_CLEAR 0x1
+#define FILTER_BLUE  0x2
 #define FILTER_GREEN 0x3
 
 
@@ -72,12 +72,10 @@ public:
 
 private:
     /**
-     * @type    TimerExternalClock
      * @brief   Numéro du compteur pour lequel utiliser l'horloge externe.
      */
     static TimerExternalClock _TEC;
     /**
-     * @type    Timer*
      * @brief   Compteur utilisé.
      */
 	static Timer* _TIMER;

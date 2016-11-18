@@ -151,7 +151,7 @@ OBJDEPS=$(patsubst %.c,$(GENDIR)/%.o,$(strip $(filter %.c, $(PRJSRC)))) \
 # Make all permet simplement de compiler le projet
 #
 all:
-	@make $(RECIPE)
+	$(MAKE) $(RECIPE)
 
 compile: $(TRG)
 
