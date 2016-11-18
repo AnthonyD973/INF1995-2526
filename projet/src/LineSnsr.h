@@ -17,8 +17,6 @@
 #define LINE_SNSR_H
 
 #include <incl.h>
-#include <lib.h>
-
 
 #define SENSOR_PORT		PORTC
 #define SENSOR_DIRECTION	DDRC
@@ -42,9 +40,9 @@ public:
      *          interruptions à une fréquence de 100 Hz afin de mettre à jour la lecture
      * 		du capteur
      *
-     * @param[in] port, timerNum 
+     * @param[in] port
      */
-    static void init(volatile uint8_t* port, uint8_t timerNum);
+    static void init(volatile uint8_t* port);
 
     /**
      * @brief 	Lit la valeur du capteur pour donner la position    
@@ -60,17 +58,9 @@ public:
 
 private:
     /**
-     * @brief   Numéro du compteur utilisé pour la génération d'interruption
-     */
-    static uint8_t _TIMER_NUM;
-    /**
      * @brief   Nom du port utilisé pour la réception des sorties du capteur
      */
     static uint8_t _PORT;
-    /**
-     * @brief   Compteur utilisé.
-     */
-	static Timer* _TIMER;
 
 };
 

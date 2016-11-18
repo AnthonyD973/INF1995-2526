@@ -9,7 +9,7 @@
 #ifndef PATH_H
 #define PATH_H
 
-#define   NB_PATHS 2
+#define   NB_PATHS 3
 
 #include "lib.h"
 #include "timer.h"
@@ -32,7 +32,7 @@ class Path {
     
     private :
     
-    static void readPath(pathAddr_ addr);
+    static void readPath(uint16_t addr);
     uint16_t[NB_PATHS] pathAddr_; // 3 Adresses for the paths    
 };
 

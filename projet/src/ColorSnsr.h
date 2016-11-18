@@ -61,14 +61,11 @@ public:
     static void init(TimerExternalClock tec);
 
     /**
-     * @brief   Détermine la fréquence de la sortie du capteur pour le filtre choisi et
-     *          l'interprète pour retourner une intensité de la couleur choisie.
+     * @brief   Détermine la couleur dominante vue par le capteur.
      * 
-     * @param[in]   cf      Couleur pour laquelle on veut connaître l'intensité relative.
-     * 
-     * @return  L'intensité de la couleur choisie.
+     * @return  La couleur dominante.
      */
-    static uint8_t read(ColorFilter cf);
+    static ColorFilter read();
 
 private:
     /**

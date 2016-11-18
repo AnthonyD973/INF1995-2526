@@ -20,6 +20,6 @@ void ColorSnsr::init(TimerExternalClock tec) {
     
 }
 
-uint8_t ColorSnsr::read(ColorFilter cf) {
+ColorFilter ColorSnsr::read() {
 	return 0;
 }
