@@ -1,5 +1,4 @@
 #include "engine.h"
-#include "uart.h"
 
 Timer* getTimerFromTCU(TimerChannelUsed tcu) {
     switch(tcu) {
@@ -87,10 +86,15 @@ Engine::Engine(TimerChannelUsed tcu)
     _THIS_MASK(getThisMaskFromTCU(tcu)),
     _PORT(getPortPtrFromTCU(tcu))
 {
-    UART::transmitCStr("---CONSTRUCTION ENGINE---\n");
     if (_timer != 0) {
-        setMode(ENG_FORWARD);
-        _timer->modeFastPWM(0x00FF, 0x00FF);
+        setMode(ENG_OFF);
+        _timer->setMode(WGM0_PWM_F1);
+        if (_isOnChannelA) {
+            _timer->setOcrNA(0x00FF);
+        }
+        else {
+            _timer->setOcrNB(0x00FF);
+        }
     }
 }
 

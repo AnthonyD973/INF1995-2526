@@ -1,15 +1,29 @@
 #ifndef TIMER_H
 #define TIMER_H
 
-#include "lib.h"
-#include "pinPosition.h"
-#include "led.h"
-#include "engine.h"
-#include "defaultISR.h"
+#include "incl.h"
 
+class Timer;    // Résolution des dépendances circulaires (ouais... bof, c'est du patchwork)
+class Timer0;   // Résolution des dépendances circulaires
+class Timer1;   // Résolution des dépendances circulaires
+class Timer2;   // Résolution des dépendances circulaires
 
 typedef uint8_t Prescale01;
-//const Prescale01
+typedef uint8_t Prescale2;
+typedef uint8_t ComNX;
+typedef uint8_t WGMode; // Waveform Generation Mode
+
+#include "lib.h"
+#include "led.h"
+#include "engine.h"
+#include "uart.h"
+
+extern Timer0 timer0;
+extern Timer1 timer1;
+extern Timer2 timer2;
+
+
+// ---Prescale01---
 #define    P01_NO_CLK  0x0
 #define    P01_CLK1    0x1
 #define    P01_CLK8    0x2
@@ -19,8 +33,7 @@ typedef uint8_t Prescale01;
 #define    P01_EXT_CLK_FALLING_EDGE 0x6
 #define    P01_EXT_CLK_RISING_EDGE 0x7
 
-typedef uint8_t Prescale2;
-//const Prescale2
+// ---Prescale2---
 #define    P2_NO_CLK  0x0
 #define    P2_CLK1    0x1
 #define    P2_CLK8    0x2
@@ -30,16 +43,14 @@ typedef uint8_t Prescale2;
 #define    P2_CLK256  0x6
 #define    P2_CLK1024 0x7
 
-typedef uint8_t ComNX;
-//const ComNX
+// ---ComNX---
 #define    DISCONNECTED 0x0
 #define    TOGGLE       0x1   // ATTENTION: Dans certains modes (ex: Fast-PWM et PC-PWM du Timer0 avec WGM02 = 0), TOGGLE est équivalent à DISCONNECTED.
                               // Également, pour COMNB, TOGGLE peut ne pas être supporté par le microcontrôleur.
 #define    CLEAR        0x2
 #define    SET          0x3
 
-typedef uint8_t WGMode; // Waveform Generation Mode
-//const WGMode               // Modes du Timer0 : [Voir Documentation p. 103]
+// ---WGMode---               // Modes du Timer0 : [Voir Documentation p. 103]
 #define    WGM0_NORMAL    0x00 // Normal             (avec TOP = 0xFF)
 #define    WGM0_PWM_PC1   0x01 // PWM, Phase correct (avec TOP = 0xFF)
 #define    WGM0_CTC       0x02 // CTC                (avec TOP = OCR0A)
@@ -84,37 +95,32 @@ class Timer {
     friend void switchAmberLedsColor(Timer* timer);
     
 public:
-    Timer();
-    
     virtual void setPrescale(Prescale01 prescale) {};
     
-    virtual void modeCTC    (uint16_t ocr0a, uint16_t ocr0b) { UART::transmitCStr("Timer::modeCTC"); };
-    virtual void modeFastPWM(uint16_t ocr0a, uint16_t ocr0b) { UART::transmitCStr("Timer::modeFastPWM"); };
+    virtual void setMode(WGMode mode) { while (true) {} };
     
-    virtual void setMode(WGMode mode) { UART::transmitCStr("UART::transmitCStr"); };
+    virtual void setComNA(ComNX comNa) { while (true) {} };
+    virtual void setComNB(ComNX comNb) { while (true) {} };
     
-    virtual void setComNA(ComNX comNa) { UART::transmitCStr("Timer::setComNA"); };
-    virtual void setComNB(ComNX comNb) { UART::transmitCStr("Timer::setComNB"); };
-    
-    virtual void setOcrNA(uint16_t ocrNa) { UART::transmitCStr("Timer::setOcrNA"); };
-    virtual void setOcrNB(uint16_t ocrNb) { UART::transmitCStr("Timer::setOcrNB"); };
+    virtual void setOcrNA(uint16_t ocrNa) { while (true) {} };
+    virtual void setOcrNB(uint16_t ocrNb) { while (true) {} };
   
-    virtual void allowOVFI() { UART::transmitCStr("Timer::allowOVFI"); };
-    virtual void allowOCIA() { UART::transmitCStr("Timer::allowOCIA"); };
-    virtual void allowOCIB() { UART::transmitCStr("Timer::allowOCIB"); };
+    virtual void allowOVFI() { while (true) {} };
+    virtual void allowOCIA() { while (true) {} };
+    virtual void allowOCIB() { while (true) {} };
     
-    virtual void denyOVFI() { UART::transmitCStr("Timer::denyOVFI"); };
-    virtual void denyOCIA() { UART::transmitCStr("Timer::denyOCIA"); };
-    virtual void denyOCIB() { UART::transmitCStr("Timer::denyOCIB"); };
+    virtual void denyOVFI() { while (true) {} };
+    virtual void denyOCIA() { while (true) {} };
+    virtual void denyOCIB() { while (true) {}  };
     
-    inline virtual bool is8BitClock() { UART::transmitCStr("Timer::is8BitClock"); return false;};
+    __attribute__ ((always_inline))
+    inline virtual bool is8BitClock() { while (true) {} return false;};
     
     volatile uint16_t getAmberLeds();
 
 protected:
-    ComNX _getComNA(); // ATTENTION: Ne PAS utiliser cette méthode. Elle est gardée au cas où on décide le la réimplémenter plus tard.
-    ComNX _getComNB(); // ATTENTION: Ne PAS utiliser cette méthode. Elle est gardée au cas où on décide le la réimplémenter plus tard.
-
+    Timer();
+    
 private:
     ComNX _comNa, _comNb;           // Mode de réaction des signaux OCNX lors de l'égalité entre OCRNX et TCNTN.
  
@@ -128,32 +134,29 @@ private:
 
 class Timer0 : public Timer {
 public:
-    
     Timer0(Prescale01 prescale);
     
-    void setPrescale(Prescale01 prescale);
+    virtual void setPrescale(Prescale01 prescale);
     
-    void modeCTC    (uint16_t ocr0a, uint16_t ocr0b);
-    void modeFastPWM(uint16_t ocr0a, uint16_t ocr0b);
+    virtual void setMode(WGMode mode0);
     
-    void setMode(WGMode mode0);
+    virtual void setComNA(ComNX com0a);
+    virtual void setComNB(ComNX com0b);
     
-    void setComNA(ComNX com0a);
-    void setComNB(ComNX com0b);
-    
-    void setOcrNA(uint16_t ocrNa);
-    void setOcrNB(uint16_t ocrNb);
+    virtual void setOcrNA(uint16_t ocrNa);
+    virtual void setOcrNB(uint16_t ocrNb);
     
     
-    void allowOVFI();
-    void allowOCIA();
-    void allowOCIB();
+    virtual void allowOVFI();
+    virtual void allowOCIA();
+    virtual void allowOCIB();
     
-    void denyOVFI();
-    void denyOCIA();
-    void denyOCIB();
+    virtual void denyOVFI();
+    virtual void denyOCIA();
+    virtual void denyOCIB();
     
-    inline bool is8BitClock() { return true; }
+    __attribute__ ((always_inline))
+    inline virtual bool is8BitClock() { return true; }
 };
 
 // ===========================
@@ -162,62 +165,60 @@ public:
 
 class Timer1 : public Timer {
 public:
-    
     Timer1(Prescale01 prescale);
     
-    void setPrescale(Prescale01 prescale);
+    virtual void setPrescale(Prescale01 prescale);
     
-    void modeCTC    (uint16_t ocr1a, uint16_t ocr1b);
-    void modeFastPWM(uint16_t ocr1a, uint16_t ocr1b);
+    virtual void setMode(WGMode mode1);
     
-    void setMode(WGMode mode1);
+    virtual void setComNA(ComNX com1a);
+    virtual void setComNB(ComNX com1b);
     
-    void setComNA(ComNX com1a);
-    void setComNB(ComNX com1b);
-    
-    void setOcrNA(uint16_t ocr1a);
-    void setOcrNB(uint16_t ocr1b);
+    virtual void setOcrNA(uint16_t ocr1a);
+    virtual void setOcrNB(uint16_t ocr1b);
     
     
-    void allowOVFI();
-    void allowOCIA();
-    void allowOCIB();
+    virtual void allowOVFI();
+    virtual void allowOCIA();
+    virtual void allowOCIB();
     
-    void denyOVFI();
-    void denyOCIA();
-    void denyOCIB();
+    virtual void denyOVFI();
+    virtual void denyOCIA();
+    virtual void denyOCIB();
     
-    inline bool is8BitClock() { return false; }
+    __attribute__ ((always_inline))
+    inline virtual bool is8BitClock() { return false; }
 };
+
+// ===========================
+// =         TIMER 2         =
+// ===========================
 
 class Timer2 : public Timer {
 public:
-    
     Timer2(Prescale2 prescale);
     
-    void setPrescale(Prescale2 prescale);
+    virtual void setPrescale(Prescale2 prescale);
     
-    void modeCTC    (uint16_t ocr2a, uint16_t ocr2b);
-    void modeFastPWM(uint16_t ocr2a, uint16_t ocr2b);
+    virtual void setMode(WGMode mode2);
     
-    void setMode(WGMode mode2);
+    virtual void setComNA(ComNX com2a);
+    virtual void setComNB(ComNX com2b);
     
-    void setComNA(ComNX com2a);
-    void setComNB(ComNX com2b);
-    
-    void setOcrNA(uint16_t ocr2a);
-    void setOcrNB(uint16_t ocr2b);
+    virtual void setOcrNA(uint16_t ocr2a);
+    virtual void setOcrNB(uint16_t ocr2b);
     
     
-    void allowOVFI();
-    void allowOCIA();
-    void allowOCIB();
+    virtual void allowOVFI();
+    virtual void allowOCIA();
+    virtual void allowOCIB();
     
-    void denyOVFI();
-    void denyOCIA();
-    void denyOCIB();
+    virtual void denyOVFI();
+    virtual void denyOCIA();
+    virtual void denyOCIB();
     
-    inline bool is8BitClock() { return true; }
+    __attribute__ ((always_inline))
+    inline virtual bool is8BitClock() { return true; }
 };
 
 #endif // TIMER_H

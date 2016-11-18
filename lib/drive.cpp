@@ -12,12 +12,11 @@ Engine Drive::_engR(0xFF);
  * @param[in] tcuRight  Sert à définir sur quelles broches le moteur droit est
  *      branché. Voir engine.h.
  */
-void Drive::init(TimerChannelUsed tcuLeft, TimerChannelUsed tcuRight,
-                 uint8_t left, uint8_t right) {
+void Drive::init(TimerChannelUsed tcuLeft, TimerChannelUsed tcuRight, uint8_t constLeft, uint8_t constRight) {
     _engL = Engine(tcuLeft);
     _engR = Engine(tcuRight);
-    CONST_R = right;
-    CONST_L = left;
+    CONST_L = constLeft;
+    CONST_R = constRight;
 }
 
 /**

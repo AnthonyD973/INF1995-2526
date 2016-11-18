@@ -17,8 +17,8 @@
 /*                                                                            */
 /******************************************************************************/
 
-#ifndef MEMORY_H
-#define MEMORY_H
+#ifndef RAM_H
+#define RAM_H
 
 #include "lib.h"
 
@@ -51,4 +51,4 @@ private:
    static const uint8_t _PAGE_SIZE;
 };
 
-#endif /* MEMOIRE_24_H */
+#endif // RAM_H

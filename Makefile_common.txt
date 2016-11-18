@@ -150,7 +150,10 @@ OBJDEPS=$(patsubst %.c,$(GENDIR)/%.o,$(strip $(filter %.c, $(PRJSRC)))) \
 
 # Make all permet simplement de compiler le projet
 #
-all: $(TRG)
+all:
+	@make $(RECIPE)
+
+compile: $(TRG)
 
 # Implementation de la cible
 $(TRG): $(GENDIR) $(OBJDEPS)
@@ -180,7 +183,7 @@ $(GENDIR)/%.hex: $(GENDIR)/%.out $(GENDIR)
 		-O $(HEXFORMAT) $< $@
 
 # La cible lib permet de produire une librairie .a
-# que l'on peut reutiliser ailleur
+# que l'on peut reutiliser ailleurs
 lib: $(LIBTRG)
 
 $(LIBTRG): $(GENDIR) $(OBJDEPS)

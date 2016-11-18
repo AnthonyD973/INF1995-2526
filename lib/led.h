@@ -1,14 +1,13 @@
 #ifndef LED_H
 #define LED_H
 
-#include "lib.h"
-#include "pinPosition.h"
-#include "timer.h"
-
-class Timer;    // Nécessaire pour résoudre la dépendance circulaire.
-
+#include "incl.h"
 
 typedef uint8_t LedColor;
+
+#include "lib.h"
+#include "timer.h"
+
 
 /**
  * @brief Constantes pour la DEL.

@@ -1,6 +1,10 @@
 #ifndef DRIVE_H
 #define DRIVE_H
 
+#include "incl.h"
+
+typedef uint8_t DriveDir;
+
 #include "lib.h"
 #include "engine.h"
 
@@ -10,8 +14,7 @@
  * 
  */
 
-typedef uint8_t DriveDir;
-//const DriveDir
+// ---DriveDir---
 #define    DIR_OFF 0x00
 #define    DIR_RIGHT 0x01
 #define    DIR_LEFT 0x02
@@ -19,7 +22,7 @@ typedef uint8_t DriveDir;
 class Drive {
 public:
     static void init(TimerChannelUsed tcuLeft, TimerChannelUsed tcuRight,
-                     uint8_t left, uint8_t right);
+                     uint8_t constLeft, uint8_t constRight);
     
     /**
      * @brief   Fait avancer/reculer le robot.

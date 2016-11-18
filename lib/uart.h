@@ -1,9 +1,15 @@
-#ifndef UART_H_
-#define UART_H_ // INCLUDE GUARD
+#ifndef UART_H
+#define UART_H
 #ifdef  DEBUG
 
-#include <string.h>
+//#include <string.h>
 #include "lib.h"
+
+typedef bool CommMode;
+#define UART_POLLING    true
+#define UART_INTERRUPT  false
+
+typedef uint16_t size_t;
 
 /**
  * @brief   Puisque c'est une classe qui agit comme interface de communication
@@ -28,6 +34,12 @@ public:
      *                      de données (en baud).
      */
     static void init(uint16_t baud);
+    /**
+     * @brief   Cette fonction assigne le mode de communication de l'uart, i.e.
+     *          peut prendre une de ces valeurs : UART_POLLING, UART_INTERRUPT
+     * @param[int]  commMode    Le mode de communication.
+     */
+    static void setMode(CommMode commMode);
     /**
      * @brief   Cette fonction ajoute 1 octet au tampon de transmission.
      *          Si le tampon est plein, la fonction bloque le thread jusqu'à ce
@@ -58,7 +70,7 @@ public:
      *          contenant sa représentation binaire sur 8 bits.
      *          Si le tampon est plein, la fonction bloque le thread jusqu'à ce
      *          qu'il y a de la place.
-     * @param[in]   data    Donnée à transmettre.
+     * @param[in]   data    Donnée de 8 bits à transmettre.
      */
     static void transmitBin(uint8_t data);
     /**
@@ -93,26 +105,21 @@ public:
 
 private:
     static volatile uint8_t _recBuffer[BUFFER_SIZE];
-    static volatile uint8_t  _recBufferDataBeg;
+    static volatile size_t  _recBufferDataBeg;
     static volatile size_t  _recBufferDataCount;
     static volatile uint8_t _traBuffer[BUFFER_SIZE];
-    static volatile uint8_t  _traBufferDataBeg;
+    static volatile size_t  _traBufferDataBeg;
     static volatile size_t  _traBufferDataCount;
     
-    static bool _initialized;
+    static bool     _initialized;
+    static CommMode _commMode;
     
     static volatile uint8_t _rec_pop(void);// "pop" le premier élément du tampon
     static void    _tra_push_back(volatile uint8_t data);
 };
 
-/*
-void initialisationUART ( void );
-void transmissionUART ( uint8_t donnee );
-uint8_t receptionUART ( );
-void viderTamponDeReceptionUART();//*/
-
 #else
-#include <string.h>
+typedef uint16_t size_t;
 // Définition d'une classe UART qui ne fait rien pour optimiser la mémoire.
 class UART {
 public:
@@ -128,10 +135,10 @@ public:
     
     static void    _rec_push_back(volatile uint8_t data) { }
     static bool    _rec_full(void) { return true; }
-    static size_t _rec_size(void) { return 0; }
+    static size_t  _rec_size(void) { return 0; }
     static volatile uint8_t _tra_pop(void) { return 0; }
     static bool    _tra_empty(void) { return true; }
-    static size_t _tra_size(void) { return 0; }
+    static size_t  _tra_size(void) { return 0; }
 };
 #endif
 #endif // END OF INCLUDE GUARD

@@ -1,10 +1,8 @@
-#ifndef BUZZER_H_ // BUZZER_H
-#define BUZZER_H_
+#ifndef BUZZER_H // BUZZER_H
+#define BUZZER_H
 
 #include "lib.h"
 #include "timer.h"
-
-extern Timer1 timer1;
 
 /**
  * @brief   Classe gérant le piezo-electrique.

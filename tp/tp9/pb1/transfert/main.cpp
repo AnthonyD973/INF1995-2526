@@ -3,9 +3,6 @@
 #include "ram.h"
 #include "led.h"
 
-Timer0 timer0(P01_CLK8);
-Timer1 timer1(P01_CLK8);
-
 int main() {
     uint16_t size = 0;
     uint8_t  buffer = 0;
