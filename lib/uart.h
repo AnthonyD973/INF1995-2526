@@ -66,13 +66,21 @@ public:
      */
     static void transmitCStr(const char* str);
     /**
-     * @brief   Cette fonction convertie un octet en une chaîne de caractère
+     * @brief   Cette fonction convertit un octet en une chaîne de caractère
      *          contenant sa représentation binaire sur 8 bits.
      *          Si le tampon est plein, la fonction bloque le thread jusqu'à ce
      *          qu'il y a de la place.
      * @param[in]   data    Donnée de 8 bits à transmettre.
      */
     static void transmitBin(uint8_t data);
+    /**
+     * @brief   Cette fonction convertit un octet en une chaîne de caractère
+     *          contenant sa représentation binaire sur 8 bits.
+     *          Si le tampon est plein, la fonction bloque le thread jusqu'à ce
+     *          qu'il y a de la place.
+     * @param[in]   data    Donnée à transmettre.
+     */
+    static void transmitHex(uint8_t data);
     /**
      * @brief   Cette fonction renvoie le premier octet du tampon de reception.
      *          Si le tampon est vide, la fonction bloque le thread jusqu'à ce
@@ -129,6 +137,7 @@ public:
     static void transmit(const uint8_t* data, size_t n) { }
     static void transmitCStr(const char* str) { }
     static void transmitBin(uint8_t data) { }
+    static void transmitHex(uint8_t data) { }
     static uint8_t receive(void) { return 0; }
     static void receive(uint8_t* data, size_t n) { }
     static void emptyRecBuffer(void) { }

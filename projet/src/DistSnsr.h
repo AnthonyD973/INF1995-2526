@@ -60,7 +60,6 @@ public:
 
 private:
     /**
-     * @type    PinAPos
      * @brief   Numéro de la broche.
      */
     static PinAPos _PINA_NUM;

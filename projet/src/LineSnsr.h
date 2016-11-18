@@ -55,21 +55,19 @@ public:
      */		
     static uint8_t read();
 
-// Une méthode estSurLaligne() qui retourne un booléen pourrait être également intéressante; son résultat déclencherait l'appel de l'algorithme de correction de trajectoire ...
+// Une méthode estSurLaligne() qui retourne un booléen pourrait être également intéressante;
+// son résultat déclencherait l'appel de l'algorithme de correction de trajectoire ...
 
 private:
     /**
-     * @type    uint8_t
      * @brief   Numéro du compteur utilisé pour la génération d'interruption
      */
     static uint8_t _TIMER_NUM;
     /**
-     * @type    uint8_t*
      * @brief   Nom du port utilisé pour la réception des sorties du capteur
      */
     static uint8_t _PORT;
     /**
-     * @type    Timer*
      * @brief   Compteur utilisé.
      */
 	static Timer* _TIMER;

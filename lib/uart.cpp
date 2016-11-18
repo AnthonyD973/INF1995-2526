@@ -180,8 +180,26 @@ void UART::transmitCStr(const char* str) {
 void UART::transmitBin(uint8_t data) {
     if (!_initialized) return;
     for (uint8_t i = 0; i < 8; ++i) {
-        transmit((data & 0x80) >> 7 | 0x30);
+        transmit((data & 0x80) >> 7 | '0');
         data <<= 1;
+    }
+}
+
+/**
+ * @brief Transmet les chiffires hexa d'un octet via l'interface UART du ATMega324PA.
+ * @param[in] data      Donnée de 8 bits à transmettre.
+ */
+void UART::transmitHex(uint8_t data) {
+    for (uint8_t i = 0; i < 2; ++i) {
+        uint8_t hexNum = (data & 0xF0) >> 4;
+        if (hexNum < 10) { // 0-9
+            uint8_t charToDisplay = hexNum | '0';
+        }
+        else { // A-F
+          uint8_t charToDisplay = (hexNum - 10) | 'A';
+        }
+        transmit(charToDisplay);
+        data <<= 4;
     }
 }
 
