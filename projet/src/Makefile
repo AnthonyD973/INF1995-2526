@@ -36,7 +36,7 @@ RECIPE=compile
 
 # Emplacement ou se trouve les fichiers sources (ex: ../src ./main . )
 # Par defaut, c'est le dossier courant (".")
-SRCDIR=. tests
+SRCDIR=.
 
 # Emplacement de stockage temporaire des fichiers generes
 # lors de la compilation (par defaut, creer un dossier 'gen' dans le
@@ -46,7 +46,7 @@ GENDIR=build
 # Inclusions additionnels separes par des espaces
 # (L'emplacement des fichiers .h utilises dans les fichers sources)
 # (ex: /path/to/mydir /path/to/dir2) (utilisation avec le prefix -I)
-INC=$(REPO_ROOT_PATH)/lib tests
+INC=$(REPO_ROOT_PATH)/lib
 
 ### Variables spécifiques à la production d'un executable
 
