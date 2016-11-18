@@ -16,11 +16,12 @@
 #ifndef COLOR_SNSR_H
 #define COLOR_SNSR_H
 
+#include <incl.h>
+
 typedef uint8_t TimerExternalClock;
 typedef uint8_t ColorFilter;
-
-#include <incl.h>
 #include <lib.h>
+#include <timer.h>
 
 // ---TimerExternalClock---
 #define T0_FALLING_EDGE 0x06
@@ -51,14 +52,21 @@ public:
      *          Met en entrée le numéro du compteur pour lequel utiliser  du port A où le signal
      *          analogique du capteur de distance est reçu.
      * 
-     * @param[in]   tec     
+     * @param[in]   tec     Le compteur sur lequel la sortie du capteur est branchée.
+     *  
+     *                      La valeur peut prendre une de celles-ci
+     *                      [T0_FALLING_EDGE, T0_RISING_EDGE, T1_FALLING_EDGE, T1_RISING_EDGE],
+     *                      définies ci-dessus.
      */
     static void init(TimerExternalClock tec);
 
     /**
-     * @brief   
+     * @brief   Détermine la fréquence de la sortie du capteur pour le filtre choisi et
+     *          l'interprète pour retourner une intensité de la couleur choisie.
      * 
-     * @return  
+     * @param[in]   cf      Couleur pour laquelle on veut connaître l'intensité relative.
+     * 
+     * @return  L'intensité de la couleur choisie.
      */
     static uint8_t read(ColorFilter cf);
 
@@ -72,7 +80,7 @@ private:
      * @type    Timer*
      * @brief   Compteur utilisé.
      */
-	static Timer* _TIMER
+	static Timer* _TIMER;
 
 };
 

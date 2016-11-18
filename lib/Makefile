@@ -30,6 +30,10 @@
 # (utilisez un seul mot, exemple: 'monprojet')
 PROJECTNAME=robot
 
+# Nom de la cible à utiliser
+# ('lib' pour 'make lib' ou 'all' pour 'make all')
+RECIPE=lib
+
 # Emplacement ou se trouve les fichiers sources (ex: ../src ./main . )
 # Par defaut, c'est le dossier courant (".")
 SRCDIR=.
