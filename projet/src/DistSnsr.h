@@ -16,12 +16,12 @@
 #ifndef DISTSNSR_H_ // Include Guard
 #define DISTSNSR_H_
 
+#include <incl.h>
+
 typedef uint8_t PinAPos;
 
-#include <incl.h>
-#include <can.h>
-
 #include <lib.h>
+#include <can.h>
 
 /**
  * @class   DistSnsr
@@ -44,13 +44,13 @@ public:
      * 
      *                          La valeur peut prendre une de celles-ci:
      *                              [PA0, PA1, PA2, PA3, PA4, PA5, PA6, PA7]
-     *                          Elles sont définit dans la librairie d'AVR.
+     *                          Elles sont définies dans la librairie d'AVR.
      */
     static void     init(PinAPos pinANum);
 
     /**
      * @brief   Lit la valeur du capteur et l'interprète pour retourner une
-     *          de ditance relative (voir l'explication dans @return).
+     *          ditance relative (voir l'explication dans @return).
      * 
      * @return  Une valeur allant de 0 à 255 représentant des distances allant
      *          respectivement de 10 à 80 cm (Ex.: 10 cm => 0x00, 80 cm => 0xFF,

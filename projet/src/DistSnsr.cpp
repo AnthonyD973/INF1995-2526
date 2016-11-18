@@ -20,4 +20,5 @@ void DistSnsr::init(PinAPos pinANum) {
 uint8_t DistSnsr::read() {
     //TODO Implementer la lecture de la valeur analogique et
     //TODO le calcul de la distance.
+    return 0; //FIXME Valeur de débuggage
 }
