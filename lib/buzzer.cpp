@@ -64,7 +64,5 @@ void Buzzer::setTone(uint8_t midiTone) {
 }
 
 void Buzzer::clearTone() {
-    timer1.setMode(WGM1_PWM_PFC2);
     timer1.setPrescale(P01_NO_CLK);
-    timer1.setOcrNA(0x00);//*/
 }

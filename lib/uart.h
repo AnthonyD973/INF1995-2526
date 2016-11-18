@@ -116,22 +116,22 @@ void viderTamponDeReceptionUART();//*/
 // Définition d'une classe UART qui ne fait rien pour optimiser la mémoire.
 class UART {
 public:
-    static const uint8_t BUFFER_SIZE = 0;
+    static const size_t BUFFER_SIZE = 0;
     static void init(uint16_t baud) { }
     static void transmit(uint8_t data) { }
-    static void transmit(const uint8_t* data, uint8_t n) { }
+    static void transmit(const uint8_t* data, size_t n) { }
     static void transmitCStr(const char* str) { }
     static void transmitBin(uint8_t data) { }
     static uint8_t receive(void) { return 0; }
-    static void receive(uint8_t* data, uint8_t n) { }
+    static void receive(uint8_t* data, size_t n) { }
     static void emptyRecBuffer(void) { }
     
     static void    _rec_push_back(volatile uint8_t data) { }
     static bool    _rec_full(void) { return true; }
-    static uint8_t _rec_size(void) { return 0; }
+    static size_t _rec_size(void) { return 0; }
     static volatile uint8_t _tra_pop(void) { return 0; }
     static bool    _tra_empty(void) { return true; }
-    static uint8_t _tra_size(void) { return 0; }
+    static size_t _tra_size(void) { return 0; }
 };
 #endif
 #endif // END OF INCLUDE GUARD
