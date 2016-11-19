@@ -13,7 +13,7 @@ volatile uint8_t UART::_recBuffer[UART::BUFFER_SIZE];
 volatile uint8_t UART::_traBuffer[UART::BUFFER_SIZE];
 
 bool     UART::_initialized = false;
-CommMode UART::_commMode    = UART_INTERRUPT;
+CommMode UART::_commMode    = UART_POLLING;
 
 // Implementation de strlen de la librairie <string.h> qui nous permet de ne pas
 // avoir à inclure toute la librairie.
@@ -191,12 +191,13 @@ void UART::transmitBin(uint8_t data) {
  */
 void UART::transmitHex(uint8_t data) {
     for (uint8_t i = 0; i < 2; ++i) {
-        uint8_t hexNum = (data & 0xF0) >> 4;
+        uint8_t charToDisplay,
+                hexNum = (data & 0xF0) >> 4;
         if (hexNum < 10) { // 0-9
-            uint8_t charToDisplay = hexNum | '0';
+            charToDisplay = hexNum | '0';
         }
         else { // A-F
-          uint8_t charToDisplay = (hexNum - 10) | 'A';
+            charToDisplay = (hexNum - 10) | 'A';
         }
         transmit(charToDisplay);
         data <<= 4;

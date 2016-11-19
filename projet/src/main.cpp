@@ -29,6 +29,7 @@ void testColorSensor() {
 }
 
 int main() {
+    UART::init(2400);
  
     testColorSensor();
     

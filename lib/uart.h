@@ -127,12 +127,15 @@ private:
 };
 
 #else
+#include "incl.h"
+typedef bool CommMode;
 typedef uint16_t size_t;
 // Définition d'une classe UART qui ne fait rien pour optimiser la mémoire.
 class UART {
 public:
     static const size_t BUFFER_SIZE = 0;
     static void init(uint16_t baud) { }
+    static void setMode(CommMode commMode) { }
     static void transmit(uint8_t data) { }
     static void transmit(const uint8_t* data, size_t n) { }
     static void transmitCStr(const char* str) { }

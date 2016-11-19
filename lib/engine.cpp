@@ -62,10 +62,10 @@ uint8_t getThisMaskFromTCU(TimerChannelUsed tcu) {
 
 volatile uint8_t* getPortPtrFromTCU (TimerChannelUsed tcu) {
     switch (tcu) {
-     case T0CA: return &PORTB;
-     case T0CB: return &PORTB;
-     case T1CA: return &PORTD;
-     case T1CB: return &PORTD;
+     case T0CA: DDRB |= _BV(PB2) | _BV(PB3); return &PORTB;
+     case T0CB: DDRB |= _BV(PB4) | _BV(PB5); return &PORTB;
+     case T1CA: DDRD |= _BV(PD3) | _BV(PD5); return &PORTD;
+     case T1CB: DDRD |= _BV(PD2) | _BV(PD4); return &PORTD;
 //      case T2CA: return &PORTD;
 //      case T2CB: return &PORTD;
      default: return 0;
@@ -87,12 +87,15 @@ Engine::Engine(TimerChannelUsed tcu)
     _PORT(getPortPtrFromTCU(tcu))
 {
     if (_timer != 0) {
+        _timer->setPrescale(P01_CLK8);
         setMode(ENG_OFF);
         _timer->setMode(WGM0_PWM_F1);
         if (_isOnChannelA) {
+            _timer->setComNA(CLEAR);
             _timer->setOcrNA(0x00FF);
         }
         else {
+            _timer->setComNB(CLEAR);
             _timer->setOcrNB(0x00FF);
         }
     }

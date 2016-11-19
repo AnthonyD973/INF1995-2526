@@ -60,7 +60,7 @@ private:
     /**
      * @brief   Nom du port utilisé pour la réception des sorties du capteur
      */
-    static uint8_t _PORT;
+    static volatile uint8_t* _PORT;
 
 };
 
