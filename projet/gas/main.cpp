@@ -19,9 +19,10 @@
 #include "gas.h"
 
 int main(int argc, char* argv[]) {
-	if (argc != 2 || (argc == 1 && std::string(argv[0]) == "help")) {
+	if (argc != 2 || (argc == 2 && toLower(std::string(argv[1])) == "help")) {
 		printHelp();
 	}
+	
 	
 	return 0;
 }
