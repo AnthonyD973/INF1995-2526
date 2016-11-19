@@ -18,9 +18,6 @@
 
 #include <incl.h>
 
-#define SENSOR_PORT		PORTC
-#define SENSOR_DIRECTION	DDRC
-
 /**
  * @class   LineSnsr
  * 
@@ -35,32 +32,30 @@ class LineSnsr {
 public:
     /**
      * @brief   Initialisation du détecteur. À appeler au début du programme.
-     *		Met en entrée les broches du port C qui reçoit les sorties du capteur
-     *          Met en entrée le numéro du compteur qui sera utilisé pour générer des 
-     *          interruptions à une fréquence de 100 Hz afin de mettre à jour la lecture
-     * 		du capteur
+     *		Met en entrée les broches du port passé en paramètre qui reçoit les sorties du capteur.
      *
-     * @param[in] port
+     * @param[in] pin, port, ddr
      */
-    static void init(volatile uint8_t* port);
+    static void init(volatile uint8_t* pin, volatile uint8_t* port, volatile uint8_t* ddr);
 
     /**
      * @brief 	Lit la valeur du capteur pour donner la position    
-     * 	      	du robot par rapport à ligne qu'il suit
-     * @return  Un byte dont cinq bits sont d'intérêt. Deux bits du milieu servent
-     *		d'indicateur pour un déplacement suivant la ligne, i.e. 0b00110 ou 0b01100
-     *		Toute combinaison différente nécessite une correction 
+     * 	      	du robot par rapport à ligne qu'il suit.
+     *          Les broches 1 à 5 (bits 0 à 4) correspondent aux cinq sorties du capteur (la broche 1 
+     *          correspondant au détecteur de gauche)
+     *		La broche 6 (bit 5) est mise à 1 (pas de calibration; capteur déjà calibré)
+     *		Les broches restantes (bits 6 et 7) ne sont pas utilisés
+     *
+     * @return  Un byte dont cinq bits sont d'intérêt (encodés comme ci-dessus)
      */		
     static uint8_t read();
 
-// Une méthode estSurLaligne() qui retourne un booléen pourrait être également intéressante;
-// son résultat déclencherait l'appel de l'algorithme de correction de trajectoire ...
 
 private:
     /**
      * @brief   Nom du port utilisé pour la réception des sorties du capteur
      */
-    static volatile uint8_t* _PORT;
+    static volatile uint8_t* _PIN;
 
 };
 

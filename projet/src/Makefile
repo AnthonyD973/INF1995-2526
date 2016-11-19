@@ -59,6 +59,8 @@ LIBS=robot
 # la generation de l'executable final)
 LIBS_PATHS=$(REPO_ROOT_PATH)/lib
 
+DEBUG=-DDEBUG
+
 
 %.bin: %.asmb
 	$(REPO_ROOT_PATH)/progmem_ubuntu -o $@ $<
