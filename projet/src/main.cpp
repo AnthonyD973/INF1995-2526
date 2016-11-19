@@ -2,6 +2,7 @@
 #include <timer.h>
 #include <buzzer.h>
 #include <uart.h>
+#include "path.h"
 
 
 void testColorSensor() {
@@ -28,10 +29,30 @@ void testColorSensor() {
     }
 }
 
+void readShape() {
+    Path::turn(ROT_RIGHT);
+    _delay_ms(500.0);
+    while (!(LineSnsr::read() & 0x08));
+    Path::stop();
+}
+
 int main() {
+    Engine engL(T0CA);
+    Engine engR(T0CB);
+    
     UART::init(2400);
+    LineSnsr::init(&PINA, &PORTA, &DDRA);
+    Path::init(&engL, &engR);
  
-    testColorSensor();
+    //testColorSensor();
+    
+    Path::doPath(0);
+    readShape();
+    Path::doPath(1);
+    readShape();
+    Path::doPath(1);
+    readShape();
+    Path::doPath(2);
     
     return 0;
 }

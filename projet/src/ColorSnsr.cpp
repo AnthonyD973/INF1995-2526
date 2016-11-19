@@ -52,11 +52,11 @@ ColorFilter ColorSnsr::read() {
     
     ColorFilter ret;
     
-    if () { // ROUGE ?
+    if (false) { // ROUGE ?
         ret = FILTER_RED;
-    } else if () { // VERT ?
+    } else if (false) { // VERT ?
         ret = FILTER_GREEN;
-    } else if () { // BLEU ?
+    } else if (false) { // BLEU ?
         ret = FILTER_BLUE;
     } else {
         ret = FILTER_CLEAR;
