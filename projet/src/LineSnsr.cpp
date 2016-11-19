@@ -13,6 +13,8 @@
 
 #include "LineSnsr.h"
 
+volatile uint8_t* LineSnsr::_PIN = &PINA; // PINA par défault
+
 void LineSnsr::init(volatile uint8_t* pin, volatile uint8_t* port, volatile uint8_t* ddr) {
     _PIN = pin; // choix des pins pour recevoir les sorties du capteur
     *ddr &= ~(_BV(0) | _BV(1) | _BV(2) | _BV(3) | _BV(4)); // port configuré en entrée pour recevoir les sorties du capteur sur les broches 1 à 5

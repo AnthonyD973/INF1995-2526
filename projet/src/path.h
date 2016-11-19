@@ -27,6 +27,8 @@
 #include "LineSnsr.h"
 #include "DistSnsr.h"
 
+typedef uint8_t State;
+
 typedef bool RotDir;
 #define ROT_LEFT    true
 #define ROT_RIGHT   false
@@ -73,11 +75,7 @@ public :
     //Section qui doit être utilisée uniquement avec les ISR
     static Engine* engL_;
     static Engine* engR_;
-    
-    /**
-     * 
-     */
-    static void readPath_(uint16_t addr);
+    static volatile State etat;
     
 private :
     /**
@@ -85,6 +83,10 @@ private :
      *          instruction d'un chemin.
      */
     static uint16_t pathAddr_[NB_PATHS]; // 3 chemins en mémoire
+    /**
+     * 
+     */
+    static void readPath_(uint16_t addr);
     
     // +=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=+
     // | instructions de l'interpréteur |

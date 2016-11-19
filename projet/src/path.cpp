@@ -21,7 +21,6 @@ bool checkBranch(uint8_t input);
  */
 bool checkValidState(uint8_t input);
 
-typedef uint8_t State;
 const State
     S_BEGIN     = 0x1F, // Etat de debut
     S_FOR1      = 0x04, // Etat avancement
@@ -52,16 +51,16 @@ const uint8_t
 // distance que le capteur doit mesurer : ~18 cm
 static const uint8_t MIDDLE_DIST = 0x41;
 
-volatile State etat = S_STOP;
+volatile State Path::etat = S_STOP;
 
 /**
  * @brief   Routine d'interruption qui est utilisé pour faire du multi-threading
  */
 ISR(TIMER0_OVF_vect) {
     if (checkValidState(LineSnsr::read()))
-        etat = State(LineSnsr::read());
+        Path::etat = State(LineSnsr::read());
     
-    switch(etat) {
+    switch(Path::etat) {
     case S_BEGIN: //fallthrough
     case S_FOR1: //fallthrough
     case S_FOR2: //fallthrough
@@ -113,17 +112,37 @@ void Path::init(Engine* engL, Engine* engR) {
     engL_ = engL;
     engR_ = engR;
     engL_->getTimer()->denyOVFI();
+    RAM::init();
+    readPath_(0x0000);
 }
 
 void Path::doPath(uint8_t path) {
-    ini();
-    tnr();
-    mdl();
+    uint8_t  instr;
+    uint16_t instrIndex = 0;
+    RAM::read(pathAddr_[path], &instr);
+    while (instr != ENP) {
+        UART::transmitHex(pathAddr_[path]);
+        UART::transmit(' ');
+        UART::transmitHex(instr);
+        UART::transmit('\n');
+        switch (instr) {
+        case INI: ini(); break;
+        case TNR: tnr(); break;
+        case TNL: tnl(); break;
+        case MDL: mdl(); break;
+        default:  enp(); break;
+        }
+        RAM::read(pathAddr_[path] + (++instrIndex), &instr);
+    }
     enp();
 }
 
 void Path::readPath_(uint16_t addr) {
-    
+    uint16_t pathCount = 0; // Nombre de chemin dans le fichier.
+    RAM::read(addr+2, (uint8_t*)&pathCount, 2);
+    for(uint8_t i = 0; i < pathCount; ++i) {
+        RAM::read(addr + 4 + i*2, (uint8_t*)(&(pathAddr_[i])), 2);
+    }
 }
 
 void Path::forward() {
@@ -163,9 +182,9 @@ void Path::tnr(void) {
     _delay_ms(1000.0);
     turn(ROT_RIGHT);
     _delay_ms(1000.0);
-    etat = S_FCOR_R1;
+    Path::etat = S_FCOR_R1;
     forward();
-    while (LineSnsr::read() != S_COR_R2);
+    while (!(LineSnsr::read() & 0x08));
     stop();
 }
 void Path::tnl(void) {
@@ -174,14 +193,15 @@ void Path::tnl(void) {
     _delay_ms(1000.0);
     turn(ROT_LEFT);
     _delay_ms(1000.0);
-    etat = S_FCOR_L1;
+    Path::etat = S_FCOR_L1;
     forward();
-    while (LineSnsr::read() != S_COR_L2);
+    while (!(LineSnsr::read() & 0x02));
     stop();
 }
 void Path::mdl(void) {
     forward();
-    while (DistSnsr::read() > MIDDLE_DIST);
+    while (LineSnsr::read() != S_STOP);
+    //while (DistSnsr::read() > MIDDLE_DIST);
     stop();
 }
 void Path::enp(void) {
