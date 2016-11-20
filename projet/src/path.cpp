@@ -54,26 +54,26 @@ static const uint8_t MIDDLE_DIST = 0x41;
 volatile State Path::etat = S_STOP;
 
 /**
- * @brief   Routine d'interruption qui est utilisé pour faire du multi-threading
+ * @brief   Routine d'interruption qui est utilisé pour faire du multi-threading.
  */
 ISR(TIMER0_OVF_vect) {
     if (checkValidState(LineSnsr::read()))
-        Path::etat = State(LineSnsr::read());
+        Path::etat = State(LineSnsr::read()); // State(...) : Nice code m8!!
     
     switch(Path::etat) {
-    case S_BEGIN: //fallthrough
-    case S_FOR1: //fallthrough
-    case S_FOR2: //fallthrough
-    case S_FOR3: Path::engL_->setPower(ENG_FORWARD,V_MAX);Path::engR_->setPower(ENG_FORWARD,V_MAX); break;
-    case S_COR_R1: //fallthrough
-    case S_COR_R2: Path::engL_->setPower(ENG_FORWARD,V_MAX);Path::engR_->setPower(ENG_FORWARD,V_MOY);break;
-    case S_COR_L1: //fallthrough
-    case S_COR_L2: Path::engL_->setPower(ENG_FORWARD,V_MOY);Path::engR_->setPower(ENG_FORWARD,V_MAX);break;
+    case S_BEGIN:   //fallthrough
+    case S_FOR1:    //fallthrough
+    case S_FOR2:    //fallthrough
+    case S_FOR3:    Path::engL_->setPower(ENG_FORWARD,V_MAX);Path::engR_->setPower(ENG_FORWARD,V_MAX); break;
+    case S_COR_R1:  //fallthrough
+    case S_COR_R2:  Path::engL_->setPower(ENG_FORWARD,V_MAX);Path::engR_->setPower(ENG_FORWARD,V_MOY);break;
+    case S_COR_L1:  //fallthrough
+    case S_COR_L2:  Path::engL_->setPower(ENG_FORWARD,V_MOY);Path::engR_->setPower(ENG_FORWARD,V_MAX);break;
     case S_FCOR_R1: //fallthrough
     case S_FCOR_R2: Path::engL_->setPower(ENG_FORWARD,V_MAX);Path::engR_->setPower(ENG_OFF,V_MIN);break;
     case S_FCOR_L1: //fallthrough
     case S_FCOR_L2: Path::engL_->setPower(ENG_OFF,V_MIN);Path::engR_->setPower(ENG_FORWARD,V_MAX);break;
-    case S_STOP: //fallthrough
+    case S_STOP:    //fallthrough
     default: Path::engL_->setMode(ENG_OFF);Path::engR_->setMode(ENG_OFF);
     }
 }
@@ -90,14 +90,14 @@ bool checkBranch(uint8_t input) {
 
 bool checkValidState(uint8_t input) {
     switch(input) {
-    case S_BEGIN: //fallthrough
-    case S_FOR1: //fallthrough
-    case S_FOR2: //fallthrough
-    case S_FOR3: //fallthrough
-    case S_COR_R1: //fallthrough
-    case S_COR_R2: //fallthrough
-    case S_COR_L1: //fallthrough
-    case S_COR_L2: //fallthrough
+    case S_BEGIN:   //fallthrough
+    case S_FOR1:    //fallthrough
+    case S_FOR2:    //fallthrough
+    case S_FOR3:    //fallthrough
+    case S_COR_R1:  //fallthrough
+    case S_COR_R2:  //fallthrough
+    case S_COR_L1:  //fallthrough
+    case S_COR_L2:  //fallthrough
     case S_FCOR_R1: //fallthrough
     case S_FCOR_R2: //fallthrough
     case S_FCOR_L1: //fallthrough
@@ -118,21 +118,21 @@ void Path::init(Engine* engL, Engine* engR) {
 
 void Path::doPath(uint8_t path) {
     uint8_t  instr;
-    uint16_t instrIndex = 0;
-    RAM::read(pathAddr_[path], &instr);
-    while (instr != ENP) {
+    uint16_t instrAddr = pathAddr_[path];
+    RAM::read(instrAddr, &instr);
+    while (instr != ENP_OP) {
         UART::transmitHex(pathAddr_[path]);
         UART::transmit(' ');
         UART::transmitHex(instr);
         UART::transmit('\n');
         switch (instr) {
-        case INI: ini(); break;
-        case TNR: tnr(); break;
-        case TNL: tnl(); break;
-        case MDL: mdl(); break;
+        case INI_OP: ini(); break;
+        case TNR_OP: tnr(); break;
+        case TNL_OP: tnl(); break;
+        case MDL_OP: mdl(); break;
         default:  enp(); break;
         }
-        RAM::read(pathAddr_[path] + (++instrIndex), &instr);
+        RAM::read(++instrAddr, &instr);
     }
     enp();
 }

@@ -28,28 +28,39 @@ const unsigned char
 
 class GAS {
 public:
-    static void compile(const std::string& ifName, const std::string& ofName); 
-    static bool shouldCompile(int argc, char* argv[]);
-
+    static void run(int argc, char* argv[]);
+    
 private:
     /**
      * @brief   Instructions compilées qui seront mises dans le fichier.
      */
     static std::list<unsigned char> _instrs;
+    /**
+     * @brief   Adresses de début des chemins (avant l'ajout du header).
+     */
+    static std::list<unsigned short> _pathAddr;
     
     static std::ifstream _iFile;
     static std::ofstream _oFile;
     
-    static void _openFiles(const std::string& ifName, const std::string& ofName);
+    static bool _shouldCompile(int argc, char* argv[]);
+    static void _compile(const std::string& ifName, const std::string& ofName);
+    
+    static void _openInputFile(const std::string& ifName);
     static void _closeFiles();
     
+    static void _startOver();
     static void _compileInputFile();
     static void _emitCodeFromToken(std::string token);
-    static void _flushIntoOutputFile();
+    static void _addHeader();
+    static void _flushIntoOutputFile(const std::string& ofName);
     static void _printHelp();
-    static void _printSendEmail(const std::string& email);
+    static void _sendEmail(const std::string& email);
 };
 
 std::string toLower(const std::string& str);
+
+template <class T>
+unsigned int computeLength(std::list<T> l);
 
 #endif // GAS_H

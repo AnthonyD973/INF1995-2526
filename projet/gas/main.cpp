@@ -22,11 +22,7 @@
 int main(int argc, char* argv[]) {
 	setlocale(LC_ALL, ""); // Pour les accents
 	
-	bool isOkToCompile = GAS::shouldCompile(argc, argv);
-	
-	if (isOkToCompile) {
-		GAS::compile(argv[1], argv[2]);
-	}
+	GAS::run(argc, argv);
 	
 	return 0;
 }

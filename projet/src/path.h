@@ -35,12 +35,12 @@ typedef bool RotDir;
 
 typedef uint8_t Opcode;
 const Opcode
-    NOP = 0x00,
-    INI = 0x01,
-    TNR = 0x02,
-    TNL = 0x03,
-    MDL = 0x04,
-    ENP = 0xFF;
+    NOP_OP = 0x00, // No OPeration: Ne rien faire.
+    INI_OP = 0x10, // INIt: Attendre que les 5 capteurs de ligne soient actifs, puis se déplacer en avant pendant une demi-seconde.
+    TNL_OP = 0x20, // TurN Left: Au prochain embranchement, tourner à gauche.
+    TNR_OP = 0x21, // TurN Right: Au prochain embranchement, tourner à droite.
+    MDL_OP = 0x30, // MiDdLe: Se mettre au milieu de la pièce.
+    ENP_OP = 0xF0; // ENd Path: Le chemin est terminé ; les prochaines instructions sont pour le chemin suivant.
 
 /**
  * @class   Path

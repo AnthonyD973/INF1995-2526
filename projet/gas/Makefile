@@ -1,16 +1,18 @@
 
-.PHONY: all clean
+.PHONY: clean
 
 PRJNAME:=gas
 PRJSRC:=main.cpp gas.cpp
 GENDIR:=build
 SRCDIR:=.
-INC=.
 
 OBJDEPS:=$(patsubst %.cpp,$(GENDIR)/%.o,$(strip $(filter %.cpp, $(PRJSRC))))
 
 all: $(GENDIR) $(OBJDEPS)
-	g++ -lm -I. -o $(PRJNAME) $(OBJDEPS) -std=c++11 -Wall
+	g++ -o $(PRJNAME) $(OBJDEPS) -std=c++11 -Wall
+
+# Pour tester GAS, effectuer la commande suivante:
+# $ make && ./gas input.txt output.txt; hexdump output.txt -v -e '/1 "%02X "'; echo
 
 clean:
 	rm -rf $(GENDIR)
@@ -23,7 +25,5 @@ clean:
 $(GENDIR):
 	mkdir $(GENDIR)
 
-# Production des fichiers objet
-# De C++ à objet
 $(GENDIR)/%.o: $(SRCDIR)/%.cpp $(GENDIR)
-	g++ -I. -o $@ -c $< -std=c++11 -Wall
+	g++ -o $@ -c $< -std=c++11 -Wall
