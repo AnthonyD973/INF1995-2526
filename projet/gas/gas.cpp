@@ -153,7 +153,7 @@ void GAS::_addHeader() {
 }
 
 void GAS::_flushIntoOutputFile(const std::string& ofName) {
-    _oFile.open(ofName);
+    _oFile.open(ofName, std::ios::binary);
     if (_oFile.fail()) {
         throw std::runtime_error("ERREUR: Le fichier \"" + ofName + "\" n'a pas pu être ouvert.");
     }
