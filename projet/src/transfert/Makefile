@@ -30,6 +30,10 @@
 # (utilisez un seul mot, exemple: 'monprojet')
 PROJECTNAME=tp9transfert
 
+# Nom de la cible à utiliser
+# ('lib' pour 'make lib' ou 'compile' pour 'make compile')
+RECIPE=install
+
 # Emplacement ou se trouve les fichiers sources (ex: ../src ./main . )
 # Par defaut, c'est le dossier courant (".")
 SRCDIR=.
@@ -55,6 +59,7 @@ LIBS=robot
 # la generation de l'executable final)
 LIBS_PATHS=$(REPO_ROOT_PATH)/lib
 
+DEBUG=-DDEBUG
 
 
 -include $(shell git rev-parse --show-toplevel)/Makefile_common.txt
