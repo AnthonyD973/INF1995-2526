@@ -19,7 +19,7 @@
 #include <incl.h>
 
 typedef uint8_t TimerExternalClock;
-typedef uint8_t ColorFilter;
+typedef uint8_t ColorRead;
 #include <lib.h>
 #include <timer.h>
 
@@ -29,11 +29,11 @@ typedef uint8_t ColorFilter;
 #define T1_FALLING_EDGE	0x16
 #define T1_RISING_EDGE	0x17
 
-// ---ColorFilter---
-#define FILTER_RED	 0x0
-#define FILTER_GREEN 0x3
-#define FILTER_BLUE  0x2
-#define FILTER_CLEAR 0x1
+// ---ColorRead---
+#define COLOR_READ_RED	 0x0
+#define COLOR_READ_WHITE 0x1
+#define COLOR_READ_BLUE  0x2
+#define COLOR_READ_GREEN 0x3
 
 
 /**
@@ -65,18 +65,35 @@ public:
      * 
      * @return  La couleur dominante.
      */
-    static ColorFilter read();
+    static ColorRead read();
 
 private:
     /**
-     * @brief   Numéro du compteur pour lequel utiliser l'horloge externe.
+     * @brief   Masque de l'horloge externe.
      */
     static uint8_t _LED_MASK;
+    /**
+     * @brief   Numéro du bit de S2.
+     */
+    static const uint8_t _S2;
+    /**
+     * @brief   Numéro du bit de S0.
+     */
+    static const uint8_t _S0;
     /**
      * @brief   Compteur utilisé.
      */
 	static Timer* _TIMER;
-
+    /**
+     * @brief   Constantes décidées à l'Initialisation.
+     */
+    static const uint16_t
+        _RED_THRESH,
+        _GREEN_THRESH,
+        _BLUE_THRESH;
+    
+    static void _initializeConstants();
+    
 };
 
 #endif  // COLOR_SNSR_H
