@@ -13,12 +13,15 @@
 
 #include "DistSnsr.h"
 
+PinAPos DistSnsr::_PIN_A_NUM = 0xFF;
+
 void DistSnsr::init(PinAPos pinANum) {
-    //TODO Implementer l'initialisation de la methode
+    _PIN_A_NUM = pinANum;
 }
 
 uint8_t DistSnsr::read() {
-    //TODO Implementer la lecture de la valeur analogique et
-    //TODO le calcul de la distance.
-    return 0; //FIXME Valeur de débuggage
+    uint8_t valueRead = (uint8_t)CAN::read(_PIN_A_NUM);
+    UART::transmitHex(valueRead);
+    UART::transmit(' ');
+    return valueRead;
 }

@@ -16,7 +16,7 @@
 #ifndef CAN_H
 #define CAN_H
 
-#include <avr/io.h> 
+#include "incl.h"
 
 /**
  * @class   CAN
@@ -29,14 +29,14 @@ class CAN {
 public:
 
     /**
-     * @brief   Initialisation du convertisseur. Doit être appeler au début du
+     * @brief   Initialisation du convertisseur. Doit être appelé au début du
      *          programme, et uniquement au début.
      */
-    static void startCAN();
+    static void init();
     /**
      * @brief   Arrête le convertisseur pour sauver sur la consommation.
      */
-    static void stopCAN();
+    static void terminate();
 
     /**
      * @brief   Retourne la valeur numerique correspondant a la valeur

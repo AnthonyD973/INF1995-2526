@@ -62,7 +62,7 @@ private:
     /**
      * @brief   Numéro de la broche.
      */
-    static PinAPos _PINA_NUM;
+    static PinAPos _PIN_A_NUM;
 
 };
 

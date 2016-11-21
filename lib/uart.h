@@ -2,7 +2,6 @@
 #define UART_H
 #ifdef  DEBUG
 
-//#include <string.h>
 #include "lib.h"
 
 typedef bool CommMode;
@@ -126,7 +125,7 @@ private:
     static void    _tra_push_back(volatile uint8_t data);
 };
 
-#else
+#else // DEBUG
 #include "incl.h"
 typedef bool CommMode;
 typedef uint16_t size_t;
@@ -152,5 +151,5 @@ public:
     static bool    _tra_empty(void) { return true; }
     static size_t  _tra_size(void) { return 0; }
 };
-#endif
-#endif // END OF INCLUDE GUARD
+#endif // DEBUG
+#endif // UART_H

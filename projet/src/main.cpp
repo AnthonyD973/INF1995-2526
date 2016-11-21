@@ -17,10 +17,10 @@ void testColorSensor() {
     
     for EVER {
      
-        for (unsigned int i = 0; i < 255; ++i) {
+        for (unsigned int i = 0; i < 50; ++i) {
                 timer1.setTcntN(0);
             for (unsigned int j = 0; j < i; ++j) {
-                _delay_ms(1.0);
+                _delay_us(100.0);
             }
             uint16_t numEdges = timer1.getTcntN();
             UART::transmitHex(numEdges);
@@ -43,8 +43,6 @@ int main() {
     UART::init(2400);
     LineSnsr::init(&PINA, &PORTA, &DDRA);
     Path::init(&engL, &engR);
- 
-    //testColorSensor();
     
     Path::doPath(0);
     readShape();

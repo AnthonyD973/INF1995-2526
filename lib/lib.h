@@ -6,10 +6,6 @@
 typedef uint8_t PinPosition;
 
 #include "timer.h"
-#include "drive.h"
-#include "buzzer.h"
-#include "ram.h"
-#include "uart.h"
 
 // +-------------------------+
 // | SYMBOLES GLOBAUX DIVERS |
@@ -26,25 +22,6 @@ typedef uint8_t PinPosition;
 #ifndef nullptr
 #define nullptr 0
 #endif
-
-#ifndef BUZZER_H // Éviter l'erreur (type incomplet) lorsque buzzer.h inclut lib.h qui utilise Buzzer::init.
-/**
- * @brief Initialisation des classes et objets importants.
- */
-__attribute__ ((always_inline))
-inline void globalInit(Prescale01 p0, Prescale01 p1, Prescale2 p2,
-                       tcuEngLeft, TimerChannelUsed tcuEngRight,
-                       uint8_t constLeft, uint8_t constRight) {
-    timer0.setPrescale(p0);
-    timer1.setPrescale(p1);
-    timer2.setPrescale(p2);
-    
-    Drive::init(tcuEngLeft, tcuEngRight, constLeft, constRight);
-    Buzzer::init();
-    RAM::init();
-    UART::init(2400);
-}
-#endif // BUZZER_H
 
 // +-----------------------------+
 // | FONCTIONS UTILISABLES DANS  |
