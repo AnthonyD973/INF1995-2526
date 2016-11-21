@@ -66,13 +66,13 @@ danse: protocol.bin
 	@echo "| CHARGEMENT DU MICROPROGRAMME SUR RAM |";
 	@echo "+--------------------------------------+";
 	${MAKE} -C ${LIBS_PATHS} clean lib DEBUG=-DDEBUG;
-	${MAKE} -C ${SRCDIR}/transfert all install DEBUG=-DDEBUG;
+	${MAKE} -C ${SRCDIR}/transfert compile install DEBUG=-DDEBUG;
 	$(REPO_ROOT_PATH)/serieViaUSB_ubuntu -e -h -s 8 -f $<;
 	${MAKE} -C ${LIBS_PATHS} clean lib; ${MAKE} -C ${SRCDIR}/transfert clean;
 	@echo "+-----------------------------------+";
 	@echo "| CHARGEMENT DU PROGRAMME PRINCIPAL |";
 	@echo "+-----------------------------------+";
-	${MAKE} all install;
+	${MAKE} compile install;
 
 %.bin: %.asmb
 	$(REPO_ROOT_PATH)/progmem_ubuntu -o $@ $<

@@ -1,6 +1,7 @@
 # Ne pas ajouter les résultats du make.
 *.out
 *.out.map
+*.map
 *.o
 *.ee.hex
 *.d

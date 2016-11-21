@@ -95,30 +95,30 @@ LIBSPATHSCMD=$(patsubst %,-L%,$(LIBS_PATHS))
 ####### Options de compilation #######
 
 # Flags pour le compilateur en C
-CFLAGS=-I. -MMD $(patsubst %,-I%,$(INC)) \
+CFLAGS:=-I. -MMD $(patsubst %,-I%,$(INC)) \
 	-g -mmcu=$(MCU) -O$(OPTLEVEL) \
 	-fpack-struct -fshort-enums \
 	-funsigned-bitfields -funsigned-char \
 	-Wall $(DEBUG)
 
 # Flags pour le compilateur en C++
-CXXFLAGS=-fno-exceptions
+CXXFLAGS:=-fno-exceptions
 
 # Linker pour lier les librairies utilisees
-LDFLAGS=-Wl,-Map,$(TRG).map -mmcu=$(MCU)
+LDFLAGS:=-Wl,-Map,$(TRG).map -mmcu=$(MCU)
 
 # Flags pour l'archiveur
-ARFLAGS=-crs
+ARFLAGS:=-crs
 
 
 
 ####### Cible (Target) #######
 
 #Nom des cibles par defaut
-TRG=$(GENDIR)/$(PROJECTNAME).out
-HEXROMTRG=$(GENDIR)/$(PROJECTNAME).hex
-HEXTRG=$(HEXROMTRG) $(GENDIR)/$(PROJECTNAME).ee.hex
-LIBTRG=$(SRCDIR)/lib$(PROJECTNAME).a
+TRG:=$(GENDIR)/$(PROJECTNAME).out
+HEXROMTRG:=$(GENDIR)/$(PROJECTNAME).hex
+HEXTRG:=$(HEXROMTRG) $(GENDIR)/$(PROJECTNAME).ee.hex
+LIBTRG:=$(SRCDIR)/lib$(PROJECTNAME).a
 
 
 
@@ -127,12 +127,12 @@ LIBTRG=$(SRCDIR)/lib$(PROJECTNAME).a
 # Cette fonction permet de differencier les fichiers .c
 # des fichiers .cpp
 # Fichier C
-CFILES=$(strip $(filter %.c, $(addprefix $(SRCDIR)/,$(PRJSRC))))
+CFILES:=$(strip $(filter %.c, $(addprefix $(SRCDIR)/,$(PRJSRC))))
 # Fichier C++
-CPPFILES=$(strip $(filter %.cpp, $(addprefix $(SRCDIR)/,$(PRJSRC))))
+CPPFILES:=$(strip $(filter %.cpp, $(addprefix $(SRCDIR)/,$(PRJSRC))))
 
 # Liste de tout les fichiers objet que nous devons creer
-OBJDEPS=$(patsubst %.c,$(GENDIR)/%.o,$(strip $(filter %.c, $(PRJSRC)))) \
+OBJDEPS:=$(patsubst %.c,$(GENDIR)/%.o,$(strip $(filter %.c, $(PRJSRC)))) \
 	$(patsubst %.cpp,$(GENDIR)/%.o,$(strip $(filter %.cpp, $(PRJSRC))))
 	
 # Pour plus d'information sur cette section, consulter :
@@ -150,15 +150,27 @@ OBJDEPS=$(patsubst %.c,$(GENDIR)/%.o,$(strip $(filter %.c, $(PRJSRC)))) \
 
 # Make all permet simplement de compiler le projet
 #
-all:
-	$(MAKE) $(RECIPE)
+all: $(RECIPE)
 
-compile: $(TRG)
+compile:
+	$(MAKE) $(TRG)
 
 # Implementation de la cible
-$(TRG): $(GENDIR) $(OBJDEPS)
+$(TRG): libRobot
+	@echo "+-----------------------------+"
+	@echo "| COMPILATION DE L'EXÉCUTABLE |"
+	@echo "+-----------------------------+"
+	$(MAKE) executable
 	$(CC) $(LDFLAGS) -o $(TRG) $(OBJDEPS) \
 	-lm $(LIBSCMD) $(LIBSPATHSCMD)
+
+libRobot:
+	@echo "+-----------------------------+"
+	@echo "| COMPILATION DE LA LIBRAIRIE |"
+	@echo "+-----------------------------+"
+	$(MAKE) -C $(REPO_ROOT_PATH)/lib
+
+executable: $(GENDIR) $(OBJDEPS)
 
 $(GENDIR):
 	mkdir $(GENDIR)

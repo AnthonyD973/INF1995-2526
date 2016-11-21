@@ -59,6 +59,7 @@ LIBS=
 # la generation de l'executable final)
 LIBS_PATHS=
 
+DEBUG=-DDEBUG
 
 
 -include $(shell git rev-parse --show-toplevel)/Makefile_common.txt
