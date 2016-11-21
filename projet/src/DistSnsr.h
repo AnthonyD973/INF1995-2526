@@ -49,14 +49,12 @@ public:
     static void     init(PinAPos pinANum);
 
     /**
-     * @brief   Lit la valeur du capteur et l'interprète pour retourner une
-     *          ditance relative (voir l'explication dans @return).
+     * @brief   Lit la valeur du capteur.
      * 
-     * @return  Une valeur allant de 0 à 255 représentant des distances allant
-     *          respectivement de 10 à 80 cm (Ex.: 10 cm => 0x00, 80 cm => 0xFF,
-     *          45 cm => 0x7F).
+     * @return  Une valeur allant de 0 à 1023 représentant la valeur de la
+     *          tension émise par le capteur.
      */
-    static uint8_t  read();
+    static uint16_t  read();
 
 private:
     /**

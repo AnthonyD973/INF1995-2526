@@ -19,9 +19,6 @@ void DistSnsr::init(PinAPos pinANum) {
     _PIN_A_NUM = pinANum;
 }
 
-uint8_t DistSnsr::read() {
-    uint8_t valueRead = (uint8_t)CAN::read(_PIN_A_NUM);
-    UART::transmitHex(valueRead);
-    UART::transmit(' ');
-    return valueRead;
+uint16_t DistSnsr::read() {
+    return CAN::read(_PIN_A_NUM);
 }
