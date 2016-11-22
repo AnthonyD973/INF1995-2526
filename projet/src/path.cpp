@@ -40,11 +40,6 @@ const State
     S_B_L2      = 0x0F,
     S_STOP      = 0x1B; // Etat arret
 
-const uint8_t
-    V_MAX = 0xAF,
-    V_MOY = 0x6F,
-    V_MIN = 0x00;
-
 // (VAL) * 256 / (MAX - MIN + 1)
 //  18   * 256 / (80  - 10  + 1) = 65 = 0x41
 
@@ -169,10 +164,10 @@ void Path::stop() {
     engR_->setMode(ENG_OFF);
 }
 
-void Path::turn(RotDir dir) {
+void Path::turn(RotDir dir, uint8_t speed) {
     engL_->getTimer()->denyOVFI();
-    engL_->setPower( dir ? ENG_BACKWARD : ENG_FORWARD, V_MAX);
-    engR_->setPower(!dir ? ENG_BACKWARD : ENG_FORWARD, V_MAX);
+    engL_->setPower( dir ? ENG_BACKWARD : ENG_FORWARD, speed);
+    engR_->setPower(!dir ? ENG_BACKWARD : ENG_FORWARD, speed);
 }
 
 // +=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=+

@@ -9,7 +9,6 @@
 #include "path.h"
 
 void globalInit(Engine& engL, Engine& engR) {
-    DDRA = 0x60; // 0110 0000
     DDRB = 0xFD; // 1111 1101
     DDRC = 0xFF; // 1111 1111
     DDRD = 0xFF; // 1111 1111
@@ -27,15 +26,19 @@ void globalInit(Engine& engL, Engine& engR) {
 void testColorSensor() {
     for EVER {
         ColorRead curCR = ColorSnsr::read();
-        UART::transmitHex(curCR);
-        UART::transmit(' ');
+        switch (curCR) {
+         case COLOR_READ_RED:   UART::transmitCStr("RED    "); break;
+         case COLOR_READ_GREEN: UART::transmitCStr("GREEN  "); break;
+         case COLOR_READ_BLUE:  UART::transmitCStr("BLUE   "); break;
+         case COLOR_READ_WHITE:  UART::transmitCStr("WHITE "); break;
+         default: UART::transmitCStr("???    "); break;
+        }
     }
 }
 
 void testDistSensor() {
     for EVER {
         uint16_t curDR = DistSnsr::read();
-        UART::transmitHex(curDR >> 8);
         UART::transmitHex(curDR);
         UART::transmit(' ');
         _delay_ms(1000.0);
@@ -54,8 +57,10 @@ int main() {
     Engine engR(T0CB);
     
     globalInit(engL, engR);
+    Path::forward();
     
     testDistSensor();
+    
     
     /*
     Path::doPath(0);
