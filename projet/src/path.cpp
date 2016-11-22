@@ -54,9 +54,10 @@ static const uint8_t MIDDLE_DIST = 0x41;
 volatile State Path::etat = S_STOP;
 
 /**
- * @brief   Routine d'interruption qui est utilisé pour faire du multi-threading.
+ * @brief   Fonction pour la routine d'interruption qui est utilisé pour faire
+ *          du multi-threading.
  */
-ISR(TIMER0_OVF_vect) {
+void updateDirection(void) {
     if (checkValidState(LineSnsr::read()))
         Path::etat = State(LineSnsr::read()); // State(...) : Nice code m8!!
     
@@ -77,6 +78,19 @@ ISR(TIMER0_OVF_vect) {
     default: Path::engL_->setMode(ENG_OFF);Path::engR_->setMode(ENG_OFF);
     }
 }
+
+//*
+ISR(TIMER0_OVF_vect) {
+    updateDirection();
+}//*/
+/*
+ISR(TIMER1_OVF_vect) {
+    updateDirection();
+}//*/
+/*
+ISR(TIMER2_OVF_vect) {
+    updateDirection();
+}//*/
 
 bool checkBranch(uint8_t input) {
     switch(input) {
@@ -200,8 +214,8 @@ void Path::tnl(void) {
 }
 void Path::mdl(void) {
     forward();
-    while (LineSnsr::read() != S_STOP);
-    //while (DistSnsr::read() > MIDDLE_DIST);
+    //while (LineSnsr::read() != S_STOP);
+    while (DistSnsr::read() > MIDDLE_DIST);
     stop();
 }
 void Path::enp(void) {
