@@ -34,12 +34,16 @@ private:
      *          mettre dans OCR2A pour obtenir la fréquence qui leur correspond.
      *          Les notes midis vont de 24 inclusivement à 127 inclusivement.
      */
-    static const uint16_t _FREQS[104];
+    static const uint8_t _FREQS[104];
     /**
      * @brief   Table des valeurs de prescaler correspondant à la valeur de
      *          OCR1A du même index dans le tableau Buzzer::_FREQS.
      */
-    //static const uint8_t _PRESCALER[52];
+    static const uint8_t _PRESCALER[52];
+    /**
+     * @brief   Pointeur vers le timer utilisé pour générer le son.
+     */
+    static Timer* _TIMER;
 };
 
 #endif // BUZZER_H
