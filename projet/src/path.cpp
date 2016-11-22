@@ -189,7 +189,7 @@ void Path::tnr(void) {
     forward();
     while (!checkBranch(LineSnsr::read()));
     _delay_ms(1000.0);
-    turn(ROT_RIGHT);
+    turn(ROT_RIGHT, V_MOY);
     _delay_ms(1000.0);
     Path::etat = S_FCOR_R1;
     forward();
@@ -200,7 +200,7 @@ void Path::tnl(void) {
     forward();
     while (!checkBranch(LineSnsr::read()));
     _delay_ms(1000.0);
-    turn(ROT_LEFT);
+    turn(ROT_LEFT, V_MOY);
     _delay_ms(1000.0);
     Path::etat = S_FCOR_L1;
     forward();

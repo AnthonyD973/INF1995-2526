@@ -14,7 +14,7 @@ public:
      *
      * @param   timer   Timer générant le son
      */
-    static void init();
+    static void init(Timer* timer);
     
     /**
      * @brief   Cette fonction fait la un lien entre la table midi et les

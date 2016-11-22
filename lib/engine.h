@@ -22,9 +22,9 @@ typedef uint8_t TimerChannelUsed;
 #define    T0CA 0   // PWM utilisé = OC0A. |   PB3  |    PB2    |
 #define    T0CB 1   // PWM utilisé = OC0B. |   PB4  |    PB5    |
 #define    T1CA 2   // PWM utilisé = OC1A. |   PD5  |    PD3    |
-#define    T1CB 3/* // PWM utilisé = OC1B. |   PD4  |    PD2    |
-#define    T2CA 4   // PWM utilisé = OC2A. |   PD7  |    ???    |
-#define    T2CB 5*/ // PWM utilisé = OC2B. |   PD6  |    ???    |
+#define    T1CB 3   // PWM utilisé = OC1B. |   PD4  |    PD2    |
+#define    T2CA 4   // PWM utilisé = OC2A. |   PD7  |    PD5    |
+#define    T2CB 5   // PWM utilisé = OC2B. |   PD6  |    PD4    |
 
 
 class Engine {

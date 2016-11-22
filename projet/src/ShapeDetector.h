@@ -1,6 +1,8 @@
 #ifndef SHAPE_DETECTOR_H
 #define SHAPE_DETECTOR_H
 
+#include <incl.h>
+
 typedef uint8_t Shape;
 
 #include "DistSnsr.h"
@@ -17,8 +19,8 @@ public:
     static Shape checkShape();
     
 private:
-    static bool checkDirect_();
-    static void checkDecreasing_(bool isDecreasing);
+    static bool checkDecreasing_();
+    static void updateCreaseCount_(bool isDecreasing);
     
     static uint8_t creaseCount_;
     static const uint8_t uncert_;

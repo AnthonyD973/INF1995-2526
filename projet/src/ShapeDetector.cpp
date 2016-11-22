@@ -3,21 +3,24 @@
 #include "path.h"
 
 uint8_t ShapeDetector::creaseCount_ = 0;
-const uint8_t ShapeDetector::uncert_ = 5;
+const uint8_t ShapeDetector::uncert_ = 15;
 bool ShapeDetector::wasDecreasing_ = true;
+uint8_t ShapeDetector::prevDist_ = 0;
 uint8_t ShapeDetector::prevDist_ = 0;
 
 Shape ShapeDetector::checkShape() {
-    // initialiser
+    // Initialiser
     creaseCount_ = 0;
     wasDecreasing_ = true;
     prevDist_ = 0;
+    
+    
     
     Path::turn(ROT_RIGHT, 0x7F);
     
     _delay_ms(200.0); // On veut s'assurer que l'on est sorti de la ligne.
     
-    // On continue tant que l'on n'a pas dÃ©tectÃ© la ligne.
+    // On continue tant que l'on n'a pas détecté la ligne.
     while (LineSnsr::read() < 0x10) {
         bool isDecreasing = checkDecreasing_();
         updateCreaseCount_(isDecreasing);
@@ -25,15 +28,16 @@ Shape ShapeDetector::checkShape() {
     
     Path::stop();
     
-    // Prise de dÃ©cision
+    // Prise de décision
     Shape shape;
     if (creaseCount_ <= 1) {
-        shape = CIRCLE;
+        shape = CIRCLE_G;
     } else if (creaseCount_ >= 4) {
-        shape = OCTOGON;
+        shape = OCTOGON_R;
     } else {
-        shape = SQUARE;
+        shape = SQUARE_B;
     }
+    UART::transmitHex(creaseCount_);
     
     return shape;
 }
@@ -43,13 +47,16 @@ bool ShapeDetector::checkDecreasing_() {
     uint8_t dist = DistSnsr::read();
     bool ret = wasDecreasing_;
     
-    if (prevVal_ + uncert_ < dist) { // Si la valeur augmente...
+    if (prevDist_ + uncert_ < dist) { // Si la valeur augmente...
         ret = false; // La distance NE décroit PAS.
     }
-    else if (prevVal_ - uncert_ > dist) { // Si la valeur diminue...
+    else if (prevDist_ - uncert_ > dist) { // Si la valeur diminue...
         ret = true; // La distance DÉcroit.
     }
-    prevVal_ = dist;
+    prevDist_ = dist;
+    
+    UART::transmitHex(dist);
+    UART::transmit(' ');
     
     return ret;
 }

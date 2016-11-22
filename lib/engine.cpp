@@ -6,20 +6,20 @@ Timer* getTimerFromTCU(TimerChannelUsed tcu) {
         case T0CB: return &timer0;
         case T1CA: // fallthrough
         case T1CB: return &timer1;
-//         case T2CA: // fallthrough
-//         case T2CB: return &timer2;
-        default: return 0;
+        case T2CA: // fallthrough
+        case T2CB: return &timer2;
+        default: return nullptr;
     }
 }
 
 uint8_t getIsOnChannelAFromTCU(TimerChannelUsed tcu) {
     switch (tcu) {
      case T0CA: // fallthrough
-     case T1CA: return 1;
-     // case T2CA: return 1;
+     case T1CA: // fallthrough
+     case T2CA: return 1;
      case T0CB: // fallthrough
-     case T1CB: return 0;
-     // case T2CB: return 0;
+     case T1CB: // fallthrough
+     case T2CB: // fallthrough
      default: return 0;
     }
 }
@@ -30,8 +30,8 @@ uint8_t getForwardFromTCU(TimerChannelUsed tcu) {
      case T0CB: return _BV(PB4); // 00010000
      case T1CA: return _BV(PD5); // 00100000
      case T1CB: return _BV(PD4); // 00010000
-//      case T2CA: return _BV(PD7); // 10000000
-//      case T2CB: return _BV(PD6); // 01000000
+     case T2CA: return _BV(PD7); // 10000000
+     case T2CB: return _BV(PD6); // 01000000
      default:   return 0;
     }
 }
@@ -42,8 +42,8 @@ uint8_t getBackwardFromTCU(TimerChannelUsed tcu) {
      case T0CB: return _BV(PB4) | _BV(PB5); // 00110000
      case T1CA: return _BV(PD5) | _BV(PD3); // 00101000
      case T1CB: return _BV(PD4) | _BV(PD2); // 00010100
-//      case T2CA: return _BV(PD7) | _BV(???); // 10000000
-//      case T2CB: return _BV(PD6) | _BV(???); // 01000000
+     case T2CA: return _BV(PD7) | _BV(PD5); // 10000000
+     case T2CB: return _BV(PD6) | _BV(PD4); // 01000000
      default:   return 0;
     }
 }
@@ -54,8 +54,8 @@ uint8_t getThisMaskFromTCU(TimerChannelUsed tcu) {
      case T0CB: return _BV(PB4)  | _BV(PB5); // 00110000
      case T1CA: return _BV(PD5)  | _BV(PD3); // 00101000
      case T1CB: return _BV(PD4)  | _BV(PD2); // 00010100
-//      case T2CA: return _BV(PD7) | _BV(???); // 10000000
-//      case T2CB: return _BV(PD6) | _BV(???); // 01000000
+     case T2CA: return _BV(PD7)  | _BV(PD5); // 10000000
+     case T2CB: return _BV(PD6)  | _BV(PD4); // 01000000
      default:   return 0;
     }
 }
@@ -66,8 +66,8 @@ volatile uint8_t* getPortPtrFromTCU (TimerChannelUsed tcu) {
      case T0CB: DDRB |= _BV(PB4) | _BV(PB5); return &PORTB;
      case T1CA: DDRD |= _BV(PD3) | _BV(PD5); return &PORTD;
      case T1CB: DDRD |= _BV(PD2) | _BV(PD4); return &PORTD;
-//      case T2CA: return &PORTD;
-//      case T2CB: return &PORTD;
+     case T2CA: DDRD |= _BV(PD7) | _BV(PD5); return &PORTD;
+     case T2CB: DDRD |= _BV(PD6) | _BV(PD4); return &PORTD;
      default: return 0;
     }
 }
@@ -86,7 +86,7 @@ Engine::Engine(TimerChannelUsed tcu)
     _THIS_MASK(getThisMaskFromTCU(tcu)),
     _PORT(getPortPtrFromTCU(tcu))
 {
-    if (_timer != 0) {
+    if (_timer != nullptr) {
         _timer->setPrescale(P01_CLK8);
         setMode(ENG_OFF);
         _timer->setMode(WGM0_PWM_F1);
