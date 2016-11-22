@@ -16,7 +16,7 @@ public:
     
 private:
     static bool checkDirect_();
-    static void updateCreaseCount_(bool isDecrasing);
+    static void checkDecreasing_(bool isDecreasing);
     
     static uint8_t creaseCount_;
     static const uint8_t uncert_;
