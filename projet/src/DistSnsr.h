@@ -54,7 +54,7 @@ public:
      * @return  Une valeur allant de 0 à 1023 représentant la valeur de la
      *          tension émise par le capteur.
      */
-    static uint16_t  read();
+    static uint8_t  read();
 
 private:
     /**

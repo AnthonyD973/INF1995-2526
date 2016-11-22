@@ -17,8 +17,8 @@ public:
     static Shape checkShape();
     
 private:
-    static bool checkDecreasing_();
-    static void updateCreaseCount_(bool isDecreasing);
+    static bool checkDirect_();
+    static void checkDecreasing_(bool isDecreasing);
     
     static uint8_t creaseCount_;
     static const uint8_t uncert_;

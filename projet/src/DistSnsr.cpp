@@ -20,7 +20,7 @@ void DistSnsr::init(PinAPos pinANum) {
     _PIN_A_NUM = pinANum;
 }
 
-uint16_t DistSnsr::read() {
+uint8_t DistSnsr::read() {
     uint16_t val = 0x3FF & CAN::read(_PIN_A_NUM);
     // La constante 26.5 a été calculée à partir du graphique de la Figure 5 de
     // la documentation.
