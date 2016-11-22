@@ -13,7 +13,7 @@ volatile uint8_t UART::_recBuffer[UART::BUFFER_SIZE];
 volatile uint8_t UART::_traBuffer[UART::BUFFER_SIZE];
 
 bool     UART::_initialized = false;
-CommMode UART::_commMode    = UART_POLLING;
+CommMode UART::_commMode    = UART_INTERRUPT;
 
 // Implementation de strlen de la librairie <string.h> qui nous permet de ne pas
 // avoir à inclure toute la librairie.

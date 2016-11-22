@@ -42,6 +42,12 @@ const Opcode
     MDL_OP = 0x30, // MiDdLe: Se mettre au milieu de la pièce.
     ENP_OP = 0xF0; // ENd Path: Le chemin est terminé ; les prochaines instructions sont pour le chemin suivant.
 
+ // Constantes pour les vitesses
+const uint8_t
+    V_MAX = 0xAF,
+    V_MOY = 0x6F,
+    V_MIN = 0x00;
+
 /**
  * @class   Path
  * 
@@ -66,7 +72,7 @@ public :
     /**
      * 
      */
-    static void turn(RotDir dir);
+    static void turn(RotDir dir, uint8_t speed);
     /**
      * 
      */
