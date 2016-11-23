@@ -77,14 +77,22 @@ ColorRead ColorSnsr::read() {
         isRed =   colors[0] >= _RED_THRESH,
         isGreen = colors[1] >= _GREEN_THRESH,
         isBlue =  colors[2] >= _BLUE_THRESH;
-    if (isRed && !isGreen && !isBlue) {
-        ret = COLOR_READ_RED;
-    } else if (!isRed && isGreen && !isBlue) {
-        ret = COLOR_READ_GREEN;
-    } else if (!isRed && !isGreen && isBlue) {
-        ret = COLOR_READ_BLUE;
-    } else {
+    if (isRed && isGreen && isBlue) {
         ret = COLOR_READ_WHITE;
+    } else if (isRed) {
+        ret = COLOR_READ_RED;
+    } else if (isGreen) {
+        ret = COLOR_READ_GREEN;
+    } else {
+        ret = COLOR_READ_BLUE;
+    }
+    
+    switch(ret) {
+     case COLOR_READ_RED:   UART::transmitCStr("RED  \n");
+     case COLOR_READ_GREEN: UART::transmitCStr("GREEN\n");
+     case COLOR_READ_BLUE:  UART::transmitCStr("BLUE \n");
+     case COLOR_READ_WHITE: UART::transmitCStr("WHITE\n");
+     default: UART::transmitCStr("???  \n");
     }
     
     return ret;

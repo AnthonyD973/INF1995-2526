@@ -29,13 +29,6 @@ void globalInit(Engine& engL, Engine& engR) {
 void testColorSensor() {
     for EVER {
         ColorRead curCR = ColorSnsr::read();
-        switch (curCR) {
-         case COLOR_READ_RED:   UART::transmitCStr("RED    "); break;
-         case COLOR_READ_GREEN: UART::transmitCStr("GREEN  "); break;
-         case COLOR_READ_BLUE:  UART::transmitCStr("BLUE   "); break;
-         case COLOR_READ_WHITE:  UART::transmitCStr("WHITE "); break;
-         default: UART::transmitCStr("???    "); break;
-        }
     }
 }
 
