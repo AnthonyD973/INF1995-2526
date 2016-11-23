@@ -187,26 +187,32 @@ void Path::ini(void) {
 }
 void Path::tnr(void) {
     forward();
+    _delay_ms(250.0);
     while (!checkBranch(LineSnsr::read()));
     stop();
     engL_->setPower(ENG_FORWARD, V_MAX);
     engR_->setPower(ENG_FORWARD, V_MAX);
     _delay_ms(1000.0);
     turn(ROT_RIGHT, V_MAX);
-    _delay_ms(1000.0);
+    _delay_ms(500.0);
     while (!(LineSnsr::read() & 0x08));
+    forward();
+    _delay_ms(250.0);
     stop();
 }
 void Path::tnl(void) {
     forward();
+    _delay_ms(250.0);
     while (!checkBranch(LineSnsr::read()));
     stop();
     engL_->setPower(ENG_FORWARD, V_MAX);
     engR_->setPower(ENG_FORWARD, V_MAX);
     _delay_ms(1000.0);
     turn(ROT_LEFT, V_MAX);
-    _delay_ms(1000.0);
+    _delay_ms(500.0);
     while (!(LineSnsr::read() & 0x02));
+    forward();
+    _delay_ms(250.0);
     stop();
 }
 void Path::mdl(void) {

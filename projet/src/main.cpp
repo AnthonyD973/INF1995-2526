@@ -63,7 +63,7 @@ int main() {
     
     Path::doPath(0);
     testShapeDetector(led);
-    /*/Path::doPath(1);
+    /**/Path::doPath(1);
     testShapeDetector(led);
     Path::doPath(1);
     testShapeDetector(led);

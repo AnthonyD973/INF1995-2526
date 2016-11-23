@@ -51,6 +51,7 @@ Shape ShapeDetector::checkShape() {
         shape = CIRCLE_G;
     }
     UART::transmitHex(max_ - min_);
+    UART::transmit('\n');
     
     return shape;
 }
