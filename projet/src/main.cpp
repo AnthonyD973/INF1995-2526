@@ -1,5 +1,6 @@
 #include <lib.h>
 #include <timer.h>
+#include <led.h>
 #include <buzzer.h>
 #include <uart.h>
 
@@ -7,6 +8,7 @@
 #include "DistSnsr.h"
 #include "ColorSnsr.h"
 #include "path.h"
+#include "ShapeDetector.h"
 
 void globalInit(Engine& engL, Engine& engR) {
     DDRB = 0xFD; // 1111 1101
@@ -20,6 +22,7 @@ void globalInit(Engine& engL, Engine& engR) {
     DistSnsr::init(PA7);
     ColorSnsr::init(T1_RISING_EDGE);
     Path::init(&engL, &engR);
+    Buzzer::init(&timer0);
 }
 
 
@@ -45,22 +48,27 @@ void testDistSensor() {
     }
 }
 
-void readShape() {
-    Path::turn(ROT_RIGHT);
-    _delay_ms(500.0);
-    while (!(LineSnsr::read() & 0x08));
-    Path::stop();
+void testShapeDetector(LED& led) {
+    Shape shape = ShapeDetector::checkShape();
+    
+    switch (shape) {
+     case CIRCLE_G:  _MASK(PORTC, _BV(PC4), _BV(PC4) | _BV(PC5)); _delay_ms(1000.0); break;
+     case OCTOGON_R: _MASK(PORTC, _BV(PC5), _BV(PC4) | _BV(PC5));   _delay_ms(1000.0); break;
+     case SQUARE_B:  _MASK(PORTC, _BV(PC4), _BV(PC4) | _BV(PC5)); _delay_ms(1000.0); _MASK(PORTC, _BV(PC5), _BV(PC4) | _BV(PC5)); _delay_ms(1000.0); break;
+     default: ;
+    }
+    _MASK(PORTC, 0, _BV(PC4) | _BV(PC5));
 }
 
 int main() {
-    Engine engL(T0CA);
-    Engine engR(T0CB);
+    Engine engL(T2CA);
+    Engine engR(T2CB);
+    
+    LED led(C4_C5, &timer0);
     
     globalInit(engL, engR);
-    Path::forward();
     
-    testDistSensor();
-    
+    testShapeDetector(led);
     
     /*
     Path::doPath(0);

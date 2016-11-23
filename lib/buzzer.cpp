@@ -38,13 +38,12 @@ Timer* Buzzer::_TIMER = 0;
 // +=-=-==-=-=+
 
 void Buzzer::init(Timer* timer) {
-    DDRD |= _BV(PD4) | _BV(PD5);
     _TIMER = timer;
     _TIMER->setPrescale(P01_CLK8);
     _TIMER->setMode(WGM1_PWM_PFC2);
     _TIMER->setComNA(TOGGLE);
     _TIMER->setOcrNA(0x00);
-    TCNT1 = 0x0000;
+    _TIMER->setTcntN(0x0000);
     
     clearTone();
 }
