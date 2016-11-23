@@ -44,7 +44,7 @@ const State
 //  18   * 256 / (80  - 10  + 1) = 65 = 0x41
 
 // distance que le capteur doit mesurer : ~18 cm
-static const uint8_t MIDDLE_DIST = 0x41;
+static const uint8_t MIDDLE_DIST = 50;
 
 volatile State Path::etat = S_STOP;
 
@@ -74,7 +74,7 @@ void updateDirection(void) {
     }
 }
 
-//*
+/*
 ISR(TIMER0_OVF_vect) {
     updateDirection();
 }//*/
@@ -82,7 +82,7 @@ ISR(TIMER0_OVF_vect) {
 ISR(TIMER1_OVF_vect) {
     updateDirection();
 }//*/
-/*
+//*
 ISR(TIMER2_OVF_vect) {
     updateDirection();
 }//*/
@@ -188,28 +188,31 @@ void Path::ini(void) {
 void Path::tnr(void) {
     forward();
     while (!checkBranch(LineSnsr::read()));
+    stop();
+    engL_->setPower(ENG_FORWARD, V_MOY);
+    engR_->setPower(ENG_FORWARD, V_MOY);
     _delay_ms(1000.0);
-    turn(ROT_RIGHT, V_MOY);
+    turn(ROT_RIGHT, V_MAX);
     _delay_ms(1000.0);
-    Path::etat = S_FCOR_R1;
-    forward();
     while (!(LineSnsr::read() & 0x08));
     stop();
 }
 void Path::tnl(void) {
     forward();
     while (!checkBranch(LineSnsr::read()));
+    stop();
+    engL_->setPower(ENG_FORWARD, V_MOY);
+    engR_->setPower(ENG_FORWARD, V_MOY);
     _delay_ms(1000.0);
-    turn(ROT_LEFT, V_MOY);
+    turn(ROT_LEFT, V_MAX);
     _delay_ms(1000.0);
-    Path::etat = S_FCOR_L1;
-    forward();
     while (!(LineSnsr::read() & 0x02));
     stop();
 }
 void Path::mdl(void) {
     forward();
     //while (LineSnsr::read() != S_STOP);
+    _delay_ms(1500.0);
     while (DistSnsr::read() > MIDDLE_DIST);
     stop();
 }

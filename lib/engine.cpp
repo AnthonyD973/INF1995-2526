@@ -88,7 +88,6 @@ Engine::Engine(TimerChannelUsed tcu)
 {
     if (_timer != nullptr) {
         _timer->setPrescale(P01_CLK8);
-        setMode(ENG_OFF);
         _timer->setMode(WGM0_PWM_F1);
         if (_isOnChannelA) {
             _timer->setComNA(CLEAR);
@@ -98,6 +97,7 @@ Engine::Engine(TimerChannelUsed tcu)
             _timer->setComNB(CLEAR);
             _timer->setOcrNB(0x00FF);
         }
+        setMode(ENG_OFF);
     }
 }
 

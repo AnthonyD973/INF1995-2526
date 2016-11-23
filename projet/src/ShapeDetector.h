@@ -19,13 +19,15 @@ public:
     static Shape checkShape();
     
 private:
-    static bool checkDecreasing_();
-    static void updateCreaseCount_(bool isDecreasing);
+    static uint8_t getAverageValue_();
+    static void updateMax_(uint8_t curDist);
     
-    static uint8_t creaseCount_;
+//     static uint8_t creaseCount_;
+    static uint8_t min_;
+    static uint8_t max_;
     static const uint8_t uncert_;
-    static bool wasDecreasing_;
-    static uint8_t prevDist_;
+    static const uint8_t SQUARE_DELTA;
+    static const uint8_t OCTOGON_DELTA;
 };
 
 #endif // SHAPE_DETECTOR_H

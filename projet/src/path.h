@@ -44,7 +44,7 @@ const Opcode
 
  // Constantes pour les vitesses
 const uint8_t
-    V_MAX = 0xAF,
+    V_MAX = 0x8F,
     V_MOY = 0x6F,
     V_MIN = 0x00;
 
