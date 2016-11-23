@@ -39,15 +39,15 @@ Shape ShapeDetector::checkShape() {
 }
 
 bool ShapeDetector::checkDecreasing_() {
-    // On récupert la distance actuelle
+    // On rÃ©cupert la distance actuelle
     uint8_t dist = DistSnsr::read();
     bool ret = wasDecreasing_;
     
     if (prevVal_ + uncert_ < dist) { // Si la valeur augmente...
-        ret = false; // La distance NE décroit PAS.
+        ret = false; // La distance NE dÃ©croit PAS.
     }
     else if (prevVal_ - uncert_ > dist) { // Si la valeur diminue...
-        ret = true; // La distance DÉcroit.
+        ret = true; // La distance DÃ©croit.
     }
     prevVal_ = dist;
     
