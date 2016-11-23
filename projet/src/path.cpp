@@ -44,7 +44,7 @@ const State
 //  18   * 256 / (80  - 10  + 1) = 65 = 0x41
 
 // distance que le capteur doit mesurer : ~18 cm
-static const uint8_t MIDDLE_DIST = 50;
+static const uint8_t MIDDLE_DIST = 55;
 
 volatile State Path::etat = S_STOP;
 
@@ -189,8 +189,8 @@ void Path::tnr(void) {
     forward();
     while (!checkBranch(LineSnsr::read()));
     stop();
-    engL_->setPower(ENG_FORWARD, V_MOY);
-    engR_->setPower(ENG_FORWARD, V_MOY);
+    engL_->setPower(ENG_FORWARD, V_MAX);
+    engR_->setPower(ENG_FORWARD, V_MAX);
     _delay_ms(1000.0);
     turn(ROT_RIGHT, V_MAX);
     _delay_ms(1000.0);
@@ -201,8 +201,8 @@ void Path::tnl(void) {
     forward();
     while (!checkBranch(LineSnsr::read()));
     stop();
-    engL_->setPower(ENG_FORWARD, V_MOY);
-    engR_->setPower(ENG_FORWARD, V_MOY);
+    engL_->setPower(ENG_FORWARD, V_MAX);
+    engR_->setPower(ENG_FORWARD, V_MAX);
     _delay_ms(1000.0);
     turn(ROT_LEFT, V_MAX);
     _delay_ms(1000.0);

@@ -1,10 +1,9 @@
 #ifndef COLOR_SEQUENCE_DETECTOR_H
 #define COLOR_SEQUENCE_DETECTOR_H
 
-typedef uint8_t Color;
-#define 
-
+#include <incl.h>
 #include "ColorSnsr.h"
+typedef uint8_t Color;
 
 // ---Shape---
 #ifndef CIRCLE_G
@@ -25,6 +24,6 @@ private:
     static uint8_t colorSequenceCount_;
     static Color inputSequence_[4];
     static uint8_t inputSequenceCount_;
-}
+};
 
 #endif // COLOR_SEQUENCE_DETECTOR_H
