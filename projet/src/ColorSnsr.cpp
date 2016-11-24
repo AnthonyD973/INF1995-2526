@@ -34,7 +34,9 @@ void ColorSnsr::init(TimerExternalClock tec) {
     
     _TIMER->setPrescale(tec & 0x0F);
     
-    _MASK(PORTC, 0x3 << _S0 | COLOR_READ_WHITE << _S2, 0x3 << _S0 | 0x3 << _S2); // S1:0 = 2. Division d'horloge = 1:50 ; S3:2 = 1. Filtre Blanc.
+    _MASK(PORTC, 0x3 << _S0 | COLOR_READ_WHITE << _S2, 0x3 << _S0 | 0x3 << _S2); // S1:0 = 2. Division d'horloge = 1:1 ; S3:2 = 1. Filtre Blanc.
+    
+    _initializeConstants();
 }
 
 ColorRead ColorSnsr::read() {
@@ -44,12 +46,12 @@ ColorRead ColorSnsr::read() {
     ColorRead cf = COLOR_READ_RED;
     uint16_t colors[3];
     for (uint8_t i = 0; i < 3; ++i) {
-        _MASK(PORTC, cf << _S2, 0x3 << _S2);
+        _MASK(PORTC, cf << _S2, 0x3 << _S2); // Envoyer le filtre de couleur au capteur
         _TIMER->setTcntN(0);
         _delay_ms(30.0); //FIXME Est-ce la bonne valeur?
         colors[i] = _TIMER->getTcntN();
         
-        switch(cf) {
+        switch(cf) { // Passer à l'état (filtre) suivant
          case COLOR_READ_RED:   cf = COLOR_READ_GREEN; break;
          case COLOR_READ_GREEN: cf = COLOR_READ_BLUE; break;
          default: cf = COLOR_READ_WHITE; break;
@@ -79,12 +81,13 @@ ColorRead ColorSnsr::read() {
         isBlue =  colors[2] >= _BLUE_THRESH;
     if (isRed && isGreen && isBlue) {
         ret = COLOR_READ_WHITE;
-    } else if (isRed) {
+    } else if (colors[0] > (colors[1] + COLOR_INCERT) &&  // red > green + incert
+                colors[0] > (colors[2] + COLOR_INCERT)) { // red > blue + incert
         ret = COLOR_READ_RED;
-    } else if (isGreen) {
-        ret = COLOR_READ_GREEN;
-    } else {
+    } else if (colors[2] > (colors[1] + COLOR_INCERT)) {  // blue > green + incert
         ret = COLOR_READ_BLUE;
+    } else {
+        ret = COLOR_READ_GREEN;
     }
     
     switch(ret) {
@@ -96,4 +99,21 @@ ColorRead ColorSnsr::read() {
     }
     
     return ret;
+}
+
+void _initialiseConstants() {
+    _MASK(PORTB, 0xFF, _LED_MASK); // Allumer les LED
+    _MASK(PORTC, COLOR_READ_RED << _S2, 0x3 << _S2); // On choisi le filtre Rouge
+    _TIMER->setTcnt(0);
+    _delay_ms(30.0);
+    _RED_THRESH = (_TIMER->getTcnt() >> 2) * 3;
+    _MASK(PORTC, COLOR_READ_GREEN << _S2, 0x3 << _S2);
+    _TIMER->setTcnt(0);
+    _delay_ms(30.0);
+    _GREEN_THRESH = (_TIMER->getTcnt() >> 2) * 3;
+    _MASK(PORTC, COLOR_READ_BLUE << _S2, 0x3 << _S2);
+    _TIMER->setTcnt(0);
+    _delay_ms(30.0);
+    _BLUE_THRESH = (_TIMER->getTcnt() >> 2) * 3;
+    _MASK(PORTB, 0x00, _LED_MASK);
 }

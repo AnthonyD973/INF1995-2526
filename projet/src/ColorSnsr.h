@@ -30,11 +30,13 @@ typedef uint8_t ColorRead;
 #define T1_RISING_EDGE	0x17
 
 // ---ColorRead---
-#define COLOR_READ_RED	 0x0
-#define COLOR_READ_WHITE 0x1
-#define COLOR_READ_BLUE  0x2
-#define COLOR_READ_GREEN 0x3
+#define COLOR_READ_RED	 0x0 // S3 = 0 , S2 = 0
+#define COLOR_READ_WHITE 0x1 // S3 = 0 , S2 = 1
+#define COLOR_READ_BLUE  0x2 // S3 = 1 , S2 = 0
+#define COLOR_READ_GREEN 0x3 // S3 = 1 , S2 = 1
 
+// ---Incertitude sur la couleur---
+#define COLOR_INCERT 0xA // = ±10
 
 /**
  * @class   ColorSnsr
