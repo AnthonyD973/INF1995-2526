@@ -44,7 +44,7 @@ const State
 //  18   * 256 / (80  - 10  + 1) = 65 = 0x41
 
 // distance que le capteur doit mesurer : ~18 cm
-static const uint8_t MIDDLE_DIST = 55;
+static const uint8_t MIDDLE_DIST = 94;
 
 volatile State Path::etat = S_STOP;
 
@@ -57,20 +57,20 @@ void updateDirection(void) {
         Path::etat = State(LineSnsr::read()); // State(...) : Nice code m8!!
     
     switch(Path::etat) {
-    case S_BEGIN:   //fallthrough
-    case S_FOR1:    //fallthrough
-    case S_FOR2:    //fallthrough
-    case S_FOR3:    Path::engL_->setPower(ENG_FORWARD,V_MAX);Path::engR_->setPower(ENG_FORWARD,V_MAX); break;
+    case S_STOP:    Path::engL_->setMode(ENG_OFF);Path::engR_->setMode(ENG_OFF);
     case S_COR_R1:  //fallthrough
     case S_COR_R2:  Path::engL_->setPower(ENG_FORWARD,V_MAX);Path::engR_->setPower(ENG_FORWARD,V_MOY);break;
     case S_COR_L1:  //fallthrough
     case S_COR_L2:  Path::engL_->setPower(ENG_FORWARD,V_MOY);Path::engR_->setPower(ENG_FORWARD,V_MAX);break;
     case S_FCOR_R1: //fallthrough
-    case S_FCOR_R2: Path::engL_->setPower(ENG_FORWARD,V_MAX);Path::engR_->setPower(ENG_OFF,V_MIN);break;
+    case S_FCOR_R2: Path::engL_->setPower(ENG_FORWARD,V_MOY);Path::engR_->setPower(ENG_BACKWARD,V_MOY);break;
     case S_FCOR_L1: //fallthrough
-    case S_FCOR_L2: Path::engL_->setPower(ENG_OFF,V_MIN);Path::engR_->setPower(ENG_FORWARD,V_MAX);break;
-    case S_STOP:    //fallthrough
-    default: Path::engL_->setMode(ENG_OFF);Path::engR_->setMode(ENG_OFF);
+    case S_FCOR_L2: Path::engL_->setPower(ENG_BACKWARD,V_MOY);Path::engR_->setPower(ENG_FORWARD,V_MOY);break;
+    case S_BEGIN:   //fallthrough
+    case S_FOR1:    //fallthrough
+    case S_FOR2:    //fallthrough
+    case S_FOR3:    //fallthrough
+    default: Path::engL_->setPower(ENG_FORWARD,V_MAX);Path::engR_->setPower(ENG_FORWARD,V_MAX); break;
     }
 }
 
@@ -192,7 +192,7 @@ void Path::tnr(void) {
     stop();
     engL_->setPower(ENG_FORWARD, V_MAX);
     engR_->setPower(ENG_FORWARD, V_MAX);
-    _delay_ms(1000.0);
+    _delay_ms(1100.0);
     turn(ROT_RIGHT, V_MAX);
     _delay_ms(500.0);
     while (!(LineSnsr::read() & 0x08));
@@ -207,7 +207,7 @@ void Path::tnl(void) {
     stop();
     engL_->setPower(ENG_FORWARD, V_MAX);
     engR_->setPower(ENG_FORWARD, V_MAX);
-    _delay_ms(1000.0);
+    _delay_ms(1100.0);
     turn(ROT_LEFT, V_MAX);
     _delay_ms(500.0);
     while (!(LineSnsr::read() & 0x02));
@@ -218,9 +218,13 @@ void Path::tnl(void) {
 void Path::mdl(void) {
     forward();
     //while (LineSnsr::read() != S_STOP);
-    _delay_ms(1500.0);
-    while (DistSnsr::read() > MIDDLE_DIST);
+    _delay_ms(1200.0);
+    while (DistSnsr::readAverage() > MIDDLE_DIST);
+    engL_->setMode(ENG_BACKWARD);
+    engR_->setMode(ENG_BACKWARD);
+    _delay_ms(300.0);
     stop();
+    _delay_ms(500.0);
 }
 void Path::enp(void) {
     stop();

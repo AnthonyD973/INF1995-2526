@@ -219,7 +219,7 @@ clean:
 # y a a compiler, un 'make install' pour transferer le programme
 # compiles et un 'make clean' pour que les ficher generes ne
 # soient pas transferes dans l'entrepot git par erreur.
-auto: all install clean
+auto: all install
 
 # Pour plus d'information sur les phony target, consulter:
 # http://bit.ly/1WBQe61

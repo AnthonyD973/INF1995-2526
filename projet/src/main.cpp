@@ -34,10 +34,10 @@ void testColorSensor() {
 
 void testDistSensor() {
     for EVER {
-        uint16_t curDR = DistSnsr::read();
+        uint16_t curDR = DistSnsr::readAverage();
         UART::transmitHex(curDR);
-        UART::transmit(' ');
-        _delay_ms(1000.0);
+        UART::transmit('\n');
+        _delay_ms(100.0);
     }
 }
 
@@ -68,15 +68,6 @@ int main() {
     Path::doPath(1);
     testShapeDetector(led);
     Path::doPath(2);//*/
-    
-    /*
-    Path::doPath(0);
-    readShape();
-    Path::doPath(1);
-    readShape();
-    Path::doPath(1);
-    readShape();
-    Path::doPath(2);*/
     
     return 0;
 }

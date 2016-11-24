@@ -55,6 +55,7 @@ public:
      *          tension émise par le capteur.
      */
     static uint8_t  read();
+    static uint8_t  readAverage();
 
 private:
     /**
