@@ -16,10 +16,24 @@
 #ifndef TESTS_H
 #define TESTS_H
 
+#include <lib.h>
+#include <timer.h>
+#include <led.h>
+#include <buzzer.h>
+#include <uart.h>
+
+#include "LineSnsr.h"
+#include "DistSnsr.h"
+#include "ColorSnsr.h"
+#include "path.h"
+#include "ShapeDetector.h"
+
 void testColorSensor();
 
 void testDistSensor();
 
 void testShapeDetector();
+
+void testBuzzer();
 
 #endif // TESTS_H

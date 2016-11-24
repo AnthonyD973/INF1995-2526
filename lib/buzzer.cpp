@@ -51,7 +51,7 @@ void Buzzer::init(Timer* timer) {
 void Buzzer::setTone(uint8_t midiTone) {
     if (midiTone >= 24 && midiTone < 128) {
         TCNT1 = 0x0000;
-        _TIMER->setPrescale(0x0F & (_PRESCALER[(midiTone - 24)>>2] >> (((~(midiTone - 24))&0x01) << 2)));
+        _TIMER->setPrescale(0x0F & (_PRESCALER[(midiTone - 24) >> 1] >> (((~(midiTone - 24))&0x01) << 2)));
         //_TIMER->setPrescale(P01_CLK8);
         _TIMER->setOcrNA(_FREQS[midiTone - 24]);//*/
     }

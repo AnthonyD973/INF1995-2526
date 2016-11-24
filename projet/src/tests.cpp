@@ -27,3 +27,26 @@ void testShapeDetector() {
 
     _MASK(PORTC, 0, _BV(PC4) | _BV(PC5));
 }
+
+void testBuzzer() {
+	const float delayValue = 120.0;
+	
+	Buzzer::setTone(67);
+	_delay_ms(delayValue);
+	Buzzer::setTone(66);
+	_delay_ms(delayValue);
+	Buzzer::setTone(63);
+	_delay_ms(delayValue);
+	Buzzer::setTone(57);
+	_delay_ms(delayValue);
+	Buzzer::setTone(56);
+	_delay_ms(delayValue);
+	Buzzer::setTone(64);
+	_delay_ms(delayValue);
+	Buzzer::setTone(68);
+	_delay_ms(delayValue);
+	Buzzer::setTone(72);
+	_delay_ms(delayValue);
+	
+	Buzzer::clearTone();
+}

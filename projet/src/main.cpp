@@ -7,8 +7,9 @@
 #include "LineSnsr.h"
 #include "DistSnsr.h"
 #include "ColorSnsr.h"
-#include "path.h"
 #include "ShapeDetector.h"
+#include "path.h"
+#include "tests.h"
 
 void globalInit(Engine& engL, Engine& engR) {
 	// DDRA est modifié par LineSnsr::init.
@@ -23,7 +24,7 @@ void globalInit(Engine& engL, Engine& engR) {
     DistSnsr::init(PA7);
     ColorSnsr::init(T1_RISING_EDGE);
     Path::init(&engL, &engR);
-    Buzzer::init(&timer0);
+    Buzzer::init(&timer1);
 }
 
 
@@ -31,16 +32,18 @@ int main() {
     Engine engL(T2CA);
     Engine engR(T2CB);
     
-    LED led(C4_C5, &timer0);
     
     globalInit(engL, engR);
-    
+	
+	testBuzzer();
+	
+    /*/
     Path::doPath(0);
-    testShapeDetector(led);
-    /**/Path::doPath(1);
-    testShapeDetector(led);
+    testShapeDetector();
     Path::doPath(1);
-    testShapeDetector(led);
+    testShapeDetector();
+    Path::doPath(1);
+    testShapeDetector();
     Path::doPath(2);//*/
     
     return 0;
