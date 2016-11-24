@@ -11,6 +11,7 @@
 #include "ShapeDetector.h"
 
 void globalInit(Engine& engL, Engine& engR) {
+	// DDRA est modifié par LineSnsr::init.
     DDRB = 0xFD; // 1111 1101
     DDRC = 0xFF; // 1111 1111
     DDRD = 0xFF; // 1111 1111
@@ -25,33 +26,6 @@ void globalInit(Engine& engL, Engine& engR) {
     Buzzer::init(&timer0);
 }
 
-
-void testColorSensor() {
-    for EVER {
-        ColorRead curCR = ColorSnsr::read();
-    }
-}
-
-void testDistSensor() {
-    for EVER {
-        uint16_t curDR = DistSnsr::readAverage();
-        UART::transmitHex(curDR);
-        UART::transmit('\n');
-        _delay_ms(100.0);
-    }
-}
-
-void testShapeDetector(LED& led) {
-    Shape shape = ShapeDetector::checkShape();
-    
-    switch (shape) {
-     case CIRCLE_G:  _MASK(PORTC, _BV(PC4), _BV(PC4) | _BV(PC5)); _delay_ms(1000.0); break;
-     case OCTOGON_R: _MASK(PORTC, _BV(PC5), _BV(PC4) | _BV(PC5));   _delay_ms(1000.0); break;
-     case SQUARE_B:  _MASK(PORTC, _BV(PC4), _BV(PC4) | _BV(PC5)); _delay_ms(1000.0); _MASK(PORTC, _BV(PC5), _BV(PC4) | _BV(PC5)); _delay_ms(1000.0); break;
-     default: ;
-    }
-    _MASK(PORTC, 0, _BV(PC4) | _BV(PC5));
-}
 
 int main() {
     Engine engL(T2CA);
