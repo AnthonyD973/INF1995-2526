@@ -13,7 +13,7 @@
  *
  */
 
-#ifndef BUZZER_H // BUZZER_H
+#ifndef BUZZER_H
 #define BUZZER_H
 
 #include "lib.h"
