@@ -26,18 +26,19 @@ void switchAmberLedsColor(Timer* timer) {
         return;
     }
     
-    uint16_t curAmberLeds = timer->_amberLeds;
+    // Changer la couleur des LED actuellement ambres.
+    uint16_t curAmberLeds  = timer->_amberLeds;
     uint8_t nAmberLedsLeft = timer->_nAmberLeds;
     volatile uint8_t* curPort;
     for (PinPosition portBeginNum = 0; portBeginNum < 32 && nAmberLedsLeft != 0; portBeginNum += 8) {
         curPort = getPortPtr(portBeginNum);
         uint8_t amberLedsMask = 0;
         
-        for (uint8_t pinNumberOnPortDiv2 = 0; pinNumberOnPortDiv2 < 4 && nAmberLedsLeft != 0; ++pinNumberOnPortDiv2) {
+        for (uint8_t pinNumberDivBy2 = 0; pinNumberDivBy2 < 4 && nAmberLedsLeft != 0; ++pinNumberDivBy2) {
             bool isThisLedAmber = (curAmberLeds & 1) == 1;
             if (isThisLedAmber) {
                 --nAmberLedsLeft;
-                amberLedsMask |= getMask(portBeginNum + 2*pinNumberOnPortDiv2);
+                amberLedsMask |= getMask(portBeginNum + 2*pinNumberDivBy2);
             }
             curAmberLeds >>= 1;
         }
