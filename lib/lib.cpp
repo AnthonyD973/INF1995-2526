@@ -1,9 +1,24 @@
+/*
+ * Fichier de symboles divers utilisés dans la librarie.
+ *
+ * Ecole Polytechnique de Montreal
+ * Departement de genie informatique
+ * Cours inf1995
+ *
+ * Emir Khaled Belhaddad, Anthony Dentinger,
+ * Gergi Younis et Vincent Dandenault
+ * 2016
+ *
+ * Code qui n'est sous aucune license.
+ *
+ */
+
 #include "lib.h"
 
-// +-----------------------------+
-// | FONCTIONS UTILISABLES DANS  |
-// | LES ROUTINES D'INTERRUPTION |
-// +-----------------------------+
+// ===============================
+// = FONCTIONS UTILISABLES DANS  =
+// = LES ROUTINES D'INTERRUPTION =
+// ===============================
 
 void switchAmberLedsColor(Timer* timer) {
     // Test fréquemment vrai, alors effectué au début.
@@ -32,9 +47,9 @@ void switchAmberLedsColor(Timer* timer) {
 }
 
 
-// +------------------------+
-// | GESTION DE PinPosition |
-// +------------------------+
+// ===============================
+// =   GESTION DE PinPosition    =
+// ===============================
 
 volatile uint8_t* getPortPtr(PinPosition pinPos) {
     switch (pinPos / 8) {

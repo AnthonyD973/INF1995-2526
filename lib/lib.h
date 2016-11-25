@@ -1,3 +1,18 @@
+/*
+ * Fichier de symboles divers utilisés dans la librarie.
+ *
+ * Ecole Polytechnique de Montreal
+ * Departement de genie informatique
+ * Cours inf1995
+ *
+ * Emir Khaled Belhaddad, Anthony Dentinger,
+ * Gergi Younis et Vincent Dandenault
+ * 2016
+ *
+ * Code qui n'est sous aucune license.
+ *
+ */
+
 #ifndef LIB_H
 #define LIB_H
 
@@ -7,9 +22,9 @@ typedef uint8_t PinPosition;
 
 #include "timer.h"
 
-// +-------------------------+
-// | SYMBOLES GLOBAUX DIVERS |
-// +-------------------------+
+// ===============================
+// =   SYMBOLES GLOBAUX DIVERS   =
+// ===============================
 
 #define EVER (;;) // for EVER { ... }
 
@@ -20,10 +35,10 @@ typedef uint8_t PinPosition;
 #define nullptr 0
 #endif
 
-// +-----------------------------+
-// | FONCTIONS UTILISABLES DANS  |
-// | LES ROUTINES D'INTERRUPTION |
-// +-----------------------------+
+// ===============================
+// = FONCTIONS UTILISABLES DANS  =
+// = LES ROUTINES D'INTERRUPTION =
+// ===============================
 
 /**
  * @brief Change la couleur des leds présentement ambres gérées par un compteur.
@@ -33,11 +48,11 @@ typedef uint8_t PinPosition;
  */
 void switchAmberLedsColor(Timer* timer);
 
-// +------------------------+
-// | GESTION DE PinPosition |
-// +------------------------+
+// ===============================
+// =   GESTION DE PinPosition    =
+// ===============================
 
-// PinPosition #define
+// ---PinPosition---
 #define    A0_A1 0
 #define    A2_A3 2
 #define    A4_A5 4
