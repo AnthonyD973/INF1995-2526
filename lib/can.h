@@ -9,6 +9,9 @@
  * Matthew Khouzam et Jerome Collin
  * 2005-2006
  *
+ * Modifié par Emir Khaled Belhaddad
+ * 2016
+ *
  * Code qui n'est sous aucune license.
  *
  */
@@ -53,7 +56,6 @@ private:
     // Donnees membres
     
     /**
-     * @type    bool
      * @brief   Etat convertisseur analogique-numerique, i.e. allume ou eteint.
      *          true:   Le convertisseur est allume et pret a lire des donnees.
      *          false:  Le convertisseur est eteint et ne peut pas lire de

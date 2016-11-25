@@ -1,4 +1,7 @@
 /*
+ * Classe permettant l'acces au convertisseur analogique/numerique
+ * du microcontroleur ATMega16 de Atmel.
+ *
  * Ecole Polytechnique de Montreal
  * Departement de genie informatique
  * Cours inf1995
@@ -6,7 +9,8 @@
  * Matthew Khouzam et Jerome Collin
  * 2005-2006
  *
- * Modifie par Emir Khaled Belhaddad
+ * Modifié par Emir Khaled Belhaddad
+ * 2016
  *
  * Code qui n'est sous aucune license.
  *
