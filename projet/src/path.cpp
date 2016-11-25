@@ -205,7 +205,7 @@ void Path::tnr(void) {
     _delay_ms(500.0);
     while (!(LineSnsr::read() & 0x08));
     forward();
-    _delay_ms(250.0);
+    _delay_ms(500.0);
     stop();
 }
 void Path::tnl(void) {
@@ -220,7 +220,7 @@ void Path::tnl(void) {
     _delay_ms(500.0);
     while (!(LineSnsr::read() & 0x02));
     forward();
-    _delay_ms(250.0);
+    _delay_ms(500.0);
     stop();
 }
 void Path::mdl(void) {

@@ -7,7 +7,7 @@ uint8_t ShapeDetector::min_ = 0;
 uint8_t ShapeDetector::max_ = 0;
 const uint8_t ShapeDetector::uncert_ = 10;
 const uint8_t ShapeDetector::SQUARE_DELTA  = 0x1A;
-const uint8_t ShapeDetector::OCTOGON_DELTA = 0x05;
+const uint8_t ShapeDetector::OCTOGON_DELTA = 0x06;
 
 Shape ShapeDetector::checkShape() {
     Path::stop();

@@ -28,6 +28,8 @@ void testColorSequenceDetector(const Color shapeSequence[3]) {
 
 Shape testShapeDetector() {
     Shape shape = ShapeDetector::checkShape();
+    Buzzer::clearTone();
+    _MASK(PORTC, 0, _BV(PC4) | _BV(PC5));
     
     switch (shape) {
      case CIRCLE_G:  _MASK(PORTC, _BV(PC4), _BV(PC4) | _BV(PC5)); _delay_ms(1000.0); break;
