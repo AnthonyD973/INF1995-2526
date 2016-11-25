@@ -8,6 +8,7 @@
 #include "DistSnsr.h"
 #include "ColorSnsr.h"
 #include "ShapeDetector.h"
+#include "ColorSequenceDetector.h"
 #include "path.h"
 #include "tests.h"
 
@@ -24,7 +25,7 @@ void globalInit(Engine& engL, Engine& engR) {
     DistSnsr::init(PA7);
     ColorSnsr::init(T1_RISING_EDGE);
     Path::init(&engL, &engR);
-    Buzzer::init(&timer1);
+    Buzzer::init(&timer0);
 }
 
 
@@ -32,19 +33,27 @@ int main() {
     Engine engL(T2CA);
     Engine engR(T2CB);
     
+    Shape shapeSequence[3];/*
+    shapeSequence[2] = OCTOGON_R;
+    shapeSequence[1] = CIRCLE_G;
+    shapeSequence[0] = SQUARE_B;//*/
     
     globalInit(engL, engR);
 	
-	testBuzzer();
-	
-    /*/
+    //*
     Path::doPath(0);
-    testShapeDetector();
+    shapeSequence[2] = testShapeDetector();
     Path::doPath(1);
-    testShapeDetector();
+    shapeSequence[1] = testShapeDetector();
     Path::doPath(1);
-    testShapeDetector();
+    shapeSequence[0] = testShapeDetector();
     Path::doPath(2);//*/
+    
+    ColorSequenceDetector::checkSequence(shapeSequence);
+    
+    for EVER {
+        // Busy wait
+    }
     
     return 0;
 }

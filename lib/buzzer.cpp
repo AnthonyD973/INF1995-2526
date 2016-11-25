@@ -40,8 +40,9 @@ Timer* Buzzer::_TIMER = 0;
 void Buzzer::init(Timer* timer) {
     _TIMER = timer;
     _TIMER->setPrescale(P01_CLK8);
-    _TIMER->setMode(WGM1_PWM_PFC2);
+    _TIMER->setMode(_TIMER->is8BitClock() ? WGM0_PWM_PC2 : WGM1_PWM_PFC2);
     _TIMER->setComNA(TOGGLE);
+    _TIMER->setComNB(DISCONNECTED);
     _TIMER->setOcrNA(0x00);
     _TIMER->setTcntN(0x0000);
     
@@ -50,9 +51,8 @@ void Buzzer::init(Timer* timer) {
 
 void Buzzer::setTone(uint8_t midiTone) {
     if (midiTone >= 24 && midiTone < 128) {
-        TCNT1 = 0x0000;
+        _TIMER->setTcntN(0x0000);
         _TIMER->setPrescale(0x0F & (_PRESCALER[(midiTone - 24) >> 1] >> (((~(midiTone - 24))&0x01) << 2)));
-        //_TIMER->setPrescale(P01_CLK8);
         _TIMER->setOcrNA(_FREQS[midiTone - 24]);//*/
     }
     else {

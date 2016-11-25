@@ -2,7 +2,7 @@
 #define UART_H
 #ifdef  DEBUG
 
-#include "lib.h"
+#include "incl.h"
 
 typedef bool CommMode;
 #define UART_POLLING    true

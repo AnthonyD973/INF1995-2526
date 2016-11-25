@@ -17,10 +17,10 @@ uint8_t ColorSnsr::_LED_MASK = 0;
 const uint8_t ColorSnsr::_S0 = 2;
 const uint8_t ColorSnsr::_S2 = 6;
 Timer* ColorSnsr::_TIMER = nullptr;
-
-const uint16_t ColorSnsr::_BLUE_THRESH  = 0x0680;
-const uint16_t ColorSnsr::_GREEN_THRESH = 0x0800;
-const uint16_t ColorSnsr::_RED_THRESH   = 0x1100;
+//*
+uint16_t ColorSnsr::_BLUE_THRESH  = 0x0680;
+uint16_t ColorSnsr::_GREEN_THRESH = 0x0800;
+uint16_t ColorSnsr::_RED_THRESH   = 0x1100;//*/
 
 
 void ColorSnsr::init(TimerExternalClock tec) {
@@ -40,15 +40,14 @@ void ColorSnsr::init(TimerExternalClock tec) {
 }
 
 ColorRead ColorSnsr::read() {
-	_MASK(PORTB, 0xFF, _LED_MASK); // Allumer la LED.
-    
-    
     ColorRead cf = COLOR_READ_RED;
+    
+    _MASK(PORTB, 0xFF, _LED_MASK); // Allumer la LED.
     uint16_t colors[3];
     for (uint8_t i = 0; i < 3; ++i) {
         _MASK(PORTC, cf << _S2, 0x3 << _S2); // Envoyer le filtre de couleur au capteur
         _TIMER->setTcntN(0);
-        _delay_ms(30.0); //FIXME Est-ce la bonne valeur?
+        _delay_ms(15.0); //FIXME Est-ce la bonne valeur?
         colors[i] = _TIMER->getTcntN();
         
         switch(cf) { // Passer à l'état (filtre) suivant
@@ -59,19 +58,28 @@ ColorRead ColorSnsr::read() {
     }
     
     _MASK(PORTB, 0, _LED_MASK); // Éteindre la LED.
+    for (uint8_t i = 0; i < 3; ++i) {
+        _MASK(PORTC, cf << _S2, 0x3 << _S2); // Envoyer le filtre de couleur au capteur
+        _TIMER->setTcntN(0);
+        _delay_ms(15.0); //FIXME Est-ce la bonne valeur?
+        colors[i] -= _TIMER->getTcntN();
+        
+        switch(cf) { // Passer à l'état (filtre) suivant
+         case COLOR_READ_RED:   cf = COLOR_READ_GREEN; break;
+         case COLOR_READ_GREEN: cf = COLOR_READ_BLUE; break;
+         default: cf = COLOR_READ_WHITE; break;
+        }
+    }
     
-    UART::transmitCStr("RED: ");
+    /*UART::transmitCStr("RED: ");
     UART::transmitHex(colors[0] >> 8);
     UART::transmitHex(colors[0]);
-    UART::transmit(' ');
-    UART::transmitCStr("GREEN: ");
+    UART::transmitCStr(" GREEN: ");
     UART::transmitHex(colors[1] >> 8);
     UART::transmitHex(colors[1]);
-    UART::transmit(' ');
-    UART::transmitCStr("BLUE: ");
+    UART::transmitCStr(" BLUE: ");
     UART::transmitHex(colors[2] >> 8);
-    UART::transmitHex(colors[2]);
-    UART::transmit('\n');
+    UART::transmitHex(colors[2]);*/
     
     ColorRead ret;
     
@@ -90,30 +98,61 @@ ColorRead ColorSnsr::read() {
         ret = COLOR_READ_GREEN;
     }
     
-    switch(ret) {
-     case COLOR_READ_RED:   UART::transmitCStr("RED  \n");
-     case COLOR_READ_GREEN: UART::transmitCStr("GREEN\n");
-     case COLOR_READ_BLUE:  UART::transmitCStr("BLUE \n");
-     case COLOR_READ_WHITE: UART::transmitCStr("WHITE\n");
-     default: UART::transmitCStr("???  \n");
-    }
+    /*switch(ret) {
+     case COLOR_READ_RED:   UART::transmitCStr(" RED  \n"); break;
+     case COLOR_READ_GREEN: UART::transmitCStr(" GREEN\n"); break;
+     case COLOR_READ_BLUE:  UART::transmitCStr(" BLUE \n"); break;
+     case COLOR_READ_WHITE: UART::transmitCStr(" WHITE\n"); break;
+     default: UART::transmitCStr(" ??? \n");
+    }*/
     
     return ret;
 }
 
-void _initialiseConstants() {
+void ColorSnsr::_initializeConstants() {
+    // On soustrait les valeur prise avec les LEDs des valeurs prise à la
+    // lumière ambiante. Selon la documentation, cela permet d'accroitre la
+    // précision des mesures 
+
     _MASK(PORTB, 0xFF, _LED_MASK); // Allumer les LED
+    
     _MASK(PORTC, COLOR_READ_RED << _S2, 0x3 << _S2); // On choisi le filtre Rouge
-    _TIMER->setTcnt(0);
-    _delay_ms(30.0);
-    _RED_THRESH = (_TIMER->getTcnt() >> 2) * 3;
+    _TIMER->setTcntN(0);
+    _delay_ms(15.0);
+    _RED_THRESH = (_TIMER->getTcntN() >> 2) * 3;
     _MASK(PORTC, COLOR_READ_GREEN << _S2, 0x3 << _S2);
-    _TIMER->setTcnt(0);
-    _delay_ms(30.0);
-    _GREEN_THRESH = (_TIMER->getTcnt() >> 2) * 3;
+    _TIMER->setTcntN(0);
+    _delay_ms(15.0);
+    _GREEN_THRESH = (_TIMER->getTcntN() >> 2) * 3;
     _MASK(PORTC, COLOR_READ_BLUE << _S2, 0x3 << _S2);
-    _TIMER->setTcnt(0);
-    _delay_ms(30.0);
-    _BLUE_THRESH = (_TIMER->getTcnt() >> 2) * 3;
-    _MASK(PORTB, 0x00, _LED_MASK);
+    _TIMER->setTcntN(0);
+    _delay_ms(15.0);
+    _BLUE_THRESH = (_TIMER->getTcntN() >> 2) * 3;
+    
+    _MASK(PORTB, 0x00, _LED_MASK); // Éteindre les LED
+    
+    _MASK(PORTC, COLOR_READ_RED << _S2, 0x3 << _S2); // On choisi le filtre Rouge
+    _TIMER->setTcntN(0);
+    _delay_ms(15.0);
+    _RED_THRESH -= (_TIMER->getTcntN() >> 2) * 3;
+    _MASK(PORTC, COLOR_READ_GREEN << _S2, 0x3 << _S2);
+    _TIMER->setTcntN(0);
+    _delay_ms(15.0);
+    _GREEN_THRESH -= (_TIMER->getTcntN() >> 2) * 3;
+    _MASK(PORTC, COLOR_READ_BLUE << _S2, 0x3 << _S2);
+    _TIMER->setTcntN(0);
+    _delay_ms(15.0);
+    _BLUE_THRESH -= (_TIMER->getTcntN() >> 2) * 3;
+    
+    UART::transmitCStr("[Initialisation] ");
+    UART::transmitCStr("RED: ");
+    UART::transmitHex(_RED_THRESH >> 8);
+    UART::transmitHex(_RED_THRESH);
+    UART::transmitCStr(" GREEN: ");
+    UART::transmitHex(_GREEN_THRESH >> 8);
+    UART::transmitHex(_GREEN_THRESH);
+    UART::transmitCStr(" BLUE: ");
+    UART::transmitHex(_BLUE_THRESH >> 8);
+    UART::transmitHex(_BLUE_THRESH);
+    UART::transmit('\n');
 }

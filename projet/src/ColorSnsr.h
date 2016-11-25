@@ -36,7 +36,7 @@ typedef uint8_t ColorRead;
 #define COLOR_READ_GREEN 0x3 // S3 = 1 , S2 = 1
 
 // ---Incertitude sur la couleur---
-#define COLOR_INCERT 0xA // = Â±10
+#define COLOR_INCERT 0x30 // = ±20
 
 /**
  * @class   ColorSnsr
@@ -89,7 +89,7 @@ private:
     /**
      * @brief   Constantes décidées à l'Initialisation.
      */
-    static const uint16_t
+    static uint16_t
         _RED_THRESH,
         _GREEN_THRESH,
         _BLUE_THRESH;

@@ -57,7 +57,15 @@ void updateDirection(void) {
         Path::etat = State(LineSnsr::read()); // State(...) : Nice code m8!!
     
     switch(Path::etat) {
-    case S_STOP:    Path::engL_->setMode(ENG_OFF);Path::engR_->setMode(ENG_OFF);
+    case S_BEGIN:   //fallthrough
+    case S_B_L1:    // fallthrough
+    case S_B_L2:    // fallthrough
+    case S_B_R1:    // fallthrough
+    case S_B_R2:    // fallthrough
+    case S_FOR1:    //fallthrough
+    case S_FOR2:    //fallthrough
+    case S_FOR3:    Path::engL_->setPower(ENG_FORWARD,V_MAX);Path::engR_->setPower(ENG_FORWARD,V_MAX); break;
+    case S_STOP:    Path::engL_->setMode(ENG_OFF);Path::engR_->setMode(ENG_OFF); break;
     case S_COR_R1:  //fallthrough
     case S_COR_R2:  Path::engL_->setPower(ENG_FORWARD,V_MAX);Path::engR_->setPower(ENG_FORWARD,V_MOY);break;
     case S_COR_L1:  //fallthrough
@@ -66,11 +74,7 @@ void updateDirection(void) {
     case S_FCOR_R2: Path::engL_->setPower(ENG_FORWARD,V_MOY);Path::engR_->setPower(ENG_BACKWARD,V_MOY);break;
     case S_FCOR_L1: //fallthrough
     case S_FCOR_L2: Path::engL_->setPower(ENG_BACKWARD,V_MOY);Path::engR_->setPower(ENG_FORWARD,V_MOY);break;
-    case S_BEGIN:   //fallthrough
-    case S_FOR1:    //fallthrough
-    case S_FOR2:    //fallthrough
-    case S_FOR3:    //fallthrough
-    default: Path::engL_->setPower(ENG_FORWARD,V_MAX);Path::engR_->setPower(ENG_FORWARD,V_MAX); break;
+    default: Path::engL_->setPower(ENG_FORWARD,V_MAX);Path::engR_->setPower(ENG_FORWARD,V_MAX); break; // Forward par défaut
     }
 }
 
@@ -111,7 +115,11 @@ bool checkValidState(uint8_t input) {
     case S_FCOR_R2: //fallthrough
     case S_FCOR_L1: //fallthrough
     case S_FCOR_L2: //fallthrough
-    case S_STOP: return true;
+    case S_STOP: // fallthrough
+    case S_B_L1: // fallthrough
+    case S_B_L2: // fallthrough
+    case S_B_R1: // fallthrough
+    case S_B_R2: return true;
     default: return false;
     }
 }

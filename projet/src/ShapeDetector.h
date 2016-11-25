@@ -9,9 +9,11 @@ typedef uint8_t Shape;
 
 // ---Shape---
 #ifndef CIRCLE_G
-    #define CIRCLE_G  0
-    #define OCTOGON_R 1
-    #define SQUARE_B  2
+    #include "ColorSnsr.h"  // Nécessaire pour rester consistant avec les
+                            // constantes de couleur du capteur.
+    #define CIRCLE_G  COLOR_READ_GREEN
+    #define OCTOGON_R COLOR_READ_RED
+    #define SQUARE_B  COLOR_READ_BLUE
 #endif // CIRCLE_G
 
 class ShapeDetector {

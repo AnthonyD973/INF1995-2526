@@ -27,12 +27,15 @@
 #include "ColorSnsr.h"
 #include "path.h"
 #include "ShapeDetector.h"
+#include "ColorSequenceDetector.h"
 
 void testColorSensor();
 
 void testDistSensor();
 
-void testShapeDetector();
+void testColorSequenceDetector(const Color shapeSequence[3]);
+
+Shape testShapeDetector();
 
 void testBuzzer();
 
