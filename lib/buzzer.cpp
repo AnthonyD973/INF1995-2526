@@ -1,3 +1,18 @@
+/*
+ * Classe permettant l'utilisation du piézo-électrique.
+ *
+ * Ecole Polytechnique de Montreal
+ * Departement de genie informatique
+ * Cours inf1995
+ *
+ * Emir Khaled Belhaddad, Anthony Dentinger,
+ * Gergi Younis et Vincent Dandenault
+ * 2016
+ *
+ * Code qui n'est sous aucune license.
+ *
+ */
+
 #include "buzzer.h"
 
 /*  +-------------------------------------------------------------------------+
