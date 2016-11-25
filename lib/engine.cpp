@@ -31,15 +31,15 @@ Timer* getTimerFromTCU(TimerChannelUsed tcu) {
     }
 }
 
-uint8_t getIsOnChannelAFromTCU(TimerChannelUsed tcu) {
+bool getIsOnChannelAFromTCU(TimerChannelUsed tcu) {
     switch (tcu) {
      case T0CA: // fallthrough
      case T1CA: // fallthrough
-     case T2CA: return 1;
+     case T2CA: return true;
      case T0CB: // fallthrough
      case T1CB: // fallthrough
      case T2CB: // fallthrough
-     default: return 0;
+     default: return false;
     }
 }
 
@@ -136,7 +136,7 @@ void Engine::setPower(EngineMode mode, uint16_t occrNX) {
      case ENG_FORWARD:  _MASK(*_PORT, _FORWARD,  _THIS_MASK); break;
      case ENG_BACKWARD: _MASK(*_PORT, _BACKWARD, _THIS_MASK); break;
      case ENG_OFF: setMode(ENG_OFF); break;
-     default: UART::transmitCStr("Engine::power : mauvaise valeur de 'mode'.\n"); setMode(ENG_OFF);
+     default: setMode(ENG_OFF); UART::transmitCStr("Engine::power : mauvaise valeur de 'mode'.\n");
     }
     
 }
