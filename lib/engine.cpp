@@ -88,7 +88,7 @@ Engine::Engine(TimerChannelUsed tcu)
 {
     if (_timer != nullptr) {
         _timer->setPrescale(P01_CLK8);
-        _timer->setMode(WGM0_PWM_F1);
+        _timer->setMode(WGM02_PWM_F1);
         if (_isOnChannelA) {
             _timer->setComNA(CLEAR);
             _timer->setOcrNA(0x00FF);

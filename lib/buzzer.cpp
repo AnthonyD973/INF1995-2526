@@ -41,7 +41,7 @@ uint8_t Buzzer::_currTone = NO_TONE;
 
 void Buzzer::init(Timer* timer) {
     _TIMER = timer;
-    _TIMER->setMode(_TIMER->is8BitClock() ? WGM0_PWM_PC2 : WGM1_PWM_PFC2);
+    _TIMER->setMode(_TIMER->is8BitClock() ? WGM02_PWM_PC2 : WGM1_PWM_PFC2);
     _TIMER->setComNA(TOGGLE);
     _TIMER->setComNB(DISCONNECTED);
     _TIMER->setOcrNA(0x00);
