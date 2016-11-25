@@ -46,6 +46,9 @@ private:
      * @brief   Pointeur vers le timer utilisé pour générer le son.
      */
     static Timer* _TIMER;
+    /**
+     * @brief   Note midi actuellemtn jouée.
+     */
     static uint8_t _currTone;
 };
 
