@@ -31,7 +31,9 @@ const uint8_t Buzzer::_PRESCALER[52]={ // Optimisation de la mémoire
                                   0x2<<4|0x2,0x2<<4|0x2,0x2<<4|0x2,0x2<<4|0x2,0x2<<4|0x2,0x2<<4|0x2,
                                   0x2<<4|0x2,0x2<<4|0x2,0x2<<4|0x2,0x2<<4|0x2};//*/
 
-Timer* Buzzer::_TIMER = 0;
+Timer* Buzzer::_TIMER = nullptr;
+
+uint8_t Buzzer::_currTone = NO_TONE;
 
 // +=-=-==-=-=+
 // |  Buzzer  |
@@ -39,7 +41,6 @@ Timer* Buzzer::_TIMER = 0;
 
 void Buzzer::init(Timer* timer) {
     _TIMER = timer;
-    _TIMER->setPrescale(P01_CLK8);
     _TIMER->setMode(_TIMER->is8BitClock() ? WGM0_PWM_PC2 : WGM1_PWM_PFC2);
     _TIMER->setComNA(TOGGLE);
     _TIMER->setComNB(DISCONNECTED);
@@ -51,9 +52,12 @@ void Buzzer::init(Timer* timer) {
 
 void Buzzer::setTone(uint8_t midiTone) {
     if (midiTone >= 24 && midiTone < 128) {
-        _TIMER->setTcntN(0x0000);
-        _TIMER->setPrescale(0x0F & (_PRESCALER[(midiTone - 24) >> 1] >> (((~(midiTone - 24))&0x01) << 2)));
-        _TIMER->setOcrNA(_FREQS[midiTone - 24]);//*/
+        if (midiTone != _currTone) {
+            _currTone = midiTone;
+            _TIMER->setTcntN(0x0000);
+            _TIMER->setPrescale(0x0F & (_PRESCALER[(midiTone - 24) >> 1] >> (((~(midiTone - 24))&0x01) << 2)));
+            _TIMER->setOcrNA(_FREQS[midiTone - 24]);//*/
+        }
     }
     else {
         clearTone();//*
@@ -66,5 +70,8 @@ void Buzzer::setTone(uint8_t midiTone) {
 }
 
 void Buzzer::clearTone() {
-    _TIMER->setPrescale(P01_NO_CLK);
+    if (_currTone != NO_TONE) {
+        _currTone = NO_TONE;
+        _TIMER->setPrescale(P01_NO_CLK);
+    }
 }

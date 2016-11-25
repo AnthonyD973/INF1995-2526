@@ -6,9 +6,7 @@ Color ColorSequenceDetector::inputSequence_[INPUT_SEQ_MAX] = {COLOR_READ_WHITE,C
 uint8_t ColorSequenceDetector::inputSequenceBeg_ = 0;
 
 void ColorSequenceDetector::checkSequence(const Color shapeSequence[3]) {
-    uint8_t colorCount = 0;
     Color color = ColorSnsr::read();
-    Color prevColor = COLOR_READ_WHITE;
     
     Path::forward();
     
@@ -16,22 +14,18 @@ void ColorSequenceDetector::checkSequence(const Color shapeSequence[3]) {
     for (uint8_t i = 0; i < 6; ++i) {
         color = ColorSnsr::read();
         colorSequenceCount_ = 0;
-        colorCount = 0;
         inputSequence_[0] = inputSequence_[1] = inputSequence_[2] = inputSequence_[3] = COLOR_READ_WHITE;
         
         // On attend de commencer sur du blanc...
         while (color != COLOR_READ_WHITE) { color = ColorSnsr::read(); }
         
-        //
-        while (colorCount < 2) {
+        // On n'a besoin que de 2 couleurs pour avoir une correspondance avec la séquence de formes
+        while (colorSequenceCount_ < 2) {
             color = ColorSnsr::read();
             
             if (checkColorChange(color)) {
                 colorSequence_[colorSequenceCount_++] = color;
-                ++colorCount;
-            }
-            
-            if (color != prevColor) {
+                
                 switch(color) {
                  case OCTOGON_R:        Buzzer::clearTone();_MASK(PORTC, _BV(PC5), _BV(PC4) | _BV(PC5)); break;
                  case CIRCLE_G:         Buzzer::clearTone();_MASK(PORTC, _BV(PC4), _BV(PC4) | _BV(PC5)); break;
@@ -39,7 +33,6 @@ void ColorSequenceDetector::checkSequence(const Color shapeSequence[3]) {
                  case COLOR_READ_WHITE: // fallthrough
                  default: _MASK(PORTC, 0, _BV(PC4) | _BV(PC5));
                 }
-                prevColor = color;
             }
         }
         
@@ -66,10 +59,7 @@ void ColorSequenceDetector::checkSequence(const Color shapeSequence[3]) {
             
             if (checkColorChange(color)) {
                 colorSequence_[colorSequenceCount_++] = color;
-                ++colorCount;
-            }
-            
-            if (color != prevColor) {
+                
                 switch(color) {
                  case OCTOGON_R:        Buzzer::clearTone();_MASK(PORTC, _BV(PC5), _BV(PC4) | _BV(PC5)); break;
                  case CIRCLE_G:         Buzzer::clearTone();_MASK(PORTC, _BV(PC4), _BV(PC4) | _BV(PC5)); break;
@@ -77,7 +67,6 @@ void ColorSequenceDetector::checkSequence(const Color shapeSequence[3]) {
                  case COLOR_READ_WHITE: // fallthrough
                  default: _MASK(PORTC, 0, _BV(PC4) | _BV(PC5));
                 }
-                prevColor = color;
             }
         }
         

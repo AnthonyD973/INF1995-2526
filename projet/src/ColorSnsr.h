@@ -36,7 +36,7 @@ typedef uint8_t ColorRead;
 #define COLOR_READ_GREEN 0x3 // S3 = 1 , S2 = 1
 
 // ---Incertitude sur la couleur---
-#define COLOR_INCERT 0x30 // = ±20
+#define COLOR_INCERT 0x30 // = ±48
 
 /**
  * @class   ColorSnsr
