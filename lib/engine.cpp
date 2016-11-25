@@ -1,4 +1,23 @@
+/*
+ * Classe permettant l'utilisation des moteurs.
+ *
+ * Ecole Polytechnique de Montreal
+ * Departement de genie informatique
+ * Cours inf1995
+ *
+ * Emir Khaled Belhaddad, Anthony Dentinger,
+ * Gergi Younis et Vincent Dandenault
+ * 2016
+ *
+ * Code qui n'est sous aucune license.
+ *
+ */
+
 #include "engine.h"
+
+// ===========================
+// =    POUR CONSTRUCTEUR    =
+// ===========================
 
 Timer* getTimerFromTCU(TimerChannelUsed tcu) {
     switch(tcu) {
@@ -122,12 +141,6 @@ void Engine::setPower(EngineMode mode, uint16_t occrNX) {
     
 }
 
-
-/**
- * @brief   Met le moteur sur un certain mode. Le compteur ne sera plus utilisé :
- *      le moteur est sur ce mode jusqu'à nouvel ordre.
- * @param[in] mode  Mode du moteur à mettre.
- */
 void Engine::setMode(EngineMode mode) {
     uint8_t valueToSet;
     
@@ -148,7 +161,6 @@ void Engine::setMode(EngineMode mode) {
     _MASK(*_PORT, valueToSet, _THIS_MASK);
     
 }
-
 
 Timer* Engine::getTimer() {
      return _timer;

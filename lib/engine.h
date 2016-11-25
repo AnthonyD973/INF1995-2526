@@ -1,3 +1,18 @@
+/*
+ * Classe permettant l'utilisation des moteurs.
+ *
+ * Ecole Polytechnique de Montreal
+ * Departement de genie informatique
+ * Cours inf1995
+ *
+ * Emir Khaled Belhaddad, Anthony Dentinger,
+ * Gergi Younis et Vincent Dandenault
+ * 2016
+ *
+ * Code qui n'est sous aucune license.
+ *
+ */
+
 #ifndef ENGINE_H
 #define ENGINE_H
 
@@ -17,8 +32,7 @@ typedef uint8_t TimerChannelUsed;
 #define    ENG_FORWARD  0x00
 #define    ENG_BACKWARD 0x01
 
-// #define pour TimerChannelUsed
-                                        // | ENABLE | DIRECTION |
+// ---TimerChannelUsed---                  | ENABLE | DIRECTION |
 #define    T0CA 0   // PWM utilisé = OC0A. |   PB3  |    PB2    |
 #define    T0CB 1   // PWM utilisé = OC0B. |   PB4  |    PB5    |
 #define    T1CA 2   // PWM utilisé = OC1A. |   PD5  |    PD3    |
@@ -29,10 +43,26 @@ typedef uint8_t TimerChannelUsed;
 
 class Engine {
 public:
+    /**
+     * @brief   Constructeur d'Engine. Permet de savoir où est branché le moteur.
+     * @param[in] tcu   Permet de savoir : Quel Timer ? Canal A ou B ? Voir engine.h.
+     */
     Engine(TimerChannelUsed tcu);
-    
-    void setPower(EngineMode mode, uint16_t occrNX);
-    
+    /**
+     * @brief   Fait avancer ou reculer le moteur en utilisant le Timer pour
+     *      gérer la puissance.
+     * @param[in] mode  Définit si le moteur doit avancer, reculer ou
+     *      s'arrêter.
+     * @param[in] ocrNX Valeur à mettre dans le registre de comparaison du
+     *      compteur.
+     */
+    void setPower(EngineMode mode, uint16_t ocrNX);
+    /**
+     * @brief   Fait avancer ou reculer le moteur sans utiliser le Timer
+     *      (puissance 100%).
+     * @param[in] mode  Définit si le moteur doit avancer, reculer ou
+     *      s'arrêter.
+     */
     void setMode(EngineMode mode);
     
     Timer* getTimer();
