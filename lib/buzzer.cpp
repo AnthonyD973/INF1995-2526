@@ -58,7 +58,8 @@ void Buzzer::setTone(uint8_t midiTone) {
             
             uint8_t index = midiTone - 24;
             bool shouldShift = ~index % 2;
-            _TIMER->setPrescale((_PRESCALER[index/2] >> (shouldShift * 4)) & 0x0F);
+            uint8_t prescale = (_PRESCALER[index/2] >> (shouldShift * 4)) & 0x0F;
+            _TIMER->setPrescale(prescale);
             _TIMER->setOcrNA(_FREQS[index]);
         }
     }
