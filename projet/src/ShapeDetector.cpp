@@ -19,7 +19,7 @@ Shape ShapeDetector::checkShape() {
     UART::transmit(' ');
     
     
-    Path::turn(ROT_RIGHT, 0x8F);
+    Path::turn(ROT_LEFT, 0x8F);
     
     _delay_ms(200.0); // On veut s'assurer que l'on est sorti de la ligne.
     
@@ -28,7 +28,7 @@ Shape ShapeDetector::checkShape() {
         UART::transmit(' ');
     
     uint8_t readsCount = 0;
-    while (curDist >= max_ - uncert_ && !(LineSnsr::read() & 0x08) && readsCount++ < 12) { // On ne détecte que le premier maximum.
+    while (curDist >= max_ - uncert_ && readsCount++ < 12) { // On ne détecte que le premier maximum.
         curDist = getAverageValue_();
         UART::transmitHex(curDist);
         UART::transmit(' ');
@@ -38,7 +38,7 @@ Shape ShapeDetector::checkShape() {
     UART::transmitCStr("Trouve Max. ");
     
     _MASK(PORTC, _BV(PC4), _BV(PC4) | _BV(PC5));
-    while (!(LineSnsr::read() & 0x08)) { _MASK(PORTC, ~PORTC, _BV(PC4) | _BV(PC5)); } // On continue tant que l'on n'a pas détecté la ligne.
+    while (!(LineSnsr::read() & 0x02)) { _MASK(PORTC, ~PORTC, _BV(PC4) | _BV(PC5)); } // On continue tant que l'on n'a pas détecté la ligne.
     
     Path::stop();
     
