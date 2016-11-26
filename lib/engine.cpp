@@ -15,9 +15,9 @@
 
 #include "engine.h"
 
-// ===========================
-// =    POUR CONSTRUCTEUR    =
-// ===========================
+// =====================================
+// =   GESTION DE TIMER_CHANNEL_USED   =
+// =====================================
 
 Timer* getTimerFromTCU(TimerChannelUsed tcu) {
     switch(tcu) {
