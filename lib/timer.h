@@ -176,10 +176,10 @@ public:
     /**
      * @brief   Empêche l'interruption lors de l'égalité du OCRNB et TCNTN.
      */
-    virtual void denyOCIB() { while (true) {}  };
+    virtual void denyOCIB() { while (true) {} };
     
     __attribute__ ((always_inline))
-    inline virtual bool is8BitClock() { while (true) {} return false;};
+    inline virtual bool is8BitClock() { while (true) {} return false; };
     
     /**
      * @brief   Retourne les positions des LED présentement ambres (et donc gérées par les interruptions du compteur).
