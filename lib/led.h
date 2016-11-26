@@ -56,7 +56,7 @@ public:
      * @brief   Accède à la couleur présente de la LED.
      * @return  La couleur de la LED.
      */
-    volatile LedColor getColor();
+    LedColor getColor();
     
     /**
      * @brief   Accède à la position de la LED sur les broches.

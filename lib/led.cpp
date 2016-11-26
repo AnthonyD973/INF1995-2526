@@ -53,7 +53,7 @@ void LED::setColor(LedColor color) {
 	_color = color;
 }
 
-volatile LedColor LED::getColor() {
+LedColor LED::getColor() {
     return _color;
 }
 
@@ -83,7 +83,7 @@ Timer* LED::getTimer() {
 void LED::_setColorAmber() {
     ++(_timer->_nAmberLeds);
     _MASK(*_PORT, _GREEN, _THIS_MASK);
-    _MASK(_timer->_amberLeds, getShiftedPos(_pinPos), getShiftedPos(_pinPos)); // Une division par 2 car les positions sont des multiples de 2
+    _MASK(_timer->_amberLeds, getShiftedPos(_pinPos), getShiftedPos(_pinPos));
 }
 
 void LED::_unsetColorAmber()  {
