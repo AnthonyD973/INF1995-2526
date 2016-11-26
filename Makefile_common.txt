@@ -9,7 +9,7 @@
 ##################################################
 
 # Ce Makefile vous permet de compiler des projets
-# pour les microcontroleurs Atmel AVR sur 
+# pour les microcontroleurs Atmel AVR sur
 # Linux ou Unix, en utilisant l'outil AVR-GCC. 
 # Ce Makefile supporte C & C++
 
