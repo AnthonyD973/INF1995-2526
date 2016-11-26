@@ -1,3 +1,19 @@
+/*
+ * Classe permettant de transmettre des données par USB via l'interface USART
+ * du microcontrôleur.
+ *
+ * Ecole Polytechnique de Montreal
+ * Departement de genie informatique
+ * Cours inf1995
+ *
+ * Emir Khaled Belhaddad, Anthony Dentinger,
+ * Gergi Younis et Vincent Dandenault
+ * 2016
+ *
+ * Code qui n'est sous aucune license.
+ *
+ */
+
 #ifdef DEBUG
 #include "uart.h"
 
@@ -185,10 +201,6 @@ void UART::transmitBin(uint8_t data) {
     }
 }
 
-/**
- * @brief Transmet les chiffires hexa d'un octet via l'interface UART du ATMega324PA.
- * @param[in] data      Donnée de 8 bits à transmettre.
- */
 void UART::transmitHex(uint8_t data) {
     for (uint8_t i = 0; i < 2; ++i) {
         uint8_t charToDisplay,
@@ -242,4 +254,4 @@ void UART::emptyRecBuffer(void) {
     volatile unsigned char dummy;
     while ( UCSR0A & (1<<RXC0) ) dummy = UDR0;
 }
-#endif
+#endif // DEBUG

@@ -1,3 +1,19 @@
+/*
+ * Classe permettant de transmettre des données par USB via l'interface USART
+ * du microcontrôleur.
+ *
+ * Ecole Polytechnique de Montreal
+ * Departement de genie informatique
+ * Cours inf1995
+ *
+ * Emir Khaled Belhaddad, Anthony Dentinger,
+ * Gergi Younis et Vincent Dandenault
+ * 2016
+ *
+ * Code qui n'est sous aucune license.
+ *
+ */
+
 #ifndef UART_H
 #define UART_H
 #ifdef  DEBUG
@@ -5,18 +21,15 @@
 #include "incl.h"
 
 typedef bool CommMode;
+typedef uint16_t size_t;
+
+// ---CommMode---
 #define UART_POLLING    true
 #define UART_INTERRUPT  false
 
-typedef uint16_t size_t;
-
 /**
- * @brief   Puisque c'est une classe qui agit comme interface de communication
- *          et qu'aucune information sur le protocole UART n'a besoin d'être 
- *          enregistrée, on en fait une classe 'statique' pour que l'on n'ait
- *          pas besoin de l'instancier partout où l'on en a besoin. Il suffit
- *          juste d'inclure le fichier d'entête et d'utiliser les fonctions.
- *          Cette classe utilise des tampon de type 'queue'.
+ * @brief   Transmet des données via l'interface USART du microcontrôleur.
+ *      Cette classe utilise des tampons de type 'queue'.
  */
 class UART {
 
@@ -42,18 +55,17 @@ public:
     /**
      * @brief   Cette fonction ajoute 1 octet au tampon de transmission.
      *          Si le tampon est plein, la fonction bloque le thread jusqu'à ce
-     *          qu'il y a de la place.
+     *          qu'il y ait de la place.
      * @param[in]   data    L'octet à transmettre.
      */
     static void transmit(uint8_t data);
     /**
-     * @brief   Cette fonction ajoute n octet(s) du tableau passé en paramètre au
+     * @brief   Cette fonction ajoute les n octet(s) du tableau passé en paramètre au
      *          tampon de transmission.
      *          Si le tampon est plein, la fonction bloque le thread jusqu'à ce
-     *          qu'il y a de la place.
+     *          qu'il y ait de la place.
      * @param[in]   data    Le tableau contenant les données à transmettre.
-     * @param[in]   n       Le nombre d'octet du tableau à transmettre. Commence
-     *                      de l'index 0 jusqu'à l'index n-1;
+     * @param[in]   n       Le nombre d'octet du tableau à transmettre.
      */
     static void transmit(const uint8_t* data, size_t n);
     /**
@@ -65,16 +77,16 @@ public:
      */
     static void transmitCStr(const char* str);
     /**
-     * @brief   Cette fonction convertit un octet en une chaîne de caractère
-     *          contenant sa représentation binaire sur 8 bits.
+     * @brief   Cette fonction convertit un octet en la chaîne de caractère
+     *          de sa représentation binaire.
      *          Si le tampon est plein, la fonction bloque le thread jusqu'à ce
      *          qu'il y a de la place.
      * @param[in]   data    Donnée de 8 bits à transmettre.
      */
     static void transmitBin(uint8_t data);
     /**
-     * @brief   Cette fonction convertit un octet en une chaîne de caractère
-     *          contenant sa représentation binaire sur 8 bits.
+     * @brief   Cette fonction convertit un octet en la chaîne de caractère
+     *          de sa représentation hexadécimale.
      *          Si le tampon est plein, la fonction bloque le thread jusqu'à ce
      *          qu'il y a de la place.
      * @param[in]   data    Donnée à transmettre.
@@ -86,42 +98,71 @@ public:
      *          qu'il y ait des données. [Implementation de type 'queue']
      * @return  Le premier octet du tampon de réception.
      */
-    static uint8_t receive(void);
+    static uint8_t receive();
     /**
-     * @brief   Cette fonction remplie les n premiers octet d'un tableau passé
+     * @brief   Cette fonction remplit les n premiers octets d'un tableau passé
      *          en paramètre.
      *          Si le tampon n'a pas suffisament de données pour remplir le
      *          tableau, la fonction bloque le thread jusqu'à ce qu'il y ait
      *          assez de données. [Implementation de type 'queue']
-     * @param[out]  data    Le tableau recevant les données reçu. Doit être
+     * @param[out]  data    Le tableau recevant les données reçues. Doit être
      *                      pré-initialisé avec une taille suffisante.
-     * @param[in]   n       Le nombre de donnée à placer dans le tableau.
+     * @param[in]   n       Le nombre de données à placer dans le tableau.
      */
     static void receive(uint8_t* data, size_t n);
     /**
      * @brief   Cette fonction vide le tampon de reception logiciel et matériel.
      */
-    static void emptyRecBuffer(void);
+    static void emptyRecBuffer();
+    
+    // =============================
+    // = À N'UTILISER QUE DANS LES =
+    // =  ROUTINES D'INTERRUPTION  =
+    // =============================
     
     static void    _rec_push_back(volatile uint8_t data);
-    static bool    _rec_full(void) { return _recBufferDataCount >= BUFFER_SIZE; }
-    static size_t  _rec_size(void) { return _recBufferDataCount; }
-    static volatile uint8_t _tra_pop(void);// "pop" le premier élément du tampon
-    static bool    _tra_empty(void) { return _traBufferDataCount == 0; }
-    static size_t  _tra_size(void) { return _traBufferDataCount; }
+    static bool    _rec_full() { return _recBufferDataCount >= BUFFER_SIZE; }
+    static size_t  _rec_size() { return _recBufferDataCount; }
+    static volatile uint8_t _tra_pop();
+    static bool    _tra_empty() { return _traBufferDataCount == 0; }
+    static size_t  _tra_size() { return _traBufferDataCount; }
 
 private:
+    /**
+     * @brief   Tampon de réception.
+     */
     static volatile uint8_t _recBuffer[BUFFER_SIZE];
+    /**
+     * @brief   Indice du début du tampon de réception.
+     */
     static volatile size_t  _recBufferDataBeg;
+    /**
+     * @brief   Nombre d'octets dans le tampon de réception.
+     */
     static volatile size_t  _recBufferDataCount;
+    /**
+     * @brief   Tampon de transmission.
+     */
     static volatile uint8_t _traBuffer[BUFFER_SIZE];
+    /**
+     * @brief   Indice du début du tampon de transmission.
+     */
     static volatile size_t  _traBufferDataBeg;
+    /**
+     * @brief   Nombre d'octets dans le tampon de transmission.
+     */
     static volatile size_t  _traBufferDataCount;
     
+    /**
+     * @brief   Définit si l'UART est initialisée ou non.
+     */
     static bool     _initialized;
+    /**
+     * @brief   Mode de communication actuel.
+     */
     static CommMode _commMode;
     
-    static volatile uint8_t _rec_pop(void);// "pop" le premier élément du tampon
+    static volatile uint8_t _rec_pop();
     static void    _tra_push_back(volatile uint8_t data);
 };
 
