@@ -32,7 +32,7 @@ PROJECTNAME=tp9transfert
 
 # Nom de la cible à utiliser
 # ('lib' pour 'make lib' ou 'compile' pour 'make compile')
-RECIPE=install
+RECIPE=transfert
 
 # Emplacement ou se trouve les fichiers sources (ex: ../src ./main . )
 # Par defaut, c'est le dossier courant (".")
@@ -41,7 +41,7 @@ SRCDIR=.
 # Emplacement de stockage temporaire des fichiers generes
 # lors de la compilation (par defaut, creer un dossier 'gen' dans le
 # repertoire courant)
-GENDIR=gen
+GENDIR=build
 
 # Inclusions additionnels separes par des espaces
 # (L'emplacement des fichiers .h utilises dans les fichers sources)
@@ -60,6 +60,10 @@ LIBS=robot
 LIBS_PATHS=$(REPO_ROOT_PATH)/lib
 
 DEBUG=-DDEBUG
+
+
+transfert: paths.bin install
+	$(REPO_ROOT_PATH)/serieViaUSB_ubuntu -e -h -s 8 -f $<
 
 
 -include $(shell git rev-parse --show-toplevel)/Makefile_common.txt
