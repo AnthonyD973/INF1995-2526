@@ -1,13 +1,32 @@
+/*
+ * Classe permettant l'utilisation d'une LED.
+ *
+ * Ecole Polytechnique de Montreal
+ * Departement de genie informatique
+ * Cours inf1995
+ *
+ * Emir Khaled Belhaddad, Anthony Dentinger,
+ * Gergi Younis et Vincent Dandenault
+ * 2016
+ *
+ * Code qui n'est sous aucune license.
+ *
+ */
+
 #include "led.h"
 
 /**
  * @brief   Supposons que chaque paire de broche (ex: C0_C1) représente un bit d'un uint16_t.
- *      Alors cette fonction détermine le bit correspondant à la paire de broche.
+ *      Alors 'getShiftedPos' fonction détermine le bit correspondant à la paire de broche.
  * @param[in] pinPos    Position sur les broches.
  * @return  Le bit correspondant à la paire de broche.
  */
 __attribute__ ((always_inline))
 inline uint16_t getShiftedPos(PinPosition pinPos) { return 1 << (pinPos/2); }
+
+// ===============
+// =     LED     =
+// ===============
 
 // PUBLIC:
 
