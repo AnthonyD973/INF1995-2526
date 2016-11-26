@@ -1,3 +1,18 @@
+/*
+ * Classe permettant l'utilisation des minuteries du microcontrôleur.
+ *
+ * Ecole Polytechnique de Montreal
+ * Departement de genie informatique
+ * Cours inf1995
+ *
+ * Emir Khaled Belhaddad, Anthony Dentinger,
+ * Gergi Younis et Vincent Dandenault
+ * 2016
+ *
+ * Code qui n'est sous aucune license.
+ *
+ */
+
 #ifndef TIMER_H
 #define TIMER_H
 
@@ -10,7 +25,7 @@ class Timer2;   // Résolution des dépendances circulaires
 
 typedef uint8_t Prescale01;
 typedef uint8_t Prescale2;
-typedef uint8_t ComNX;
+typedef uint8_t ComNX;  // Compare Output Mode
 typedef uint8_t WGMode; // Waveform Generation Mode
 
 extern Timer0 timer0;
@@ -87,16 +102,46 @@ class Timer {
     friend void switchAmberLedsColor(Timer* timer);
     
 public:
+    /**
+     * @brief   Change la valeur du diviseur d'horloge.
+     * @param prescale  Valeur de la divison de l'horloge.
+     */
     virtual void setPrescale(Prescale01 prescale) {};
     
+    /**
+     * @brief   Met le timer au mode Passé en paramètre.
+     * @param[in]   mode    Mode auquel on veut mettre le timer.
+     *      Le mode doit être une des constantes préfixé par WGM02_ pour les
+     *      Timers 0 ou 2 ou par WGM1_ pour le Timer 1.
+     */
     virtual void setMode(WGMode mode) { while (true) {} };
     
+    /**
+     * @brief   Change la réaction du signal de OCNA lors d'une une égalité entre OCRNA et TCNTN.
+     * @param[in] comNa Valeur du COM à utiliser pour le canal A.
+     */
     virtual void setComNA(ComNX comNa) { while (true) {} };
+    /**
+     * @brief   Change la réaction du signal de OCNB lors d'une une égalité entre OCRNB et TCNTN.
+     * @param[in] comNb Valeur du COM à utiliser pour le canal B.
+     */
     virtual void setComNB(ComNX comNb) { while (true) {} };
     
+    /**
+     * @brief   Change la valeur de OCRNA.
+     * @param[in] ocrNa    Nouvelle valeur de OCRNA.
+     */
     virtual void setOcrNA(uint16_t ocrNa) { while (true) {} };
+    /**
+     * @brief   Change la valeur de OCRNB.
+     * @param[in] ocrNb    Nouvelle valeur de OCRNB.
+     */
     virtual void setOcrNB(uint16_t ocrNb) { while (true) {} };
     
+    /**
+     * @brief   Change la valeur de TCNTN.
+     * @param[in] tcntN    Nouvelle valeur de TCNTN.
+     */
     virtual void setTcntN(uint16_t tcntN) { while (true) {} };
     
     virtual uint16_t getOcrNA() { while (true) {} };
@@ -105,27 +150,68 @@ public:
     virtual uint16_t getTcntN() { while (true) {} };
     
   
+    /**
+     * @brief   Permet l'interruption TOVN (voir doc. p. 103).
+     * NOTE: L'interruption TOVN est permise par défaut dans le constructeur.
+     */
     virtual void allowOVFI() { while (true) {} };
+    /**
+     * @brief   Permet l'interruption lors de l'égalité du OCRNA et TCNTN.
+     */
     virtual void allowOCIA() { while (true) {} };
+    /**
+     * @brief   Permet l'interruption lors de l'égalité du OCRNB et TCNTN.
+     */
     virtual void allowOCIB() { while (true) {} };
     
+    /**
+     * @brief   Empêche l'interruption TOVN (voir doc. p. 103).
+     * NOTE: L'interruption TOVN est permise par défaut dans le constructeur.
+     */
     virtual void denyOVFI() { while (true) {} };
+    /**
+     * @brief   Empêche l'interruption lors de l'égalité du OCRNA et TCNTN.
+     */
     virtual void denyOCIA() { while (true) {} };
+    /**
+     * @brief   Empêche l'interruption lors de l'égalité du OCRNB et TCNTN.
+     */
     virtual void denyOCIB() { while (true) {}  };
     
     __attribute__ ((always_inline))
     inline virtual bool is8BitClock() { while (true) {} return false;};
     
+    /**
+     * @brief   Retourne les positions des LED présentement ambres (et donc gérées par les interruptions du compteur).
+     * @return  Les positions des LED. Chaque bit correspond à une paire de broche.
+     *      Exemple : le bit 0 (LSB) correspond aux broches A0 et A1.
+     */
     volatile uint16_t getAmberLeds();
 
 protected:
     Timer();
     
 private:
-    ComNX _comNa, _comNb;           // Mode de réaction des signaux OCNX lors de l'égalité entre OCRNX et TCNTN.
+    /**
+     * @brief   Mode de réaction des signaux OCNA à l'égalité entre OCRNA et
+     *      TCNTN.
+     */
+    ComNX _comNa;
+    /**
+     * @brief   Mode de réaction des signaux OCNB à l'égalité entre OCRNB et
+     *      TCNTN.
+     */
+    ComNX _comNb;
  
-    volatile uint16_t _amberLeds;   // Positions des LED ambres sur les broches.
-    uint8_t _nAmberLeds;            // Nombre de LED présentement ambres.
+    
+    /**
+     * @brief   Positions des LED ambres sur les broches.
+     */
+    volatile uint16_t _amberLeds;
+    /**
+     * @brief   Nombre de LED actuellement ambres.
+     */
+    uint8_t _nAmberLeds;
 };
 
 // ===========================
@@ -134,6 +220,10 @@ private:
 
 class Timer0 : public Timer {
 public:
+    /**
+     * @brief   Construit un Timer0 avec une certaine division d'horloge.
+     * @param prescale  Valeur de la divison de l'horloge.
+     */
     Timer0(Prescale01 prescale);
     
     virtual void setPrescale(Prescale01 prescale);
@@ -172,6 +262,10 @@ public:
 
 class Timer1 : public Timer {
 public:
+    /**
+     * @brief   Construit un Timer1 avec une certaine division d'horloge.
+     * @param prescale  Valeur de la divison de l'horloge.
+     */
     Timer1(Prescale01 prescale);
     
     virtual void setPrescale(Prescale01 prescale);
@@ -210,6 +304,10 @@ public:
 
 class Timer2 : public Timer {
 public:
+    /**
+     * @brief   Construit un Timer2 avec une certaine division d'horloge.
+     * @param prescale  Valeur de la divison de l'horloge.
+     */
     Timer2(Prescale2 prescale);
     
     virtual void setPrescale(Prescale2 prescale);
