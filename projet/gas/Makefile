@@ -27,3 +27,7 @@ $(GENDIR):
 
 $(GENDIR)/%.o: $(SRCDIR)/%.cpp $(GENDIR)
 	g++ -o $@ -c $< -std=c++11 -Wall
+
+docs:
+	doxygen doxygen/Doxyfile
+	rm -rf doxygen/latex/
