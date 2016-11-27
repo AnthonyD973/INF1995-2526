@@ -20,6 +20,7 @@
 
 typedef uint8_t TimerExternalClock;
 typedef uint8_t ColorRead;
+
 #include <lib.h>
 #include <timer.h>
 
@@ -35,8 +36,10 @@ typedef uint8_t ColorRead;
 #define COLOR_READ_BLUE  0x2 // S3 = 1 , S2 = 0
 #define COLOR_READ_GREEN 0x3 // S3 = 1 , S2 = 1
 
-// ---Incertitude sur la couleur---
-#define COLOR_INCERT 0x30 // = ±48
+#ifndef COLOR_SEQ_MAX
+    #define COLOR_SEQ_MAX   3
+#endif // COLOR_SEQ_MAX
+
 
 /**
  * @class   ColorSnsr
@@ -81,23 +84,37 @@ private:
      * @brief   Compteur utilisé.
      */
 	static Timer* _TIMER;
+    
+    /**
+     * @brief   Seuil de tolérance permettant de décider qu'une couleur est
+     *      prédominante par rapport à une autre.
+     */
+    static const uint16_t COLOR_UNCERT;
+    
     /**
      * @brief   Seuil de rouge qui est dépassé lorsque le capteur lit du blanc.
      */
-    static uint16_t _RED_THRESH;
+    static uint16_t _RED_THRESH_FOR_WHITE;
     /**
      * @brief   Seuil de vert qui est dépassé lorsque le capteur lit du blanc.
      */
-    static uint16_t _GREEN_THRESH;
+    static uint16_t _GREEN_THRESH_FOR_WHITE;
     /**
      * @brief   Seuil de bleu qui est dépassé lorsque le capteur lit du blanc.
      */
-    static uint16_t _BLUE_THRESH;
+    static uint16_t _BLUE_THRESH_FOR_WHITE;
     
     /**
-     * @brief Initialise les constantes *_THRESH pour déceler blanc.
+     * @brief   Initialise les constantes *_THRESH pour déceler blanc.
      */
     static void _initializeConstants();
+    
+    /**
+     * @brief   Change un tableau de couleurs selon les couleurs lues et selon
+     *      un prédicat binaire.
+     */
+    template <class Operator>
+    static void _readColors(uint16_t colors[COLOR_SEQ_MAX]);
     
 };
 

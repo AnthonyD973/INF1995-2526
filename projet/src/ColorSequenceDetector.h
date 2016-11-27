@@ -33,7 +33,10 @@ typedef uint8_t Color;
     #define SQUARE_B  COLOR_READ_BLUE
 #endif // CIRCLE_G
 
-#define COLOR_SEQ_MAX   3
+#ifndef COLOR_SEQ_MAX
+    #define COLOR_SEQ_MAX   3
+#endif // COLOR_SEQ_MAX
+
 #define LAST_COLORS_MAX 4
 
 
