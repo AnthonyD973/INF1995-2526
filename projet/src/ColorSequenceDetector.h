@@ -29,8 +29,8 @@ typedef uint8_t Color;
     #define SQUARE_B  COLOR_READ_BLUE
 #endif // CIRCLE_G
 
-#define COLOR_SEQ_MAX 3
-#define INPUT_SEQ_MAX 4
+#define COLOR_SEQ_MAX   3
+#define LAST_COLORS_MAX 4
 
 
 class ColorSequenceDetector {
@@ -46,6 +46,12 @@ public:
 
 private:
     /**
+     * @brief   Utilise ColorSnsr pour détecter la couleur présente et
+     *      effectue l'action correspondante (allumer LED ou jouer un son).
+     * @return  La couleur actuelle.
+     */
+    static Color findColorAndAct_();
+    /**
      * @brief   Vérifie si la couleur a changé en comparant les valeurs des
      *      derniers résultats.
      * @param[in] color Couleur lue actuellement.
@@ -53,7 +59,11 @@ private:
      *      la même sur plusieurs lectures d'affilée, mais est différente d'une
      *      lecture plus ancienne.
      */
-    static bool checkColorChange(Color color);
+    static bool checkColorChanged_(Color color);
+    /**
+     * @brief   Joue une musique pour fêter la fin de l'épreuve \(^_^)/
+     */
+    static void playEndingTheme_();
     
     /**
      * @brief   Séquence de couleurs du papier sur lequel passe le robot.
@@ -65,13 +75,13 @@ private:
     static uint8_t colorSequenceCount_;
     /**
      * @brief   Dernières valeurs lues. Il s'agit d'une sorte de tableau
-     *      circulaire : l'indice 0 est juste après l'indice INPUT_SEQ_MAX-1.
+     *      circulaire : l'indice 0 est juste après l'indice LAST_COLORS_MAX-1.
      */
-    static Color inputSequence_[INPUT_SEQ_MAX];
+    static Color lastColors_[LAST_COLORS_MAX];
     /**
      * @brief   Indice de début du tableau.
      */
-    static uint8_t inputSequenceBeg_;
+    static uint8_t lastColorsBeg_;
 };
 
 #endif // COLOR_SEQUENCE_DETECTOR_H
