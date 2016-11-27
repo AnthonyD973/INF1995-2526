@@ -17,10 +17,14 @@
 #define COLOR_SEQUENCE_DETECTOR_H
 
 #include <incl.h>
+
+typedef uint8_t Color;
+
 #include <buzzer.h>
+#include <led.h>
+
 #include "ColorSnsr.h"
 #include "path.h"
-typedef uint8_t Color;
 
 // ---Shape---
 #ifndef CIRCLE_G
@@ -41,16 +45,18 @@ public:
      * @param[in] shapeSequence Séquence de couleur cherchée. L'indice 0
      *      correspond à la première couleur de la séquence, c'est-à-dire à la
      *      forme de la dernière pièce.
+     * @param[in,out] led   LED à allumer lorsqu'une LED doit l'être.
      */
-    static void checkSequence(const Color shapeSequence[COLOR_SEQ_MAX]);
+    static void checkSequence(const Color shapeSequence[COLOR_SEQ_MAX], LED& led);
 
 private:
     /**
      * @brief   Utilise ColorSnsr pour détecter la couleur présente et
      *      effectue l'action correspondante (allumer LED ou jouer un son).
+     * @param[in,out] led   LED à allumer lorsqu'une LED doit l'être.
      * @return  La couleur actuelle.
      */
-    static Color findColorAndAct_();
+    static Color findColorAndAct_(LED& led);
     /**
      * @brief   Vérifie si la couleur a changé en comparant les valeurs des
      *      derniers résultats.

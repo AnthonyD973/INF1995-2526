@@ -20,7 +20,7 @@ uint8_t ColorSequenceDetector::colorSequenceCount_ = 0;
 Color ColorSequenceDetector::lastColors_[LAST_COLORS_MAX] = {COLOR_READ_WHITE,COLOR_READ_WHITE,COLOR_READ_WHITE,COLOR_READ_WHITE};
 uint8_t ColorSequenceDetector::lastColorsBeg_ = 0;
 
-void ColorSequenceDetector::checkSequence(const Color shapeSequence[COLOR_SEQ_MAX]) {
+void ColorSequenceDetector::checkSequence(const Color shapeSequence[COLOR_SEQ_MAX], LED& led) {
     Color color = ColorSnsr::read();
     
     Path::forward();
@@ -40,12 +40,12 @@ void ColorSequenceDetector::checkSequence(const Color shapeSequence[COLOR_SEQ_MA
         
         // On n'a besoin que de 2 couleurs pour savoir de quelle séquence il s'agit :D
         while (colorSequenceCount_ < 2) {
-            color = findColorAndAct_();
+            color = findColorAndAct_(led);
         }
         
         if (isCorrectSequence_(shapeSequence)) {
             Buzzer::clearTone();
-            _MASK(PORTC, 0, _BV(PC4) | _BV(PC5));
+            led.setColor(LED_OFF);
             Path::stop();
             break;
         }
@@ -65,27 +65,27 @@ void ColorSequenceDetector::checkSequence(const Color shapeSequence[COLOR_SEQ_MA
         
         // On vérifie un 3e changement de couleur, pour la forme ;)
         while(color != COLOR_READ_WHITE) {
-            color = findColorAndAct_();
+            color = findColorAndAct_(led);
         }
         
         Buzzer::clearTone();
-        _MASK(PORTC, 0, _BV(PC4) | _BV(PC5));
+        led.setColor(LED_OFF);
     }
     
     playEndingTheme_();
 }
 
-Color ColorSequenceDetector::findColorAndAct_() {
+Color ColorSequenceDetector::findColorAndAct_(LED& led) {
     Color color = ColorSnsr::read();
     
     if (hasColorChanged_(color)) {
         colorSequence_[colorSequenceCount_++] = color;
     
         switch(color) {
-         case OCTOGON_R:        Buzzer::clearTone(); _MASK(PORTC, _BV(PC5), _BV(PC4) | _BV(PC5)); break;
-         case CIRCLE_G:         Buzzer::clearTone(); _MASK(PORTC, _BV(PC4), _BV(PC4) | _BV(PC5)); break;
+         case OCTOGON_R:        Buzzer::clearTone(); led.setColor(LED_RED);   break;
+         case CIRCLE_G:         Buzzer::clearTone(); led.setColor(LED_GREEN); break;
          case SQUARE_B:         Buzzer::setTone(68); // fallthrough
-         default: _MASK(PORTC, 0, _BV(PC4) | _BV(PC5));
+         default: led.setColor(LED_OFF);
         }
     }
     return color;

@@ -24,7 +24,7 @@ int main() {
     uint16_t size = 0;
     uint8_t  buffer = 0;
     
-    LED led(C0_C1, nullptr); // FIXME: Où est placé la LED, déjà?
+    LED led(C4_C5, nullptr);
     
     DDRA = DDRB = DDRC = 0xff;
     

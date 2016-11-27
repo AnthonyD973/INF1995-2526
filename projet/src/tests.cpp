@@ -22,10 +22,6 @@ void testDistSensor() {
     }
 }
 
-void testColorSequenceDetector(const Color shapeSequence[3]) {
-    ColorSequenceDetector::checkSequence(shapeSequence);
-}
-
 Shape testShapeDetector() {
     Shape shape = ShapeDetector::checkShape();
     Buzzer::clearTone();

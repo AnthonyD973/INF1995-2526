@@ -32,11 +32,10 @@ void globalInit(Engine& engL, Engine& engR) {
 int main() {
     Engine engL(T2CA);
     Engine engR(T2CB);
+    LED led(C4_C5, nullptr);
     
-    Shape shapeSequence[3];/*
-    shapeSequence[2] = OCTOGON_R;
-    shapeSequence[1] = CIRCLE_G;
-    shapeSequence[0] = SQUARE_B;//*/
+    
+    Shape shapeSequence[3];
     
     globalInit(engL, engR);
 	
@@ -49,7 +48,7 @@ int main() {
     shapeSequence[0] = testShapeDetector();
     Path::doPath(2);//*/
     
-    ColorSequenceDetector::checkSequence(shapeSequence);
+    ColorSequenceDetector::checkSequence(shapeSequence, led);
     
     for EVER {
         // Busy wait
