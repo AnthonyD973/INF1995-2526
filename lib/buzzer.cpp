@@ -32,32 +32,34 @@
  * (C-3, ~32.7 Hz)
  */
 const uint8_t Buzzer::_FREQS[104]={
-                                  239/4,225/4,213/4,201/4,190/4,179/4,169/4,159/4,150/4,142/4,134/4,127/4,
-                                  119/4,113/4,106/4,100/4, 95/4, 89/4, 84/4, 80/4, 75/4, 71/4, 67/4, 63/4,
-                                  239/4,225/4,213/4,201/4,190/4,179/4,169/4,159/4,150/4,142/4,134/4,127/4,
-                                  119/4,113/4,106/4,100/4, 95/4, 89/4, 84/4, 80/4, 75/4, 71/4, 67/4, 63/4,
-                                  239/4,225/4,213/4,201/4,190/4,179/4,169/4,159/4,150/4,142/4,134/4,127/4,
-                                  119/4,113/4,106/4,100/4, 95/4, 89/4, 84/4, 80/4, 75/4, 71/4, 67/4, 63/4,
-                                   60/4, 56/4, 53/4, 50/4, 47/4, 45/4, 42/4, 40/4, 38/4, 36/4, 34/4,253/4,
-                                  239/4,225/4,213/4,201/4,190/4,179/4,169/4,159/4,150/4,142/4,134/4,127/4,
-                                  119/4,113/4,106/4,100/4, 95/4, 89/4, 84/4, 80/4};
+                                  239,225,213,201,190,179,169,159,150,142,134,127,
+                                  119,113,106,100,95,89,84,80,75,71,67,63,
+                                  239,225,213,201,190,179,169,159,150,142,134,127,
+                                  119,113,106,100,95,89,84,80,75,71,67,63,
+                                  239,225,213,201,190,179,169,159,150,142,134,127,
+                                  119,113,106,100,95,89,84,80,75,71,67,63,
+                                  60,56,53,50,47,45,42,40,38,36,34,253,
+                                  239,225,213,201,190,179,169,159,150,142,134,127,
+                                  119,113,106,100,95,89,84,80};
 /**
- * @brief   Tableau de valeurs de Prescale à utiliser dans le Timer pour
- *      générer une fréquence donnée.
+ * @brief   Tableau contenant les index de prescaler des tables P_VAL[N] (de 0
+ *      à 3) correspondant aux valeurs de chaque note MIDI.
  * 
  * L'indice 0 représente la valeur du prescale pour les notes midi 24
  * (les 4 bits de poids fort, C-3, ~32.7 Hz) et 25 (les 4 bits de poids faible).
  */
-const uint8_t Buzzer::_PRESCALER[52]={
-                                   0x5<<4|0x5, 0x5<<4|0x5, 0x5<<4|0x5, 0x5<<4|0x5, 0x5<<4|0x5, 0x5<<4|0x5,
-                                   0x5<<4|0x5, 0x5<<4|0x5, 0x5<<4|0x5, 0x5<<4|0x5, 0x5<<4|0x5, 0x5<<4|0x5,
-                                   0x4<<4|0x4, 0x4<<4|0x4, 0x4<<4|0x4, 0x4<<4|0x4, 0x4<<4|0x4, 0x4<<4|0x4,
-                                   0x4<<4|0x4, 0x4<<4|0x4, 0x4<<4|0x4, 0x4<<4|0x4, 0x4<<4|0x4, 0x4<<4|0x4,
-                                   0x3<<4|0x3, 0x3<<4|0x3, 0x3<<4|0x3, 0x3<<4|0x3, 0x3<<4|0x3, 0x3<<4|0x3,
-                                   0x3<<4|0x3, 0x3<<4|0x3, 0x3<<4|0x3, 0x3<<4|0x3, 0x3<<4|0x3, 0x3<<4|0x3,
-                                   0x3<<4|0x3, 0x3<<4|0x3, 0x3<<4|0x3, 0x3<<4|0x3, 0x3<<4|0x3, 0x3<<4|0x2,
-                                   0x2<<4|0x2, 0x2<<4|0x2, 0x2<<4|0x2, 0x2<<4|0x2, 0x2<<4|0x2, 0x2<<4|0x2,
-                                   0x2<<4|0x2, 0x2<<4|0x2, 0x2<<4|0x2, 0x2<<4|0x2};
+const uint8_t Buzzer::_PRESCALER[52]={ // Optimisation de la mémoire
+                                  0x3<<4|0x3,0x3<<4|0x3,0x3<<4|0x3,0x3<<4|0x3,0x3<<4|0x3,0x3<<4|0x3,
+                                  0x3<<4|0x3,0x3<<4|0x3,0x3<<4|0x3,0x3<<4|0x3,0x3<<4|0x3,0x3<<4|0x3,
+                                  0x2<<4|0x2,0x2<<4|0x2,0x2<<4|0x2,0x2<<4|0x2,0x2<<4|0x2,0x2<<4|0x2,
+                                  0x2<<4|0x2,0x2<<4|0x2,0x2<<4|0x2,0x2<<4|0x2,0x2<<4|0x2,0x2<<4|0x2,
+                                  0x1<<4|0x1,0x1<<4|0x1,0x1<<4|0x1,0x1<<4|0x1,0x1<<4|0x1,0x1<<4|0x1,
+                                  0x1<<4|0x1,0x1<<4|0x1,0x1<<4|0x1,0x1<<4|0x1,0x1<<4|0x1,0x1<<4|0x1,
+                                  0x1<<4|0x1,0x1<<4|0x1,0x1<<4|0x1,0x1<<4|0x1,0x1<<4|0x1,0x1<<4|0x0,
+                                  0x0<<4|0x0,0x0<<4|0x0,0x0<<4|0x0,0x0<<4|0x0,0x0<<4|0x0,0x0<<4|0x0,
+                                  0x0<<4|0x0,0x0<<4|0x0,0x0<<4|0x0,0x0<<4|0x0};//*/
+static const uint8_t P_VAL01[4] = {P01_CLK8, P01_CLK64, P01_CLK256, P01_CLK1024};
+static const uint8_t  P_VAL2[4] = { P2_CLK8,  P2_CLK64,  P2_CLK256,  P2_CLK1024};
 
 Timer* Buzzer::_TIMER = nullptr;
 
@@ -69,7 +71,7 @@ uint8_t Buzzer::_currTone = NO_TONE;
 
 void Buzzer::init(Timer* timer) {
     _TIMER = timer;
-    _TIMER->setMode(_TIMER->is8BitClock() ? WGM02_PWM_PC2 : WGM1_PWM_PFC2);
+    _TIMER->setMode(_TIMER->is8BitClock() ? WGM02_CTC : WGM1_CTC1);
     _TIMER->setComNA(TOGGLE);
     _TIMER->setComNB(DISCONNECTED);
     _TIMER->setOcrNA(0x00);
@@ -87,8 +89,9 @@ void Buzzer::setTone(uint8_t midiTone) {
             uint8_t index = midiTone - 24;
             bool shouldShift = ~index % 2;
             uint8_t prescale = (_PRESCALER[index/2] >> (shouldShift * 4)) & 0x0F;
-            _TIMER->setPrescale(prescale);
-            _TIMER->setOcrNA(_FREQS[index]);
+            const uint8_t* prescaler = (_TIMER->isAsync() ? P_VAL2 : P_VAL01);
+            _TIMER->setPrescale(prescaler[prescale]);
+            _TIMER->setOcrNA(_FREQS[index]/2);
         }
     }
     else {

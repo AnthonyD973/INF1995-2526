@@ -140,7 +140,12 @@ public:
 #ifndef DOXYGEN // Doxygen ne gère pas les __attribute__, alors nous devons les chacher lorsqu'on génère la documentation.
     __attribute__ ((always_inline))
 #endif // DOXYGEN
-    inline virtual bool is8BitClock() { while (true) {} return false; };
+    inline virtual bool is8BitClock() { while (true) {} return false;};
+    
+#ifndef DOXYGEN // Doxygen ne gère pas les __attribute__, alors nous devons les chacher lorsqu'on génère la documentation.
+    __attribute__ ((always_inline))
+#endif // DOXYGEN
+    inline virtual bool isAsync() { while (true) {} return false; }
     
     /**
      * @brief   Retourne les positions des LED présentement ambres (et donc gérées par les interruptions du compteur).
@@ -217,6 +222,8 @@ public:
     __attribute__ ((always_inline))
 #endif // DOXYGEN
     inline virtual bool is8BitClock() { return true; }
+    __attribute__ ((always_inline))
+    inline virtual bool isAsync() { return false; }
 };
 
 // ===========================
@@ -261,6 +268,8 @@ public:
     __attribute__ ((always_inline))
 #endif // DOXYGEN
     inline virtual bool is8BitClock() { return false; }
+    __attribute__ ((always_inline))
+    inline virtual bool isAsync() { return false; }
 };
 
 // ===========================
@@ -305,6 +314,8 @@ public:
     __attribute__ ((always_inline))
 #endif // DOXYGEN
     inline virtual bool is8BitClock() { return true; }
+    __attribute__ ((always_inline))
+    inline virtual bool isAsync() { return true; }
 };
 
 #endif // TIMER_H

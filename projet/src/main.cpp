@@ -26,6 +26,7 @@
 #include "ColorSequenceDetector.h"
 #include "path.h"
 #include "tests.h"
+#include "Player.h"
 
 /**
  * @brief   Initialisation globale du microcontrôleur.
@@ -52,6 +53,7 @@ void globalInit(Engine& engL, Engine& engR, LED& led) {
     Buzzer::init(&timer0);
     ShapeDetector::init(&led);
     ColorSequenceDetector::init(&led);
+    Player::init();
 }
 
 /** @cond FALSE */ // Ne pas documenter cette fonction.
@@ -74,6 +76,8 @@ int main() {
     Path::doPath(2);
     
     ColorSequenceDetector::checkSequence(shapeSequence);
+    
+    Player::play();
     
     for EVER {
         // Busy wait
