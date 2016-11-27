@@ -1,11 +1,3 @@
-//
-//  path.cpp
-//  
-//
-//  Created by Vincent Dandenault on 2016-11-18.
-//
-//
-
 #include "path.h"
 
 uint16_t Path::pathAddr_[NB_PATHS];
@@ -14,15 +6,21 @@ Engine*  Path::engR_ = NULL;
 
 /**
  * @brief   Vérifie s'il le robot est rendu à un branchement.
+ * @param[in] input Valeur lue du détecteur de ligne.
+ * @return  Si le robot est à un embranchement.
  */
 bool checkBranch(uint8_t input);
 /**
- * @brief   Verifie si l'état reçu en paramètre est un état valide.
+ * @brief   Vérifie si l'état reçu en paramètre est un état valide,
+ *      c'est-à-dire, s'il s'agit d'un des états que l'on peut s'attendre à
+ *      observer durant le parcours.
+ * @param[in] input Valeur lue du détecteur de ligne.
+ * @return  Si l'état présent est un état valide.
  */
 bool checkValidState(uint8_t input);
 
 const State
-    S_BEGIN     = 0x1F, // Etat de debut
+    S_BEGIN     = 0x1F, // Etat de début
     S_FOR1      = 0x04, // Etat avancement
     S_FOR2      = 0x0E,
     S_FOR3      = 0x0A,
@@ -43,53 +41,49 @@ const State
 // (VAL) * 256 / (MAX - MIN + 1)
 //  18   * 256 / (80  - 10  + 1) = 65 = 0x41
 
-// distance que le capteur doit mesurer : ~18 cm
+// Distance que le capteur doit mesurer : ~18 cm
 static const uint8_t MIDDLE_DIST = 94;
 
 volatile State Path::etat = S_STOP;
 
 /**
  * @brief   Fonction pour la routine d'interruption qui est utilisé pour faire
- *          du multi-threading.
+ *          une sorte de 'multi-threading'.
  */
 void updateDirection(void) {
     if (checkValidState(LineSnsr::read()))
-        Path::etat = State(LineSnsr::read()); // State(...) : Nice code m8!!
+        Path::etat = State(LineSnsr::read());
     
     switch(Path::etat) {
-    case S_BEGIN:   //fallthrough
+    // ---AVANCEMENT---
+    case S_BEGIN:   // fallthrough
     case S_B_L1:    // fallthrough
     case S_B_L2:    // fallthrough
     case S_B_R1:    // fallthrough
     case S_B_R2:    // fallthrough
-    case S_FOR1:    //fallthrough
-    case S_FOR2:    //fallthrough
+    case S_FOR1:    // fallthrough
+    case S_FOR2:    // fallthrough
     case S_FOR3:    Path::engL_->setPower(ENG_FORWARD,V_MAX);Path::engR_->setPower(ENG_FORWARD,V_MAX); break;
+    // ---ARRÊT---
     case S_STOP:    Path::engL_->setMode(ENG_OFF);Path::engR_->setMode(ENG_OFF); break;
-    case S_COR_R1:  //fallthrough
+    // ---CORRECTION---
+    case S_COR_R1:  // fallthrough
     case S_COR_R2:  Path::engL_->setPower(ENG_FORWARD,V_MAX);Path::engR_->setPower(ENG_FORWARD,V_MOY);break;
-    case S_COR_L1:  //fallthrough
+    case S_COR_L1:  // fallthrough
     case S_COR_L2:  Path::engL_->setPower(ENG_FORWARD,V_MOY);Path::engR_->setPower(ENG_FORWARD,V_MAX);break;
-    case S_FCOR_R1: //fallthrough
+    // ---CORRECTION FORCÉE---
+    case S_FCOR_R1: // fallthrough
     case S_FCOR_R2: Path::engL_->setPower(ENG_FORWARD,V_MOY);Path::engR_->setPower(ENG_BACKWARD,V_MOY);break;
-    case S_FCOR_L1: //fallthrough
+    case S_FCOR_L1: // fallthrough
     case S_FCOR_L2: Path::engL_->setPower(ENG_BACKWARD,V_MOY);Path::engR_->setPower(ENG_FORWARD,V_MOY);break;
-    default: Path::engL_->setPower(ENG_FORWARD,V_MAX);Path::engR_->setPower(ENG_FORWARD,V_MAX); break; // Forward par défaut
+    // ---DÉFAUT---
+    default: Path::engL_->setPower(ENG_FORWARD,V_MAX);Path::engR_->setPower(ENG_FORWARD,V_MAX); break;
     }
 }
 
-/*
-ISR(TIMER0_OVF_vect) {
-    updateDirection();
-}//*/
-/*
-ISR(TIMER1_OVF_vect) {
-    updateDirection();
-}//*/
-//*
 ISR(TIMER2_OVF_vect) {
     updateDirection();
-}//*/
+}
 
 bool checkBranch(uint8_t input) {
     switch(input) {
@@ -103,22 +97,22 @@ bool checkBranch(uint8_t input) {
 
 bool checkValidState(uint8_t input) {
     switch(input) {
-    case S_BEGIN:   //fallthrough
-    case S_FOR1:    //fallthrough
-    case S_FOR2:    //fallthrough
-    case S_FOR3:    //fallthrough
-    case S_COR_R1:  //fallthrough
-    case S_COR_R2:  //fallthrough
-    case S_COR_L1:  //fallthrough
-    case S_COR_L2:  //fallthrough
-    case S_FCOR_R1: //fallthrough
-    case S_FCOR_R2: //fallthrough
-    case S_FCOR_L1: //fallthrough
-    case S_FCOR_L2: //fallthrough
-    case S_STOP: // fallthrough
-    case S_B_L1: // fallthrough
-    case S_B_L2: // fallthrough
-    case S_B_R1: // fallthrough
+    case S_BEGIN:   // fallthrough
+    case S_FOR1:    // fallthrough
+    case S_FOR2:    // fallthrough
+    case S_FOR3:    // fallthrough
+    case S_COR_R1:  // fallthrough
+    case S_COR_R2:  // fallthrough
+    case S_COR_L1:  // fallthrough
+    case S_COR_L2:  // fallthrough
+    case S_FCOR_R1: // fallthrough
+    case S_FCOR_R2: // fallthrough
+    case S_FCOR_L1: // fallthrough
+    case S_FCOR_L2: // fallthrough
+    case S_STOP:    // fallthrough
+    case S_B_L1:    // fallthrough
+    case S_B_L2:    // fallthrough
+    case S_B_R1:    // fallthrough
     case S_B_R2: return true;
     default: return false;
     }
@@ -155,7 +149,7 @@ void Path::doPath(uint8_t path) {
 }
 
 void Path::readPath_(uint16_t addr) {
-    uint16_t pathCount = 0; // Nombre de chemin dans le fichier.
+    uint16_t pathCount = 0; // Nombre de chemins dans le fichier.
     RAM::read(addr+2, (uint8_t*)&pathCount, 2);
     for(uint8_t i = 0; i < pathCount; ++i) {
         RAM::read(addr + 4 + i*2, (uint8_t*)(&(pathAddr_[i])), 2);
@@ -225,7 +219,6 @@ void Path::tnl(void) {
 }
 void Path::mdl(void) {
     forward();
-    //while (LineSnsr::read() != S_STOP);
     _delay_ms(1200.0);
     while (DistSnsr::readAverage() > MIDDLE_DIST);
     engL_->setMode(ENG_BACKWARD);
