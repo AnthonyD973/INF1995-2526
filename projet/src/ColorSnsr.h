@@ -1,5 +1,5 @@
 /* 
- * Classe permettant l'accès au capteur de couleur TAOS TCS230.
+ * Classe permettant d'utiliser le capteur de couleur TAOS TCS230.
  *
  * Ecole Polytechnique de Montreal
  * Departement de genie informatique
@@ -51,14 +51,9 @@ class ColorSnsr {
 public:
     /**
      * @brief   Initialisation du détecteur. À appeler au début du programme.
-     *          Met en entrée le numéro du compteur pour lequel utiliser  du port A où le signal
-     *          analogique du capteur de distance est reçu.
      * 
-     * @param[in]   tec     Le compteur sur lequel la sortie du capteur est branchée.
-     *  
-     *                      La valeur peut prendre une de celles-ci
-     *                      [T0_FALLING_EDGE, T0_RISING_EDGE, T1_FALLING_EDGE, T1_RISING_EDGE],
-     *                      définies ci-dessus.
+     * @param[in]   tec     Le compteur sur lequel la sortie du capteur est
+     *      branchée.
      */
     static void init(TimerExternalClock tec);
 
@@ -71,7 +66,7 @@ public:
 
 private:
     /**
-     * @brief   Masque de l'horloge externe.
+     * @brief   Masque du bit de LED du capteur.
      */
     static uint8_t _LED_MASK;
     /**
@@ -87,13 +82,21 @@ private:
      */
 	static Timer* _TIMER;
     /**
-     * @brief   Constantes décidées à l'Initialisation.
+     * @brief   Seuil de rouge qui est dépassé lorsque le capteur lit du blanc.
      */
-    static uint16_t
-        _RED_THRESH,
-        _GREEN_THRESH,
-        _BLUE_THRESH;
+    static uint16_t _RED_THRESH;
+    /**
+     * @brief   Seuil de vert qui est dépassé lorsque le capteur lit du blanc.
+     */
+    static uint16_t _GREEN_THRESH;
+    /**
+     * @brief   Seuil de bleu qui est dépassé lorsque le capteur lit du blanc.
+     */
+    static uint16_t _BLUE_THRESH;
     
+    /**
+     * @brief Initialise les constantes *_THRESH pour déceler blanc.
+     */
     static void _initializeConstants();
     
 };

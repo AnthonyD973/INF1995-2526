@@ -47,7 +47,7 @@ ColorRead ColorSnsr::read() {
     for (uint8_t i = 0; i < 3; ++i) {
         _MASK(PORTC, cf << _S2, 0x3 << _S2); // Envoyer le filtre de couleur au capteur
         _TIMER->setTcntN(0);
-        _delay_ms(15.0); //FIXME Est-ce la bonne valeur?
+        _delay_ms(15.0);
         colors[i] = _TIMER->getTcntN();
         
         switch(cf) { // Passer à l'état (filtre) suivant
@@ -61,7 +61,7 @@ ColorRead ColorSnsr::read() {
     for (uint8_t i = 0; i < 3; ++i) {
         _MASK(PORTC, cf << _S2, 0x3 << _S2); // Envoyer le filtre de couleur au capteur
         _TIMER->setTcntN(0);
-        _delay_ms(15.0); //FIXME Est-ce la bonne valeur?
+        _delay_ms(15.0);
         colors[i] -= _TIMER->getTcntN();
         
         switch(cf) { // Passer à l'état (filtre) suivant
