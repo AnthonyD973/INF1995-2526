@@ -13,10 +13,10 @@
 
 #include "DistSnsr.h"
 
-PinAPos DistSnsr::_PIN_A_NUM = 0xFF;
+uint8_t DistSnsr::_PIN_A_NUM = 0xFF;
 
-//TODO Le Potentiomètre doit être réglé à 2.65 V.
-void DistSnsr::init(PinAPos pinANum) {
+// NOTE: Le Potentiomètre doit être réglé à 2.74 V.
+void DistSnsr::init(uint8_t pinANum) {
     _PIN_A_NUM = pinANum;
 }
 

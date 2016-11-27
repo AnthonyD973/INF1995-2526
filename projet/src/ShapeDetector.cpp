@@ -9,7 +9,7 @@ const uint8_t ShapeDetector::uncert_ = 10;
 const uint8_t ShapeDetector::SQUARE_DELTA  = 0x1A;
 const uint8_t ShapeDetector::OCTOGON_DELTA = 0x06;
 
-Shape ShapeDetector::checkShape() {
+ShapeColor ShapeDetector::checkShape() {
     Path::stop();
     
     // Initialiser
@@ -43,13 +43,13 @@ Shape ShapeDetector::checkShape() {
     Path::stop();
     
     // Prise de décision
-    Shape shape;
+    ShapeColor shape;
     if (max_ - min_ >= SQUARE_DELTA) {
-        shape = SQUARE_B;
+        shape = SQUARE_BLUE;
     } else if (max_ - min_ >= OCTOGON_DELTA) {
-        shape = OCTOGON_R;
+        shape = OCTOGON_RED;
     } else {
-        shape = CIRCLE_G;
+        shape = CIRCLE_GREEN;
     }
     UART::transmitHex(max_ - min_);
     UART::transmit('\n');

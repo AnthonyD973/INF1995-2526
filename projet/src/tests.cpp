@@ -2,12 +2,12 @@
 
 void testColorSensor() {
     for EVER {
-        ColorRead curCR = ColorSnsr::read();
+        ShapeColor curCR = ColorSnsr::read();
         switch(curCR) {
-        case COLOR_READ_RED:   _MASK(PORTC, _BV(PC5), _BV(PC4) | _BV(PC5)); break;
-        case COLOR_READ_GREEN: _MASK(PORTC, _BV(PC4), _BV(PC4) | _BV(PC5)); break;
-        case COLOR_READ_BLUE:  if((PORTC & 0x30) == 0x30 || (PORTC & 0x30) == 0x00) _MASK(PORTC, _BV(PC4), _BV(PC4) | _BV(PC5)); _MASK(PORTC, ~PORTC, _BV(PC4) | _BV(PC5)); break;
-        case COLOR_READ_WHITE: _MASK(PORTC, 0, _BV(PC4) | _BV(PC5)); break;
+        case OCTOGON_RED:    _MASK(PORTC, _BV(PC5), _BV(PC4) | _BV(PC5)); break;
+        case CIRCLE_GREEN:   _MASK(PORTC, _BV(PC4), _BV(PC4) | _BV(PC5)); break;
+        case SQUARE_BLUE:    if((PORTC & 0x30) == 0x30 || (PORTC & 0x30) == 0x00) _MASK(PORTC, _BV(PC4), _BV(PC4) | _BV(PC5)); _MASK(PORTC, ~PORTC, _BV(PC4) | _BV(PC5)); break;
+        case NO_SHAPE_WHITE: _MASK(PORTC, 0, _BV(PC4) | _BV(PC5)); break;
         default: _MASK(PORTC, 0, _BV(PC4) | _BV(PC5));
         }
     }
@@ -22,15 +22,15 @@ void testDistSensor() {
     }
 }
 
-Shape testShapeDetector() {
-    Shape shape = ShapeDetector::checkShape();
+ShapeColor testShapeDetector() {
+    ShapeColor shape = ShapeDetector::checkShape();
     Buzzer::clearTone();
     _MASK(PORTC, 0, _BV(PC4) | _BV(PC5));
     
     switch (shape) {
-     case CIRCLE_G:  _MASK(PORTC, _BV(PC4), _BV(PC4) | _BV(PC5)); _delay_ms(1000.0); break;
-     case OCTOGON_R: _MASK(PORTC, _BV(PC5), _BV(PC4) | _BV(PC5)); _delay_ms(1000.0); break;
-     case SQUARE_B:  Buzzer::setTone(68); _delay_ms(1000.0); break;
+     case CIRCLE_GREEN:  _MASK(PORTC, _BV(PC4), _BV(PC4) | _BV(PC5)); _delay_ms(1000.0); break;
+     case OCTOGON_RED:   _MASK(PORTC, _BV(PC5), _BV(PC4) | _BV(PC5)); _delay_ms(1000.0); break;
+     case SQUARE_BLUE:    Buzzer::setTone(68); _delay_ms(1000.0); break;
      default: ;
     }
 

@@ -3,22 +3,12 @@
 
 #include <incl.h>
 
-typedef uint8_t Shape;
-
+#include "typedefs.h"
 #include "DistSnsr.h"
-
-// ---Shape---
-#ifndef CIRCLE_G
-    #include "ColorSnsr.h"  // Nécessaire pour rester consistant avec les
-                            // constantes de couleur du capteur.
-    #define CIRCLE_G  COLOR_READ_GREEN
-    #define OCTOGON_R COLOR_READ_RED
-    #define SQUARE_B  COLOR_READ_BLUE
-#endif // CIRCLE_G
 
 class ShapeDetector {
 public:
-    static Shape checkShape();
+    static ShapeColor checkShape();
     
 private:
     static uint8_t getAverageValue_();

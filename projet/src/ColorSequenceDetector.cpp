@@ -15,13 +15,13 @@
 
 #include "ColorSequenceDetector.h"
 
-Color ColorSequenceDetector::colorSequence_[COLOR_SEQ_MAX];
+ShapeColor ColorSequenceDetector::colorSequence_[COLOR_SEQ_MAX];
 uint8_t ColorSequenceDetector::colorSequenceCount_ = 0;
-Color ColorSequenceDetector::lastColors_[LAST_COLORS_MAX] = {COLOR_READ_WHITE,COLOR_READ_WHITE,COLOR_READ_WHITE,COLOR_READ_WHITE};
+ShapeColor ColorSequenceDetector::lastColors_[LAST_COLORS_MAX] = {NO_SHAPE_WHITE, NO_SHAPE_WHITE, NO_SHAPE_WHITE, NO_SHAPE_WHITE};
 uint8_t ColorSequenceDetector::lastColorsBeg_ = 0;
 
-void ColorSequenceDetector::checkSequence(const Color shapeSequence[COLOR_SEQ_MAX], LED& led) {
-    Color color = ColorSnsr::read();
+void ColorSequenceDetector::checkSequence(const ShapeColor shapeSequence[3], LED& led) {
+    ShapeColor color = ColorSnsr::read();
     
     Path::forward();
     
@@ -31,10 +31,10 @@ void ColorSequenceDetector::checkSequence(const Color shapeSequence[COLOR_SEQ_MA
         colorSequenceCount_ = 0;
         
         for (uint8_t j = 0; j < LAST_COLORS_MAX; ++j) {
-            lastColors_[j] = COLOR_READ_WHITE;
+            lastColors_[j] = NO_SHAPE_WHITE;
         }
         
-        while (color != COLOR_READ_WHITE) {
+        while (color != NO_SHAPE_WHITE) {
             color = ColorSnsr::read();
         }
         
@@ -64,7 +64,7 @@ void ColorSequenceDetector::checkSequence(const Color shapeSequence[COLOR_SEQ_MA
         UART::transmit('\n');
         
         // On vérifie un 3e changement de couleur, pour la forme ;)
-        while(color != COLOR_READ_WHITE) {
+        while(color != NO_SHAPE_WHITE) {
             color = findColorAndAct_(led);
         }
         
@@ -75,35 +75,35 @@ void ColorSequenceDetector::checkSequence(const Color shapeSequence[COLOR_SEQ_MA
     playEndingTheme_();
 }
 
-Color ColorSequenceDetector::findColorAndAct_(LED& led) {
-    Color color = ColorSnsr::read();
+ShapeColor ColorSequenceDetector::findColorAndAct_(LED& led) {
+    ShapeColor color = ColorSnsr::read();
     
     if (hasColorChanged_(color)) {
         colorSequence_[colorSequenceCount_++] = color;
     
         switch(color) {
-         case OCTOGON_R:        Buzzer::clearTone(); led.setColor(LED_RED);   break;
-         case CIRCLE_G:         Buzzer::clearTone(); led.setColor(LED_GREEN); break;
-         case SQUARE_B:         Buzzer::setTone(68); // fallthrough
+         case OCTOGON_RED:  Buzzer::clearTone(); led.setColor(LED_RED);   break;
+         case CIRCLE_GREEN: Buzzer::clearTone(); led.setColor(LED_GREEN); break;
+         case SQUARE_BLUE:  Buzzer::setTone(68); // fallthrough
          default: led.setColor(LED_OFF);
         }
     }
     return color;
 }
 
-bool ColorSequenceDetector::hasColorChanged_(Color color) {
+bool ColorSequenceDetector::hasColorChanged_(ShapeColor color) {
     // On "push_back" une nouvelle valeur dans la queue
     lastColors_[lastColorsBeg_] = color;
     ++lastColorsBeg_;
     lastColorsBeg_ %= LAST_COLORS_MAX;
     
-    Color earliestColor = lastColors_[lastColorsBeg_];
-    Color colorAfterEarliest = lastColors_[(lastColorsBeg_ + 1) % LAST_COLORS_MAX];
+    ShapeColor earliestColor = lastColors_[lastColorsBeg_];
+    ShapeColor colorAfterEarliest = lastColors_[(lastColorsBeg_ + 1) % LAST_COLORS_MAX];
     bool hasChanged = (earliestColor != colorAfterEarliest);
     
-    Color color1 = colorAfterEarliest;
+    ShapeColor color1 = colorAfterEarliest;
     for (uint8_t i = 2; i <= (LAST_COLORS_MAX - 1) && hasChanged; ++i) {
-        Color color2 = lastColors_[(lastColorsBeg_ + i) % LAST_COLORS_MAX];
+        ShapeColor color2 = lastColors_[(lastColorsBeg_ + i) % LAST_COLORS_MAX];
         hasChanged = (color1 == color2);
         color1 = color2;
     }
@@ -111,7 +111,7 @@ bool ColorSequenceDetector::hasColorChanged_(Color color) {
     return hasChanged;
 }
 
-bool ColorSequenceDetector::isCorrectSequence_(const Color shapeSequence[COLOR_SEQ_MAX]) {
+bool ColorSequenceDetector::isCorrectSequence_(const ShapeColor shapeSequence[COLOR_SEQ_MAX]) {
     bool isCorrectSeq = true;
     
     // On n'a besoin que de 2 couleurs pour savoir de quelle séquence il s'agit :D

@@ -35,7 +35,7 @@ int main() {
     LED led(C4_C5, nullptr);
     
     
-    Shape shapeSequence[3];
+    ShapeColor shapeSequence[3];
     
     globalInit(engL, engR);
 	

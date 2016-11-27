@@ -17,24 +17,10 @@
 #define COLOR_SNSR_H
 
 #include <incl.h>
-
-typedef uint8_t TimerExternalClock;
-typedef uint8_t ColorRead;
-
 #include <lib.h>
 #include <timer.h>
 
-// ---TimerExternalClock---
-#define T0_FALLING_EDGE 0x06
-#define T0_RISING_EDGE	0x07
-#define T1_FALLING_EDGE	0x16
-#define T1_RISING_EDGE	0x17
-
-// ---ColorRead---
-#define COLOR_READ_RED	 0x0 // S3 = 0 , S2 = 0
-#define COLOR_READ_WHITE 0x1 // S3 = 0 , S2 = 1
-#define COLOR_READ_BLUE  0x2 // S3 = 1 , S2 = 0
-#define COLOR_READ_GREEN 0x3 // S3 = 1 , S2 = 1
+#include "typedefs.h"
 
 #ifndef COLOR_SEQ_MAX
     #define COLOR_SEQ_MAX   3
@@ -65,7 +51,7 @@ public:
      * 
      * @return  La couleur dominante.
      */
-    static ColorRead read();
+    static ShapeColor read();
 
 private:
     /**

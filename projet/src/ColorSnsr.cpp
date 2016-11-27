@@ -25,8 +25,8 @@ uint16_t ColorSnsr::_GREEN_THRESH_FOR_WHITE = 0x0800;
 uint16_t ColorSnsr::_RED_THRESH_FOR_WHITE   = 0x1100;
 
 
-class EqualFunctor { void operator()(uint16_t& lhs, uint16_t rhs) { lhs = rhs; } };
-class MinusEqualFunctor { void operator()(uint16_t& lhs, uint16_t rhs) { lhs -= rhs; } };
+struct EqualFunctor { void operator()(uint16_t& lhs, uint16_t rhs) { lhs = rhs; } };
+struct MinusEqualFunctor { void operator()(uint16_t& lhs, uint16_t rhs) { lhs -= rhs; } };
 
 
 void ColorSnsr::init(TimerExternalClock tec) {
@@ -40,13 +40,12 @@ void ColorSnsr::init(TimerExternalClock tec) {
     
     _TIMER->setPrescale(tec & 0x0F);
     
-    _MASK(PORTC, 0x3 << _S0 | COLOR_READ_WHITE << _S2, 0x3 << _S0 | 0x3 << _S2); // S1:0 = 2. Division d'horloge = 1:1 ; S3:2 = 1. Filtre Blanc.
+    _MASK(PORTC, 0x3 << _S0 | NO_SHAPE_WHITE << _S2, 0x3 << _S0 | 0x3 << _S2); // S1:0 = 2. Division d'horloge = 1:1 ; S3:2 = 1. Filtre Blanc.
     
     _initializeConstants();
 }
 
-ColorRead ColorSnsr::read() {
-    ColorRead colorFilter = COLOR_READ_RED;
+ShapeColor ColorSnsr::read() {
     uint16_t colors[COLOR_SEQ_MAX];
     
     // Prendre une mesure avec la LED allumée...
@@ -58,30 +57,22 @@ ColorRead ColorSnsr::read() {
     _MASK(PORTB, 0, _LED_MASK);
     _readColors<MinusEqualFunctor>(colors);
     
-    ColorRead colorRead;
+    ShapeColor colorRead;
     
     bool
         isRed =   colors[0] >= _RED_THRESH_FOR_WHITE,
         isGreen = colors[1] >= _GREEN_THRESH_FOR_WHITE,
         isBlue =  colors[2] >= _BLUE_THRESH_FOR_WHITE;
     if (isRed && isGreen && isBlue) {
-        colorRead = COLOR_READ_WHITE;
+        colorRead = NO_SHAPE_WHITE;
     } else if (colors[0] > (colors[1] + COLOR_UNCERT) &&  // red > green + incert
                 colors[0] > (colors[2] + COLOR_UNCERT)) { // red > blue + incert
-        colorRead = COLOR_READ_RED;
+        colorRead = OCTOGON_RED;
     } else if (colors[2] > (colors[1] + COLOR_UNCERT)) {  // blue > green + incert
-        colorRead = COLOR_READ_BLUE;
+        colorRead = SQUARE_BLUE;
     } else {
-        colorRead = COLOR_READ_GREEN;
+        colorRead = CIRCLE_GREEN;
     }
-    
-    /*switch(ret) {
-     case COLOR_READ_RED:   UART::transmitCStr(" RED  \n"); break;
-     case COLOR_READ_GREEN: UART::transmitCStr(" GREEN\n"); break;
-     case COLOR_READ_BLUE:  UART::transmitCStr(" BLUE \n"); break;
-     case COLOR_READ_WHITE: UART::transmitCStr(" WHITE\n"); break;
-     default: UART::transmitCStr(" ??? \n");
-    }*/
     
     return colorRead;
 }
@@ -93,30 +84,30 @@ void ColorSnsr::_initializeConstants() {
 
     _MASK(PORTB, 0xFF, _LED_MASK); // Allumer les LED
     
-    _MASK(PORTC, COLOR_READ_RED << _S2, 0x3 << _S2); // On choisi le filtre Rouge
+    _MASK(PORTC, OCTOGON_RED << _S2, 0x3 << _S2); // On choisi le filtre Rouge
     _TIMER->setTcntN(0);
     _delay_ms(15.0);
     _RED_THRESH_FOR_WHITE = (_TIMER->getTcntN() >> 2) * 3;
-    _MASK(PORTC, COLOR_READ_GREEN << _S2, 0x3 << _S2);
+    _MASK(PORTC, CIRCLE_GREEN << _S2, 0x3 << _S2);
     _TIMER->setTcntN(0);
     _delay_ms(15.0);
     _GREEN_THRESH_FOR_WHITE = (_TIMER->getTcntN() >> 2) * 3;
-    _MASK(PORTC, COLOR_READ_BLUE << _S2, 0x3 << _S2);
+    _MASK(PORTC, SQUARE_BLUE << _S2, 0x3 << _S2);
     _TIMER->setTcntN(0);
     _delay_ms(15.0);
     _BLUE_THRESH_FOR_WHITE = (_TIMER->getTcntN() >> 2) * 3;
     
     _MASK(PORTB, 0x00, _LED_MASK); // Éteindre les LED
     
-    _MASK(PORTC, COLOR_READ_RED << _S2, 0x3 << _S2); // On choisi le filtre Rouge
+    _MASK(PORTC, OCTOGON_RED << _S2, 0x3 << _S2); // On choisi le filtre Rouge
     _TIMER->setTcntN(0);
     _delay_ms(15.0);
     _RED_THRESH_FOR_WHITE -= (_TIMER->getTcntN() >> 2) * 3;
-    _MASK(PORTC, COLOR_READ_GREEN << _S2, 0x3 << _S2);
+    _MASK(PORTC, CIRCLE_GREEN << _S2, 0x3 << _S2);
     _TIMER->setTcntN(0);
     _delay_ms(15.0);
     _GREEN_THRESH_FOR_WHITE -= (_TIMER->getTcntN() >> 2) * 3;
-    _MASK(PORTC, COLOR_READ_BLUE << _S2, 0x3 << _S2);
+    _MASK(PORTC, SQUARE_BLUE << _S2, 0x3 << _S2);
     _TIMER->setTcntN(0);
     _delay_ms(15.0);
     _BLUE_THRESH_FOR_WHITE -= (_TIMER->getTcntN() >> 2) * 3;
@@ -138,7 +129,7 @@ template <class Operator>
 void ColorSnsr::_readColors(uint16_t colors[COLOR_SEQ_MAX]) {
     Operator op;
     
-    ColorRead colorFilter = COLOR_READ_RED;
+    ShapeColor colorFilter = OCTOGON_RED;
     
     for (uint8_t i = 0; i < COLOR_SEQ_MAX; ++i) {
         _MASK(PORTC, colorFilter << _S2, 0x3 << _S2); // Envoyer le filtre de couleur au capteur
@@ -148,9 +139,9 @@ void ColorSnsr::_readColors(uint16_t colors[COLOR_SEQ_MAX]) {
         op(colors[i], _TIMER->getTcntN());
         
         switch(colorFilter) { // Passer à l'état (filtre) suivant
-         case COLOR_READ_RED:   colorFilter = COLOR_READ_GREEN; break;
-         case COLOR_READ_GREEN: colorFilter = COLOR_READ_BLUE; break;
-         default: colorFilter = COLOR_READ_WHITE; break;
+         case OCTOGON_RED:   colorFilter = CIRCLE_GREEN; break;
+         case CIRCLE_GREEN: colorFilter = SQUARE_BLUE; break;
+         default: colorFilter = NO_SHAPE_WHITE; break;
         }
     }
 }

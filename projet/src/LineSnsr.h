@@ -18,6 +18,8 @@
 
 #include <incl.h>
 
+#include "typedefs.h"
+
 /**
  * @class   LineSnsr
  * 

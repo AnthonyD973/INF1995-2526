@@ -22,6 +22,7 @@
 #include <buzzer.h>
 #include <uart.h>
 
+#include "typedefs.h"
 #include "LineSnsr.h"
 #include "DistSnsr.h"
 #include "ColorSnsr.h"
@@ -33,9 +34,9 @@ void testColorSensor();
 
 void testDistSensor();
 
-void testColorSequenceDetector(const Color shapeSequence[3]);
+void testColorSequenceDetector(const ShapeColor shapeSequence[3]);
 
-Shape testShapeDetector();
+ShapeColor testShapeDetector();
 
 void testBuzzer();
 

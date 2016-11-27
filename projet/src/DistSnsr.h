@@ -17,11 +17,10 @@
 #define DISTSNSR_H_
 
 #include <incl.h>
-
-typedef uint8_t PinAPos;
-
 #include <lib.h>
 #include <can.h>
+
+#include "typedefs.h"
 
 /**
  * @class   DistSnsr
@@ -46,7 +45,7 @@ public:
      *                              [PA0, PA1, PA2, PA3, PA4, PA5, PA6, PA7]
      *                          Elles sont définies dans la librairie d'AVR.
      */
-    static void     init(PinAPos pinANum);
+    static void     init(uint8_t pinANum);
 
     /**
      * @brief   Lit la valeur du capteur.
@@ -70,7 +69,7 @@ private:
     /**
      * @brief   Numéro de la broche.
      */
-    static PinAPos _PIN_A_NUM;
+    static uint8_t _PIN_A_NUM;
 
 };
 

@@ -24,23 +24,12 @@
 #include <timer.h>
 #include <ram.h>
 #include <engine.h>
+
+#include "typedefs.h"
 #include "LineSnsr.h"
 #include "DistSnsr.h"
 
 typedef uint8_t State;
-
-typedef bool RotDir;
-#define ROT_LEFT    true
-#define ROT_RIGHT   false
-
-typedef uint8_t Opcode;
-const Opcode
-    NOP_OP = 0x00, // No OPeration: Ne rien faire.
-    INI_OP = 0x10, // INIt: Attendre que les 5 capteurs de ligne soient actifs, puis se déplacer en avant pendant une demi-seconde.
-    TNL_OP = 0x20, // TurN Left: Au prochain embranchement, tourner à gauche.
-    TNR_OP = 0x21, // TurN Right: Au prochain embranchement, tourner à droite.
-    MDL_OP = 0x30, // MiDdLe: Se mettre au milieu de la pièce.
-    ENP_OP = 0xF0; // ENd Path: Le chemin est terminé ; les prochaines instructions sont pour le chemin suivant.
 
  // Constantes pour les vitesses
 const uint8_t
