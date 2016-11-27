@@ -17,8 +17,11 @@
 #define LINE_SNSR_H
 
 #include <incl.h>
+#include <lib.h>
 
 #include "typedefs.h"
+
+#define LINE_BITS_MASK 0x1F
 
 /**
  * @brief   Classe qui permet de lire les valeurs binaires du capteur LSS05.
@@ -34,12 +37,11 @@ public:
     /**
      * @brief   Initialisation du détecteur. À appeler au début du programme.
      *
-     * @param[in] pin   Registre duquel lire les valeurs sur les broches.
      * @param[in] port  Registre vers lequel écrire les valeurs sur les broches.
      * @param[in] ddr   Registre définissant les modes d'entrée/sortie des
      *      broches.
      */
-    static void init(volatile uint8_t* pin, volatile uint8_t* port, volatile uint8_t* ddr);
+    static void init(volatile uint8_t* port, volatile uint8_t* ddr);
 
     /**
      * @brief   Lit la valeur du suiveur de ligne pour donner la position du
@@ -61,7 +63,7 @@ private:
     /**
      * @brief   Port d'où lire la sortie du capteur.
      */
-    static volatile uint8_t* _PIN;
+    static volatile uint8_t* _PORT;
 
 };
 
