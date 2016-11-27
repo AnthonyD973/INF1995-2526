@@ -123,6 +123,8 @@ public:
     
     __attribute__ ((always_inline))
     inline virtual bool is8BitClock() { while (true) {} return false;};
+    __attribute__ ((always_inline))
+    inline virtual bool isAsync() { while (true) {} return false; }
     
     volatile uint16_t getAmberLeds();
 
@@ -172,6 +174,8 @@ public:
     
     __attribute__ ((always_inline))
     inline virtual bool is8BitClock() { return true; }
+    __attribute__ ((always_inline))
+    inline virtual bool isAsync() { return false; }
 };
 
 // ===========================
@@ -210,6 +214,8 @@ public:
     
     __attribute__ ((always_inline))
     inline virtual bool is8BitClock() { return false; }
+    __attribute__ ((always_inline))
+    inline virtual bool isAsync() { return false; }
 };
 
 // ===========================
@@ -248,6 +254,8 @@ public:
     
     __attribute__ ((always_inline))
     inline virtual bool is8BitClock() { return true; }
+    __attribute__ ((always_inline))
+    inline virtual bool isAsync() { return true; }
 };
 
 #endif // TIMER_H

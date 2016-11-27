@@ -11,6 +11,7 @@
 #include "ColorSequenceDetector.h"
 #include "path.h"
 #include "tests.h"
+#include "Player.h"
 
 void globalInit(Engine& engL, Engine& engR) {
 	// DDRA est modifié par LineSnsr::init.
@@ -26,6 +27,7 @@ void globalInit(Engine& engL, Engine& engR) {
     ColorSnsr::init(T1_RISING_EDGE);
     Path::init(&engL, &engR);
     Buzzer::init(&timer0);
+    Player::init();
 }
 
 
@@ -50,6 +52,8 @@ int main() {
     Path::doPath(2);//*/
     
     ColorSequenceDetector::checkSequence(shapeSequence);
+    
+    Player::play();
     
     for EVER {
         // Busy wait
