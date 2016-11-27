@@ -12,3 +12,8 @@
 # Pour KDevelop
 *.kdev_include_paths
 *.kdev4
+
+#Dossiers doxygen
+lib/doxygen/html/*
+projet/src/doxygen/html/*
+projet/gas/doxygen/html/*

@@ -83,6 +83,12 @@ HEXFORMAT=ihex
 DEBUG?=-UDEBUG
 export DEBUG
 
+# Dossier dans lequel mettre la documentation de Doxygen.
+# ATTENTION: Si vous changez cette variable, vous devez aussi modifier
+# la variable 'OUTPUT_DIRECTORY' dans tous les Doxyfile, ainsi que le
+# fichier .gitignore.
+DOXYGEN_FOLDER:=doxygen
+
 	
 ####### Variables pour la creation d'une librairie #######
 
@@ -146,7 +152,7 @@ OBJDEPS:=$(patsubst %.c,$(GENDIR)/%.o,$(strip $(filter %.c, $(PRJSRC)))) \
 # En plus de la commande make qui permet de compiler
 # votre projet, vous pouvez utilisez les commandes
 # make all, make install et make clean
-.PHONY: all install clean auto lib libauto
+.PHONY: all install clean auto lib libauto docs
 
 # Make all permet simplement de compiler le projet
 #
@@ -213,7 +219,11 @@ install: $(HEXROMTRG)
 clean:
 	$(REMOVE) $(TRG) $(TRG).map $(OBJDEPS) $(HEXTRG) $(GENDIR)/*.d \
 	$(GENDIR)/* $(GENDIR) $(LIBTRG) *.bin
-	
+
+
+docs:
+	doxygen $(DOXYGEN_FOLDER)/Doxyfile
+	rm -rf $(DOXYGEN_FOLDER)/latex/
 
 # Execute, dans l'ordre, un 'make all' pour compiler ce qu'il
 # y a a compiler, un 'make install' pour transferer le programme

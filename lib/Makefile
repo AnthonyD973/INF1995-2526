@@ -41,7 +41,7 @@ SRCDIR=.
 # Emplacement de stockage temporaire des fichiers generes
 # lors de la compilation (par defaut, creer un dossier 'gen' dans le
 # repertoire courant)
-GENDIR=gen
+GENDIR=build
 
 # Inclusions additionnels separes par des espaces
 # (L'emplacement des fichiers .h utilises dans les fichers sources)
