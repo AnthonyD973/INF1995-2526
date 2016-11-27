@@ -42,7 +42,7 @@ public:
      *      correspond à la première couleur de la séquence, c'est-à-dire à la
      *      forme de la dernière pièce.
      */
-    static void checkSequence(const Color shapeSequence[3]);
+    static void checkSequence(const Color shapeSequence[COLOR_SEQ_MAX]);
 
 private:
     /**
@@ -59,14 +59,24 @@ private:
      *      la même sur plusieurs lectures d'affilée, mais est différente d'une
      *      lecture plus ancienne.
      */
-    static bool checkColorChanged_(Color color);
+    static bool hasColorChanged_(Color color);
+    /**
+     * @brief   Vérifie si la séquence de couleur du papier au-dessus duquel est
+     *      le robot correspond à la séquence recherchée.
+     * @param[in] shapeSequence Séquence de couleur cherchée. L'indice 0
+     *      correspond à la première couleur de la séquence, c'est-à-dire à la
+     *      forme de la dernière pièce.
+     * @return Si  la séquence de couleur du papier au-dessus duquel est
+     *      le robot correspond à la séquence recherchée.
+     */
+    static bool isCorrectSequence_(const Color colorSequence[COLOR_SEQ_MAX]);
     /**
      * @brief   Joue une musique pour fêter la fin de l'épreuve \(^_^)/
      */
     static void playEndingTheme_();
     
     /**
-     * @brief   Séquence de couleurs du papier sur lequel passe le robot.
+     * @brief   Séquence de couleurs du papier au-dessus duquel passe le robot.
      */
     static Color colorSequence_[COLOR_SEQ_MAX];
     /**

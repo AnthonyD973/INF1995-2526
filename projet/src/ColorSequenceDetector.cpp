@@ -20,7 +20,7 @@ uint8_t ColorSequenceDetector::colorSequenceCount_ = 0;
 Color ColorSequenceDetector::lastColors_[LAST_COLORS_MAX] = {COLOR_READ_WHITE,COLOR_READ_WHITE,COLOR_READ_WHITE,COLOR_READ_WHITE};
 uint8_t ColorSequenceDetector::lastColorsBeg_ = 0;
 
-void ColorSequenceDetector::checkSequence(const Color shapeSequence[3]) {
+void ColorSequenceDetector::checkSequence(const Color shapeSequence[COLOR_SEQ_MAX]) {
     Color color = ColorSnsr::read();
     
     Path::forward();
@@ -30,20 +30,20 @@ void ColorSequenceDetector::checkSequence(const Color shapeSequence[3]) {
         color = ColorSnsr::read();
         colorSequenceCount_ = 0;
         
-        for (uint8_t i = 0; i < LAST_COLORS_MAX; ++i) {
-            lastColors_[i] = COLOR_READ_WHITE;
+        for (uint8_t j = 0; j < LAST_COLORS_MAX; ++j) {
+            lastColors_[j] = COLOR_READ_WHITE;
         }
         
         while (color != COLOR_READ_WHITE) {
             color = ColorSnsr::read();
         }
         
-        // On n'a besoin que de 2 couleurs savoir de quelle séquence il s'agit :D
+        // On n'a besoin que de 2 couleurs pour savoir de quelle séquence il s'agit :D
         while (colorSequenceCount_ < 2) {
             color = findColorAndAct_();
         }
         
-        if (shapeSequence[0] == colorSequence_[0] && shapeSequence[1] == colorSequence_[1]) {
+        if (isCorrectSequence_(shapeSequence)) {
             Buzzer::clearTone();
             _MASK(PORTC, 0, _BV(PC4) | _BV(PC5));
             Path::stop();
@@ -78,7 +78,7 @@ void ColorSequenceDetector::checkSequence(const Color shapeSequence[3]) {
 Color ColorSequenceDetector::findColorAndAct_() {
     Color color = ColorSnsr::read();
     
-    if (checkColorChanged_(color)) {
+    if (hasColorChanged_(color)) {
         colorSequence_[colorSequenceCount_++] = color;
     
         switch(color) {
@@ -91,24 +91,35 @@ Color ColorSequenceDetector::findColorAndAct_() {
     return color;
 }
 
-bool ColorSequenceDetector::checkColorChanged_(Color color) {
-    bool ret = false;
-    
-    // On "push_back" une nouvelle valeur dans la queue...
-    lastColors_[lastColorsBeg_] = color; // On la met à la fin, puis...
+bool ColorSequenceDetector::hasColorChanged_(Color color) {
+    // On "push_back" une nouvelle valeur dans la queue
+    lastColors_[lastColorsBeg_] = color;
     ++lastColorsBeg_;
-    lastColorsBeg_ %= LAST_COLORS_MAX; // On avance le pointeur de début.
+    lastColorsBeg_ %= LAST_COLORS_MAX;
     
-    // Si le premier est différent des 3 derniers et que les 3 derniers sont
-    // identiques...
-    if ((lastColors_[lastColorsBeg_] != lastColors_[(lastColorsBeg_+1) % LAST_COLORS_MAX]) &&
-        (lastColors_[(lastColorsBeg_+1) % LAST_COLORS_MAX] == lastColors_[(lastColorsBeg_+2) % LAST_COLORS_MAX]) &&
-        (lastColors_[(lastColorsBeg_+2) % LAST_COLORS_MAX] == lastColors_[(lastColorsBeg_+3) % LAST_COLORS_MAX])) {
-        // Il y a eu un changement de couleur !
-        ret = true;
+    Color earliestColor = lastColors_[lastColorsBeg_];
+    Color colorAfterEarliest = lastColors_[(lastColorsBeg_ + 1) % LAST_COLORS_MAX];
+    bool hasChanged = (earliestColor != colorAfterEarliest);
+    
+    Color color1 = colorAfterEarliest;
+    for (uint8_t i = 2; i <= (LAST_COLORS_MAX - 1) && hasChanged; ++i) {
+        Color color2 = lastColors_[(lastColorsBeg_ + i) % LAST_COLORS_MAX];
+        hasChanged = (color1 == color2);
+        color1 = color2;
     }
     
-    return ret;
+    return hasChanged;
+}
+
+bool ColorSequenceDetector::isCorrectSequence_(const Color shapeSequence[COLOR_SEQ_MAX]) {
+    bool isCorrectSeq = true;
+    
+    // On n'a besoin que de 2 couleurs pour savoir de quelle séquence il s'agit :D
+    for (uint8_t i = 0; i <= (COLOR_SEQ_MAX - 2) && isCorrectSeq; ++i) {
+        isCorrectSeq = (shapeSequence[i] == colorSequence_[i]);
+    }
+    
+    return isCorrectSeq;
 }
 
 
