@@ -1,4 +1,6 @@
-/*
+/**
+ * Classe permettant l'accès au capteur de distance GP2D12 de SHARP.
+ *
  * Ecole Polytechnique de Montreal
  * Departement de genie informatique
  * Cours inf1995
@@ -15,7 +17,7 @@
 
 uint8_t DistSnsr::_PIN_A_NUM = 0xFF;
 
-// NOTE: Le Potentiomètre doit être réglé à 2.74 V.
+// NOTE: Le Potentiomètre doit être réglé à 2.65 V.
 void DistSnsr::init(uint8_t pinANum) {
     _PIN_A_NUM = pinANum;
 }

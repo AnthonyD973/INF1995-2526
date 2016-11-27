@@ -1,16 +1,15 @@
-/* 
- * Classe permettant l'accès au capteur de distance GP2D12 de SHARP.
+/**
+ * @file DistSnsr.h
+ * @brief   Définition de DistSnsr qui permet l'accès au capteur de distance GP2D12 de SHARP.
  *
- * Ecole Polytechnique de Montreal
- * Departement de genie informatique
- * Cours inf1995
+ * @authors Belhaddad, Emir Khaled
+ * @authors Dandenault, Vincent
+ * @authors Dentinger, Anthony
+ * @authors Younis, Gergi
+ * 
+ * @date 2016
  *
- * Emir Khaled Belhaddad, Anthony Dentinger,
- * Gergi Younis et Vincent Dandenault
- * 2016
- *
- * Code qui n'est sous aucune license.
- *
+ * @copyright Code qui n'est sous aucune license.
  */
 
 #ifndef DIST_SNSR_H_
@@ -23,29 +22,23 @@
 #include "typedefs.h"
 
 /**
- * @class   DistSnsr
- * 
+ * @class DistSnsr
  * @brief   Classe à utiliser pour obtenir la valeur de distance lue par le
- *          capteur de distance GP2D12. La classe se charge de l'interprétation
- *          de la valeur analogique que fournit le capteur et donne une valeur
- *          normalisée de la distance (voir DistSnsr::read).
+ *          capteur de distance GP2D12.
+ * 
+ * La classe se charge de l'interprétation de la valeur analogique que fournit
+ * le capteur et donne une valeur normalisée de la distance (voir
+ * DistSnsr::read).
  */
 class DistSnsr {
 
 public:
     /**
      * @brief   Initialisation du détecteur. À appeler au début du programme.
-     *          Met en entrée la broche pinANum du port A où le signal
-     *          analogique du capteur de distance est reçu.
-     * 
-     * @param[in]   pinANum     La position de la broche où la sortie du capteur
-     *                          est branchée.
-     * 
-     *                          La valeur peut prendre une de celles-ci:
-     *                              [PA0, PA1, PA2, PA3, PA4, PA5, PA6, PA7]
-     *                          Elles sont définies dans la librairie d'AVR.
+     * @param[in] pinANum   La position de la broche où la sortie du capteur
+     *                      est branchée. Entre 0 (PA0) et 7 (PA7).
      */
-    static void     init(uint8_t pinANum);
+    static void init(uint8_t pinANum);
 
     /**
      * @brief   Lit la valeur du capteur.
@@ -53,21 +46,19 @@ public:
      * @return  Une valeur allant de 0 à 256 représentant la valeur de la
      *          tension émise par le capteur.
      */
-    static uint8_t  read();
+    static uint8_t read();
     /**
-     * @brief   Effectue 32 lectures sur le capteur en rafale pour ensuite en
-     *          faire la moyenne afin de lisser tout pic qui puisse être causé
-     *          par du bruit dans le signal reçu et avoir des valeurs
-     *          relativement constante et précise.
+     * @brief   Effectue 32 lectures en rafale sur le capteur et en fait la
+     *      moyenne pour avoir un signal plus constant entre deux lectures.
      * 
      * @return  Une valeur moyenne allant de 0 à 256 représentant la valeur de
      *          la tension émise par le capteur.
      */
-    static uint8_t  readAverage();
+    static uint8_t readAverage();
 
 private:
     /**
-     * @brief   Numéro de la broche.
+     * @brief   Numéro de la broche. Entre 0 (PA0) et 7 (PA7).
      */
     static uint8_t _PIN_A_NUM;
 
