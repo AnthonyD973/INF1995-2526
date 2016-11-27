@@ -13,8 +13,8 @@
  *
  */
 
-#ifndef DISTSNSR_H_ // Include Guard
-#define DISTSNSR_H_
+#ifndef DIST_SNSR_H_
+#define DIST_SNSR_H_
 
 #include <incl.h>
 #include <lib.h>
@@ -25,52 +25,52 @@
 /**
  * @class   DistSnsr
  * 
- * @brief   Classe à utiliser pour obtenir la valeur de distance lue par le
- *          capteur de distance GP2D12. La classe se charge de l'interprétation
+ * @brief   Classe Ã  utiliser pour obtenir la valeur de distance lue par le
+ *          capteur de distance GP2D12. La classe se charge de l'interprÃ©tation
  *          de la valeur analogique que fournit le capteur et donne une valeur
- *          normalisée de la distance (voir <DistSnsr::read>).
+ *          normalisÃ©e de la distance (voir DistSnsr::read).
  */
 class DistSnsr {
 
 public:
     /**
-     * @brief   Initialisation du détecteur. À appeler au début du programme.
-     *          Met en entrée la broche <pinANum> du port A où le signal
-     *          analogique du capteur de distance est reçu.
+     * @brief   Initialisation du dÃ©tecteur. Ã€ appeler au dÃ©but du programme.
+     *          Met en entrÃ©e la broche pinANum du port A oÃ¹ le signal
+     *          analogique du capteur de distance est reÃ§u.
      * 
-     * @param[in]   pinANum     La position de la broche où la sortie du capteur
-     *                          est branchée.
+     * @param[in]   pinANum     La position de la broche oÃ¹ la sortie du capteur
+     *                          est branchÃ©e.
      * 
      *                          La valeur peut prendre une de celles-ci:
      *                              [PA0, PA1, PA2, PA3, PA4, PA5, PA6, PA7]
-     *                          Elles sont définies dans la librairie d'AVR.
+     *                          Elles sont dÃ©finies dans la librairie d'AVR.
      */
     static void     init(uint8_t pinANum);
 
     /**
      * @brief   Lit la valeur du capteur.
      * 
-     * @return  Une valeur allant de 0 à 256 représentant la valeur de la
-     *          tension émise par le capteur.
+     * @return  Une valeur allant de 0 Ã  256 reprÃ©sentant la valeur de la
+     *          tension Ã©mise par le capteur.
      */
     static uint8_t  read();
     /**
-     * @brief   Effectu 32 lectures sur le capteur en rafale pour ensuite en
-     *          faire la moyenne afin de lisser tout pic qui puisse être causé
-     *          par du bruit dans le signal reçu et avoir des valeurs
-     *          relativement constante et précise.
+     * @brief   Effectue 32 lectures sur le capteur en rafale pour ensuite en
+     *          faire la moyenne afin de lisser tout pic qui puisse Ãªtre causÃ©
+     *          par du bruit dans le signal reÃ§u et avoir des valeurs
+     *          relativement constante et prÃ©cise.
      * 
-     * @return  Une valeur moyenne allant de 0 à 256 représentant la valeur de
-     *          la tension émise par le capteur.
+     * @return  Une valeur moyenne allant de 0 Ã  256 reprÃ©sentant la valeur de
+     *          la tension Ã©mise par le capteur.
      */
     static uint8_t  readAverage();
 
 private:
     /**
-     * @brief   Numéro de la broche.
+     * @brief   NumÃ©ro de la broche.
      */
     static uint8_t _PIN_A_NUM;
 
 };
 
-#endif  // Include Guard
+#endif  // DIST_SNSR_H_

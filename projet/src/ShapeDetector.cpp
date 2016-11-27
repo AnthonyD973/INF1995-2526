@@ -28,7 +28,7 @@ ShapeColor ShapeDetector::checkShape() {
         UART::transmit(' ');
     
     uint8_t readsCount = 0;
-    while (curDist >= max_ - uncert_ && readsCount++ < 12) { // On ne détecte que le premier maximum.
+    while (curDist >= max_ - uncert_ && readsCount++ < 12) { // On ne dÃ©tecte que le premier maximum.
         curDist = getAverageValue_();
         UART::transmitHex(curDist);
         UART::transmit(' ');
@@ -38,11 +38,11 @@ ShapeColor ShapeDetector::checkShape() {
     UART::transmitCStr("Trouve Max. ");
     
     _MASK(PORTC, _BV(PC4), _BV(PC4) | _BV(PC5));
-    while (!(LineSnsr::read() & 0x02)) { _MASK(PORTC, ~PORTC, _BV(PC4) | _BV(PC5)); } // On continue tant que l'on n'a pas détecté la ligne.
+    while (!(LineSnsr::read() & 0x02)) { _MASK(PORTC, ~PORTC, _BV(PC4) | _BV(PC5)); } // On continue tant que l'on n'a pas dÃ©tectÃ© la ligne.
     
     Path::stop();
     
-    // Prise de décision
+    // Prise de dÃ©cision
     ShapeColor shape;
     if (max_ - min_ >= SQUARE_DELTA) {
         shape = SQUARE_BLUE;

@@ -34,24 +34,24 @@
 /**
  * @class   ColorSnsr
  * 
- * @brief   Classe à utiliser pour obtenir la valeur de couleur lue par le
- *          capteur de couleur TAOS TCS230. La classe se charge de l'interprétation
- *          de la fréquence que fournit le capteur et donne une valeur
- *          normalisée de l'intensité de la couleur choisie (voir ColorSnsr::read).
+ * @brief   Classe Ã  utiliser pour obtenir la valeur de couleur lue par le
+ *          capteur de couleur TAOS TCS230. La classe se charge de l'interprÃ©tation
+ *          de la frÃ©quence que fournit le capteur et donne une valeur
+ *          normalisÃ©e de l'intensitÃ© de la couleur choisie (voir ColorSnsr::read).
  */
 class ColorSnsr {
 
 public:
     /**
-     * @brief   Initialisation du détecteur. À appeler au début du programme.
+     * @brief   Initialisation du dÃ©tecteur. Ã€ appeler au Ã©but du programme.
      * 
      * @param[in] tec   Le compteur sur lequel la sortie du capteur est
-     *      branchée.
+     *      branchÃ©e.
      */
     static void init(TimerExternalClock tec);
 
     /**
-     * @brief   Détermine la couleur dominante vue par le capteur.
+     * @brief   DÃ©termine la couleur dominante vue par le capteur.
      * 
      * @return  La couleur dominante.
      */
@@ -59,23 +59,23 @@ public:
 
 private:
     /**
-     * @brief   Initialise _THRESHES_FOR_WHITE pour déceler le blanc.
+     * @brief   Initialise _THRESHES_FOR_WHITE pour dÃ©celer le blanc.
      */
     static void _initializeConstants();
     
     /**
-     * @brief   Lit les intensités relatives des trois filtres et change un
-     *      tableau selon un prédicat binaire.
-     * @tparam Operator Classe du prédicat à appliquer sur les éléments du
+     * @brief   Lit les intensitÃ©s relatives des trois filtres et change un
+     *      tableau selon un prÃ©dicat binaire.
+     * @tparam Operator Classe du prÃ©dicat Ã  appliquer sur les Ã©lÃ©ments du
      *      tableau.
-     * @param[in] colorsIntensity   Tableau à modifier.
+     * @param[in] colorsIntensity   Tableau Ã  modifier.
      */
     template <class Operator>
     static void _readColors(uint16_t colorsIntensity[COLOR_SEQ_MAX]);
     /**
-     * @brief   Décide quelle couleur est lue dépendamment des intensités
+     * @brief   DÃ©cide quelle couleur est lue dÃ©pendamment des intensitÃ©s
      *      relatives des couleurs.
-     * @param[in] colorsIntensity   Tableau des intensités relatives des
+     * @param[in] colorsIntensity   Tableau des intensitÃ©s relatives des
      *      couleurs.
      * @return  La couleur lue.
      */
@@ -87,27 +87,27 @@ private:
      */
     static uint8_t _LED_MASK;
     /**
-     * @brief   Numéro du bit de S2.
+     * @brief   NumÃ©ro du bit de S2.
      */
     static const uint8_t _S2;
     /**
-     * @brief   Numéro du bit de S0.
+     * @brief   NumÃ©ro du bit de S0.
      */
     static const uint8_t _S0;
     /**
-     * @brief   Timer utilisé pour compter le nombre de fronts montants du
-     *      capteur sur une certaine période.
+     * @brief   Timer utilisÃ© pour compter le nombre de fronts montants du
+     *      capteur sur une certaine pÃ©riode.
      */
     static Timer* _TIMER;
     
     /**
-     * @brief   Seuil de tolérance permettant de décider qu'une couleur est
-     *      prédominante par rapport à une autre.
+     * @brief   Seuil de tolÃ©rance permettant de dÃ©cider qu'une couleur est
+     *      prÃ©dominante par rapport Ã  une autre.
      */
     static const uint16_t _COLOR_UNCERT;
     
     /**
-     * @brief   Seuils qui sont dépassés lorsque le capteur lit du blanc.
+     * @brief   Seuils qui sont dÃ©passÃ©s lorsque le capteur lit du blanc.
      */
     static uint16_t _THRESHES_FOR_WHITE[COLOR_SEQ_MAX];
 };

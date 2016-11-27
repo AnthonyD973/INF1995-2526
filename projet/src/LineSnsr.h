@@ -1,8 +1,8 @@
 /* 
- * Classe permettant l'accès au capteur suiveur de ligne LSS05 de Cytron Technologies.
+ * Classe permettant l'accÃ¨s au capteur suiveur de ligne LSS05 de Cytron Technologies.
  *
  * Ecole Polytechnique de Montreal
- * Département de Génie Informatique
+ * DÃ©partement de GÃ©nie Informatique
  * Cours INF1995
  *
  * Emir Khaled Belhaddad, Anthony Dentinger,
@@ -25,16 +25,16 @@
  * 
  * @brief   Classe qui permet de lire les valeurs binaires du capteur LSS05 
  *          Une combinaison binaire de 5 bits en provenance du capteur indique
- *          la position du robot par rapport à une ligne noire sur une surface blanche.
- * 	    Cette indication sert à vérifier si le robot se trouve toujours sur la ligne
- *	    et à corriger sa position dans le cas contraire 	
+ *          la position du robot par rapport Ã  une ligne noire sur une surface blanche.
+ * 	    Cette indication sert Ã  vÃ©rifier si le robot se trouve toujours sur la ligne
+ *	    et Ã  corriger sa position dans le cas contraire 	
  */
 class LineSnsr {
 
 public:
     /**
-     * @brief   Initialisation du détecteur. À appeler au début du programme.
-     *		Met en entrée les broches du port passé en paramètre qui reçoit les sorties du capteur.
+     * @brief   Initialisation du dÃ©tecteur. Ã€ appeler au dÃ©but du programme.
+     *		Met en entrÃ©e les broches du port passÃ© en paramÃ tre qui reÃ§oit les sorties du capteur.
      *
      * @param[in] pin, port, ddr
      */
@@ -42,20 +42,20 @@ public:
 
     /**
      * @brief 	Lit la valeur du capteur pour donner la position    
-     * 	      	du robot par rapport à ligne qu'il suit.
-     *          Les broches 1 à 5 (bits 0 à 4) correspondent aux cinq sorties du capteur (la broche 1 
-     *          correspondant au détecteur de gauche)
-     *		La broche 6 (bit 5) est mise à 1 (pas de calibration; capteur déjà calibré)
-     *		Les broches restantes (bits 6 et 7) ne sont pas utilisés
+     * 	      	du robot par rapport Ã  ligne qu'il suit.
+     *          Les broches 1 Ã  5 (bits 0 Ã  4) correspondent aux cinq sorties du capteur (la broche 1 
+     *          correspondant au dÃ©tecteur de gauche)
+     *		La broche 6 (bit 5) est mise Ã  1 (pas de calibration; capteur dÃ©jÃ  calibrÃ©)
+     *		Les broches restantes (bits 6 et 7) ne sont pas utilisÃ©s
      *
-     * @return  Un byte dont cinq bits sont d'intérêt (encodés comme ci-dessus)
+     * @return  Un byte dont cinq bits sont d'intÃ©rÃªt (encodÃ©s comme ci-dessus)
      */		
     static uint8_t read();
 
 
 private:
     /**
-     * @brief   Nom du port utilisé pour la réception des sorties du capteur
+     * @brief   Nom du port utilisÃ© pour la rÃ©ception des sorties du capteur
      */
     static volatile uint8_t* _PIN;
 
