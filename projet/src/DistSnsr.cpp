@@ -1,18 +1,3 @@
-/**
- * Classe permettant l'accès au capteur de distance GP2D12 de SHARP.
- *
- * Ecole Polytechnique de Montreal
- * Departement de genie informatique
- * Cours inf1995
- *
- * Emir Khaled Belhaddad, Anthony Dentinger,
- * Gergi Younis et Vincent Dandenault
- * 2016
- *
- * Code qui n'est sous aucune license.
- *
- */
-
 #include "DistSnsr.h"
 
 uint8_t DistSnsr::_PIN_A_NUM = 0xFF;
