@@ -27,7 +27,7 @@ void testBuzzer() {
 	
 	Buzzer::setTone(67);
 	_delay_ms(delayValue);
-	/**/Buzzer::setTone(66);
+	Buzzer::setTone(66);
 	_delay_ms(delayValue);
 	Buzzer::setTone(63);
 	_delay_ms(delayValue);
@@ -40,10 +40,10 @@ void testBuzzer() {
 	Buzzer::setTone(68);
 	_delay_ms(delayValue);
 	Buzzer::setTone(72);
-	_delay_ms(delayValue);//*/
+	_delay_ms(delayValue);
 	
 	Buzzer::clearTone();
 	for EVER {
-	    Buzzer::clearTone();
+	    // Busy-wait
 	}
 }

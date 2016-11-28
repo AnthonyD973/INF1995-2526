@@ -1,16 +1,16 @@
 /**
- * Tests des capteurs et de certaines classes.
- *
- * Ecole Polytechnique de Montreal
- * Département de Génie Informatique
- * Cours INF1995
- *
- * Emir Khaled Belhaddad, Anthony Dentinger,
- * Gergi Younis et Vincent Dandenault
- * 2016
- *
- * Code qui n'est sous aucune license.
+ * @file    tests.h
  * 
+ * @brief   Définition de quelques fonctions de tests.
+ *
+ * @authors Belhaddad, Emir Khaled
+ * @authors Dandenault, Vincent
+ * @authors Dentinger, Anthony
+ * @authors Younis, Gergi
+ * 
+ * @date Automne 2016
+ *
+ * @copyright Code qui n'est sous aucune license.
  */
 
 #ifndef TESTS_H
@@ -30,12 +30,21 @@
 #include "ShapeDetector.h"
 #include "ColorSequenceDetector.h"
 
+/**
+ * @brief   Teste la classe ColorSnsr en faisant des lectures à l'infini et en
+ *      allumant la LED dépendamment de la couleur retournée.
+ */
 void testColorSensor();
 
+/**
+ * @brief   Teste la classe DistSnsr en transmettant la valeur retournée via
+ *      l'UART.
+ */
 void testDistSensor();
 
-void testColorSequenceDetector(const ShapeColor shapeSequence[3]);
-
+/**
+ * @brief   Teste la classe Buzzer en faisant jouer une musique.
+ */
 void testBuzzer();
 
 #endif // TESTS_H
