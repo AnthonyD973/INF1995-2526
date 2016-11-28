@@ -1,16 +1,17 @@
 /**
- * Classe permettant de détecter la séquence de couleurs sur laquelle s'arrêter.
+ * @file    ColorSequenceDetector.h
+ * 
+ * @brief   Définition de ColorSequenceDetector qui permet de faire avancer le
+ *      robot jusqu'à ce qu'il soit au-dessus de la bonne séquence de couleurs.
  *
- * Ecole Polytechnique de Montreal
- * Departement de genie informatique
- * Cours inf1995
+ * @authors Belhaddad, Emir Khaled
+ * @authors Dandenault, Vincent
+ * @authors Dentinger, Anthony
+ * @authors Younis, Gergi
+ * 
+ * @date Automne 2016
  *
- * Emir Khaled Belhaddad, Anthony Dentinger,
- * Gergi Younis et Vincent Dandenault
- * 2016
- *
- * Code qui n'est sous aucune license.
- *
+ * @copyright Code qui n'est sous aucune license.
  */
 
 #ifndef COLOR_SEQUENCE_DETECTOR_H

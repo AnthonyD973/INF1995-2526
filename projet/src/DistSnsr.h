@@ -1,13 +1,15 @@
 /**
- * @file DistSnsr.h
- * @brief   Définition de DistSnsr qui permet l'accès au capteur de distance GP2D12 de SHARP.
+ * @file    DistSnsr.h
+ * 
+ * @brief   Définition de DistSnsr qui permet l'accès au capteur de distance
+ *      GP2D12 de SHARP.
  *
  * @authors Belhaddad, Emir Khaled
  * @authors Dandenault, Vincent
  * @authors Dentinger, Anthony
  * @authors Younis, Gergi
  * 
- * @date 2016
+ * @date Automne 2016
  *
  * @copyright Code qui n'est sous aucune license.
  */

@@ -1,17 +1,18 @@
 /**
  * @file    path.h
+ * 
  * @brief   Définition de Path qui permet de suivre un chemin prédéterminé.
  * 
  * Contient des fonctions pour contrôler les moteurs et un interpréteur de
  * bytecode pour la lecture des chemins.
- *
+ * 
  * @authors Belhaddad, Emir Khaled
  * @authors Dandenault, Vincent
  * @authors Dentinger, Anthony
  * @authors Younis, Gergi
  * 
- * @date 2016
- *
+ * @date Automne 2016
+ * 
  * @copyright Code qui n'est sous aucune license.
  */
 

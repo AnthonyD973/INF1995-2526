@@ -1,15 +1,16 @@
 /**
- * @file LineSnsr.h
+ * @file    LineSnsr.h
+ * 
  * @brief   Définition de LineSnsr qui permet l'accès au capteur suiveur de
  *      ligne LSS05 de Cytron Technologies.
- *
+ * 
  * @authors Belhaddad, Emir Khaled
  * @authors Dandenault, Vincent
  * @authors Dentinger, Anthony
  * @authors Younis, Gergi
  * 
- * @date 2016
- *
+ * @date Automne 2016
+ * 
  * @copyright Code qui n'est sous aucune license.
  */
 

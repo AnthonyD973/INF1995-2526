@@ -1,16 +1,17 @@
-/* 
- * Classe permettant d'utiliser le capteur de couleur TAOS TCS230.
+/**
+ * @file    ColorSnsr.h
+ * 
+ * @brief   Définition de ColorSnsr qui permet d'utiliser le capteur de couleur
+ *      TAOS TCS230 de Parallax.
  *
- * Ecole Polytechnique de Montreal
- * Departement de genie informatique
- * Cours inf1995
+ * @authors Belhaddad, Emir Khaled
+ * @authors Dandenault, Vincent
+ * @authors Dentinger, Anthony
+ * @authors Younis, Gergi
+ * 
+ * @date Automne 2016
  *
- * Emir Khaled Belhaddad, Anthony Dentinger,
- * Gergi Younis et Vincent Dandenault
- * 2016
- *
- * Code qui n'est sous aucune license.
- *
+ * @copyright Code qui n'est sous aucune license.
  */
 
 #ifndef COLOR_SNSR_H
