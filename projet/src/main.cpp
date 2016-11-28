@@ -1,3 +1,18 @@
+/**
+ * @file    main.cpp
+ * 
+ * @brief   Fichier principal du projet.
+ * 
+ * @authors Belhaddad, Emir Khaled
+ * @authors Dandenault, Vincent
+ * @authors Dentinger, Anthony
+ * @authors Younis, Gergi
+ * 
+ * @date Automne 2016
+ * 
+ * @copyright Code qui n'est sous aucune license.
+ */
+
 #include <lib.h>
 #include <timer.h>
 #include <led.h>
@@ -12,6 +27,15 @@
 #include "path.h"
 #include "tests.h"
 
+/**
+ * @brief   Initialisation globale du microcontrôleur.
+ * @param[in,out] engL  Moteur gauche. Doit être instancié dans main pour
+ *      éviter qu'il soit détruit.
+ * @param[in,out] engL  Moteur droit. Doit être instancié dans main pour
+ *      éviter qu'il soit détruit.
+ * @param[in,out] led   LED libre. Doit être instancié dans main pour
+ *      éviter qu'il soit détruit.
+ */
 void globalInit(Engine& engL, Engine& engR, LED& led) {
     // DDRA est modifié par LineSnsr::init.
     DDRB = 0xFD; // 1111 1101
@@ -29,7 +53,6 @@ void globalInit(Engine& engL, Engine& engR, LED& led) {
     ShapeDetector::init(&led);
     ColorSequenceDetector::init(&led);
 }
-
 
 int main() {
     Engine engL(T2CA);
