@@ -45,7 +45,6 @@ public:
      * @param[in] shapeSequence Séquence de couleur cherchée. L'indice 0
      *      correspond à la première couleur de la séquence, c'est-à-dire à la
      *      forme de la dernière pièce.
-     * @param[in,out] led   LED à allumer lorsqu'une LED doit l'être.
      */
     static void checkSequence(const ShapeColor shapeSequence[COLOR_SEQ_MAX]);
 
@@ -53,7 +52,6 @@ private:
     /**
      * @brief   Utilise ColorSnsr pour détecter la couleur présente et
      *      effectue l'action correspondante (allumer LED ou jouer un son).
-     * @param[in,out] led   LED à allumer lorsqu'une LED doit l'être.
      * @return  La couleur actuelle.
      */
     static ShapeColor findColorAndAct_();
