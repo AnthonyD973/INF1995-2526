@@ -16,6 +16,23 @@
 #ifndef TYPEDEFS_H
 #define TYPEDEFS_H
 
+
+/**
+ * @brief Type de valeurs qui expriment si l'UART doit transmettre/recevoir par
+ *      scrutation ou par interruption.
+ * 
+ * <b>Valeurs possibles:</b>
+ * <ul>
+ *     <li>#UART_POLLING  </li>
+ *     <li>#UART_INTERRUPT</li>
+ * </ul>
+ */
+typedef bool CommMode;
+#define UART_POLLING    true  /**< @brief L'UART doit transmettre/recevoir par
+                                         scrutation. */
+#define UART_INTERRUPT  false /**< @brief L'UART doit transmettre/recevoir par
+                                         interruption. */
+
 /**
  * @brief Type de valeurs qui expriment la couleur d'une LED.
  * 

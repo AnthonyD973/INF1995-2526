@@ -1,17 +1,17 @@
-/*
- * Classe permettant de transmettre des données par USB via l'interface USART
- * du microcontrôleur.
+/**
+ * @file    uart.h
+ * 
+ * @brief   Définition de UART qui permet de transmettre des données par USB
+ * via l'interface USART du microcontrôleur.
  *
- * Ecole Polytechnique de Montreal
- * Departement de genie informatique
- * Cours inf1995
+ * @authors Belhaddad, Emir Khaled
+ * @authors Dandenault, Vincent
+ * @authors Dentinger, Anthony
+ * @authors Younis, Gergi
+ * 
+ * @date Automne 2016
  *
- * Emir Khaled Belhaddad, Anthony Dentinger,
- * Gergi Younis et Vincent Dandenault
- * 2016
- *
- * Code qui n'est sous aucune license.
- *
+ * @copyright Code qui n'est sous aucune license.
  */
 
 #ifndef UART_H
@@ -19,17 +19,15 @@
 #ifdef  DEBUG
 
 #include "incl.h"
+#include "typedefs.h"
 
-typedef bool CommMode;
 typedef uint16_t size_t;
-
-// ---CommMode---
-#define UART_POLLING    true
-#define UART_INTERRUPT  false
 
 /**
  * @brief   Transmet des données via l'interface USART du microcontrôleur.
- *      Cette classe utilise des tampons de type 'queue'.
+ * 
+ * Cette classe utilise des sortes de tampons 'circulaires' : L'indice 0 est
+ * après l'indice #BUFFER_SIZE-1.
  */
 class UART {
 
@@ -47,20 +45,19 @@ public:
      */
     static void init(uint16_t baud);
     /**
-     * @brief   Cette fonction assigne le mode de communication de l'uart, i.e.
-     *          peut prendre une de ces valeurs : UART_POLLING, UART_INTERRUPT
+     * @brief   Cette fonction assigne le mode de communication de l'UART.
      * @param[int]  commMode    Le mode de communication.
      */
     static void setMode(CommMode commMode);
     /**
-     * @brief   Cette fonction ajoute 1 octet au tampon de transmission.
+     * @brief   Cette fonction ajoute 1'octet au tampon de transmission.
      *          Si le tampon est plein, la fonction bloque le thread jusqu'à ce
      *          qu'il y ait de la place.
      * @param[in]   data    L'octet à transmettre.
      */
     static void transmit(uint8_t data);
     /**
-     * @brief   Cette fonction ajoute les n octet(s) du tableau passé en paramètre au
+     * @brief   Cette fonction ajoute les n octets du tableau passé en paramètre au
      *          tampon de transmission.
      *          Si le tampon est plein, la fonction bloque le thread jusqu'à ce
      *          qu'il y ait de la place.
@@ -119,13 +116,14 @@ public:
     // = À N'UTILISER QUE DANS LES =
     // =  ROUTINES D'INTERRUPTION  =
     // =============================
-    
+    /** @cond FALSE */ // Ne pas documenter ces méthodes
     static void    _rec_push_back(volatile uint8_t data);
     static bool    _rec_full() { return _recBufferDataCount >= BUFFER_SIZE; }
     static size_t  _rec_size() { return _recBufferDataCount; }
     static volatile uint8_t _tra_pop();
     static bool    _tra_empty() { return _traBufferDataCount == 0; }
     static size_t  _tra_size() { return _traBufferDataCount; }
+    /** @endcond */
 
 private:
     /**
@@ -162,15 +160,17 @@ private:
      */
     static CommMode _commMode;
     
+    /** @cond FALSE */ // Ne pas documenter ces méthodes
     static volatile uint8_t _rec_pop();
     static void    _tra_push_back(volatile uint8_t data);
+    /** @endcond */
 };
 
-#else // DEBUG
+#else // !DEBUG
 #include "incl.h"
-typedef bool CommMode;
-typedef uint16_t size_t;
-// Définition d'une classe UART qui ne fait rien pour optimiser la mémoire.
+/** @cond FALSE */ // Ne pas documenter cette classe
+// Définition d'une classe UART qui ne fait rien pour optimiser la mémoire et
+// la performance.
 class UART {
 public:
     static const size_t BUFFER_SIZE = 0;
@@ -192,5 +192,6 @@ public:
     static bool    _tra_empty(void) { return true; }
     static size_t  _tra_size(void) { return 0; }
 };
-#endif // DEBUG
+/** @endcond */
+#endif // !DEBUG
 #endif // UART_H

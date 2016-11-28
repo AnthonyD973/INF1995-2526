@@ -1,19 +1,3 @@
-/*
- * Classe permettant de transmettre des données par USB via l'interface USART
- * du microcontrôleur.
- *
- * Ecole Polytechnique de Montreal
- * Departement de genie informatique
- * Cours inf1995
- *
- * Emir Khaled Belhaddad, Anthony Dentinger,
- * Gergi Younis et Vincent Dandenault
- * 2016
- *
- * Code qui n'est sous aucune license.
- *
- */
-
 #ifdef DEBUG
 #include "uart.h"
 
@@ -91,9 +75,6 @@ void UART::setMode(CommMode commMode) {
     sei();
 }
 
-/**
- * @brief   Utilisée dans les routine ISR de réception.
- */
 __attribute__ ((always_inline))
 inline void UART::_rec_push_back(volatile uint8_t data) {//*
     if (!_initialized) return;
@@ -104,9 +85,6 @@ inline void UART::_rec_push_back(volatile uint8_t data) {//*
     _recBuffer[(_recBufferDataBeg + _recBufferDataCount++) % BUFFER_SIZE] = data;//*/
 }
 
-/**
- * @brief   Utilisée dans les fonctions de récupération des données reçus.
- */
 __attribute__ ((always_inline))
 inline volatile uint8_t UART::_rec_pop(void) {
     if (!_initialized) return 0;
@@ -122,9 +100,6 @@ inline volatile uint8_t UART::_rec_pop(void) {
     return ret;
 }
 
-/**
- * @brief   Utilisée dans les fonctions de transmission de données.
- */
 __attribute__ ((always_inline))
 inline void UART::_tra_push_back(volatile uint8_t data) {
     if (!_initialized) return;
@@ -134,9 +109,6 @@ inline void UART::_tra_push_back(volatile uint8_t data) {
         % BUFFER_SIZE] = data;
 }
 
-/**
- * @brief   Utilisée dans les routine ISR de transmission.
- */
 __attribute__ ((always_inline))
 inline volatile uint8_t UART::_tra_pop(void) {
     if (!_initialized) return 0;
