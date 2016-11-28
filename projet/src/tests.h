@@ -36,8 +36,6 @@ void testDistSensor();
 
 void testColorSequenceDetector(const ShapeColor shapeSequence[3]);
 
-ShapeColor testShapeDetector();
-
 void testBuzzer();
 
 #endif // TESTS_H

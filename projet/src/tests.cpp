@@ -22,24 +22,6 @@ void testDistSensor() {
     }
 }
 
-ShapeColor testShapeDetector() {
-    ShapeColor shape = ShapeDetector::checkShape();
-    Buzzer::clearTone();
-    _MASK(PORTC, 0, _BV(PC4) | _BV(PC5));
-    
-    switch (shape) {
-     case CIRCLE_GREEN:  _MASK(PORTC, _BV(PC4), _BV(PC4) | _BV(PC5)); _delay_ms(1000.0); break;
-     case OCTOGON_RED:   _MASK(PORTC, _BV(PC5), _BV(PC4) | _BV(PC5)); _delay_ms(1000.0); break;
-     case SQUARE_BLUE:    Buzzer::setTone(68); _delay_ms(1000.0); break;
-     default: ;
-    }
-
-    Buzzer::clearTone();
-    _MASK(PORTC, 0, _BV(PC4) | _BV(PC5));
-    
-    return shape;
-}
-
 void testBuzzer() {
 	const float delayValue = 150.0;
 	

@@ -12,7 +12,7 @@
 #include "path.h"
 #include "tests.h"
 
-void globalInit(Engine& engL, Engine& engR) {
+void globalInit(Engine& engL, Engine& engR, LED& led) {
     // DDRA est modifié par LineSnsr::init.
     DDRB = 0xFD; // 1111 1101
     DDRC = 0xFF; // 1111 1111
@@ -26,6 +26,7 @@ void globalInit(Engine& engL, Engine& engR) {
     ColorSnsr::init(T1_RISING_EDGE);
     Path::init(&engL, &engR);
     Buzzer::init(&timer0);
+    ShapeDetector::init(&led);
 }
 
 
@@ -34,17 +35,17 @@ int main() {
     Engine engR(T2CB);
     LED led(C4_C5, nullptr);
     
-    globalInit(engL, engR);
+    globalInit(engL, engR, led);
     
     ShapeColor shapeSequence[COLOR_SEQ_MAX];
     
 	
     Path::doPath(0);
-    shapeSequence[2] = testShapeDetector();
+    shapeSequence[2] = ShapeDetector::checkShape();
     Path::doPath(1);
-    shapeSequence[1] = testShapeDetector();
+    shapeSequence[1] = ShapeDetector::checkShape();
     Path::doPath(1);
-    shapeSequence[0] = testShapeDetector();
+    shapeSequence[0] = ShapeDetector::checkShape();
     Path::doPath(2);
     
     ColorSequenceDetector::checkSequence(shapeSequence, led);

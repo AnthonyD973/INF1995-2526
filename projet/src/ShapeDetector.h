@@ -18,6 +18,8 @@
 #define SHAPE_DETECTOR_H
 
 #include <incl.h>
+#include <led.h>
+#include <buzzer.h>
 
 #include "typedefs.h"
 #include "DistSnsr.h"
@@ -31,29 +33,36 @@
 class ShapeDetector {
 public:
     /**
+     * @brief   Initialise l'attribut @link #LED_ @endlink. À appeler au début
+     *      du programme.
+     * @param[in,out] led   LED à allumer lorsqu'une LED doit l'être.
+     */
+    static void init(LED* led);
+    /**
      * @brief   Détecte la forme d'une pièce en supposant que le robot est déjà
      *      placé au milieu. Le robot aura fait un demi-tour sur lui-même à la
      *      fin de l'appel.
-     * 
      * @return  La forme de la pièce détectée.
      */
     static ShapeColor checkShape();
     
 private:
     /**
-     * @brief   Effectue 32 lectures en rafale sur le capteur et en fait la
-     *      moyenne pour avoir un signal plus constant entre deux lectures.
-     * 
-     * @return  Une valeur moyenne allant de 0 à 256 représentant la valeur de
-     *          la tension émise par le capteur.
-     */
-    static uint8_t getAverageValue_();
-    /**
-     * @brief   Modifie la valeur de @link max_ @endlink si ce paramètre est
-     *      plus grand que @link max_ @endlink.
+     * @brief   Modifie la valeur de @link #max_ @endlink si ce paramètre est
+     *      plus grand que @link #max_ @endlink.
      */
     static void updateMax_(uint8_t curDist);
+    /**
+     * @brief   Détermine la forme de la pièce et effectue l'action
+     *      correspondante (allumer LED ou jouer un son).
+     * @return  La forme de la pièce.
+     */
+    static ShapeColor findShapeAndAct_();
     
+    /**
+     * @brief   LED à allumer lorsque la pièce est circulaire ou octogonale.
+     */
+    static LED* LED_;
     /**
      * @brief   Distance mesurée alors que le robot fait dos à l'entrée de la
      *      pièce.
@@ -64,25 +73,23 @@ private:
      */
     static uint8_t max_;
     /**
-     * @brief   Incertitude en-deçà de laquelle on est certain que la distance
-     *      est en train de diminuer. Si la distance diminue, on peut arrêter
-     *      la prise de mesures.
-     */
-    static const uint8_t uncert_;
-    /**
-     * @brief   Seuil de différence entre @link max_ @endlink et
-     *      @link min_ @endlink pour le carré. Si @link max_ @endlink -
-     *      @link min_ @endlink est plus grand que ce seuil, la pièce est un
+     * @brief   Seuil de différence entre @link #max_ @endlink et
+     *      @link #min_ @endlink pour le carré. Si @link #max_ @endlink -
+     *      @link #min_ @endlink est plus grand que ce seuil, la pièce est un
      *      carré.
      */
-    static const uint8_t SQUARE_DELTA;
+    static const uint8_t SQUARE_DELTA_;
     /**
-     * @brief   Seuil de différence entre @link max_ @endlink et
-     *      @link min_ @endlink pour l'octogone. Si @link max_ @endlink -
-     *      @link min_ @endlink est plus grand que ce seuil, la pièce est un
+     * @brief   Seuil de différence entre @link #max_ @endlink et
+     *      @link #min_ @endlink pour l'octogone. Si @link #max_ @endlink -
+     *      @link #min_ @endlink est plus grand que ce seuil, la pièce est un
      *      octogone.
      */
-    static const uint8_t OCTOGON_DELTA;
+    static const uint8_t OCTOGON_DELTA_;
+    /**
+     * @brief   Nombre de lectures avant que le robot ait fait un quart de tour.
+     */
+    static const uint8_t N_READS_TILL_QUARTER_TURN_;
 };
 
 #endif // SHAPE_DETECTOR_H
