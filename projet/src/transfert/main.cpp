@@ -32,8 +32,12 @@ int main() {
     UART::init(2400);
     RAM::init();
     
-    // Recevoir taille à écrire en mémoire.
     led.setColor(LED_RED);
+    
+    for (uint8_t i = 0; i < 2; ++i) {
+        buffer = UART::receive();
+        size += (buffer << (8*(i)));
+    }
     
     UART::receive((uint8_t*)&size, 2);
     RAM::write(0, (uint8_t*)&size, 2);
