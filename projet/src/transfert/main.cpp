@@ -7,12 +7,13 @@ int main() {
     uint16_t size = 0;
     uint8_t  buffer = 0;
     
-    DDRA = DDRB = DDRC = 0xff;
+    DDRC = 0x30;
+    DDRD = 0x02;
     
     UART::init(2400);
     RAM::init();
     
-    PORTB = LED_RED;
+    PORTC = LED_RED << 4;
     
     for (uint8_t i = 0; i < 2; ++i) {
         buffer = UART::receive();
@@ -21,17 +22,17 @@ int main() {
     
     RAM::write(0, (uint8_t*)&size, 2);
     
-    PORTB = LED_GREEN;
+    PORTC = LED_GREEN << 4;
     
     for (uint16_t i = 2; i < size; ++i) {
-        PORTB = LED_RED;
+        PORTC = LED_RED << 4;
         buffer = UART::receive();
-        PORTB = LED_GREEN;
+        PORTC = LED_GREEN << 4;
         RAM::write(i, buffer);
     }
     
     for EVER {
-        PORTB = LED_OFF;
+        PORTC = LED_OFF << 4;
     }
     
     return 0;

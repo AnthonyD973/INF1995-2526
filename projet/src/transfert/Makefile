@@ -26,6 +26,7 @@
 
 ### Variables utilisees pour generer une librairie et pour generer un executable
 
+DEBUG=-DDEBUG
 # Nom de votre projet
 # (utilisez un seul mot, exemple: 'monprojet')
 PROJECTNAME=tp9transfert
