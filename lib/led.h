@@ -1,56 +1,26 @@
-/*
- * Classe permettant l'utilisation d'une LED.
+/**
+ * @file    led.h
+ * 
+ * @brief   Définition de LED qui permet, comme son nom l'indique, d'utiliser
+ *      une LED.
  *
- * Ecole Polytechnique de Montreal
- * Departement de genie informatique
- * Cours inf1995
+ * @authors Belhaddad, Emir Khaled
+ * @authors Dandenault, Vincent
+ * @authors Dentinger, Anthony
+ * @authors Younis, Gergi
+ * 
+ * @date Automne 2016
  *
- * Emir Khaled Belhaddad, Anthony Dentinger,
- * Gergi Younis et Vincent Dandenault
- * 2016
- *
- * Code qui n'est sous aucune license.
- *
+ * @copyright Code qui n'est sous aucune license.
  */
 
 #ifndef LED_H
 #define LED_H
 
 #include "incl.h"
-
-typedef uint8_t LedColor;
-typedef uint8_t PinPosition;
-
+#include "typedefs.h"
 #include "lib.h"
 #include "timer.h"
-
-
-/**
- * @brief Constantes pour la DEL.
- */
-// ---LedColor---
-#define    LED_OFF   0x00
-#define    LED_GREEN 0x01
-#define    LED_RED   0x02
-#define    LED_AMBER 0xFF
-
-// ---PinPosition---
-#define    A0_A1 0
-#define    A2_A3 2
-#define    A4_A5 4
-#define    A6_A7 6
-#define    B0_B1 8
-#define    B2_B3 10
-#define    B4_B5 12
-#define    B6_B7 14
-#define    C0_C1 16
-#define    C2_C3 18
-#define    C4_C5 20
-#define    C6_C7 22
-#define    D0_D1 24
-#define    D2_D3 26
-#define    D4_D5 28
-#define    D6_D7 30
 
 
 // ===============================
@@ -61,7 +31,7 @@ typedef uint8_t PinPosition;
  * @brief Change la couleur des leds présentement ambres gérées par un compteur.
  *      NOTE: Cette fonction n'est utilisée nulle part dans les libraires ; c'est une fonction
  *      préécrite que l'on peut utiliser dans les routines d'interruption.
- * @param[in] timer Compteur impliqué.
+ * @param[in,out] timer Compteur impliqué.
  */
 void switchAmberLedsColor(Timer* timer);
 
@@ -74,12 +44,12 @@ public:
     /**
      * @brief   Construit une LED en fonction de sa position. Spécifie aussi
      *      le Timer qui gèrera la couleur ambre de la LED.
-     * @param[in] pinPos    Position de la LED sur les broches. Voir lib.h.
+     * @param[in] ledPos    Position de la LED sur les broches. Voir lib.h.
      * @param[in] timer Timer pour lequel l'interruption TIMER_N_OVF gèrera
      *      la couleur ambre de la LED. Si la LED n'utilise pas la couleur
      *      ambre, mettre timer à nullptr.
      */
-    LED(PinPosition pinPos, Timer* timer);
+    LED(LedPosition ledPos, Timer* timer);
     
     /**
      * @brief   Met la LED à une certaine couleur.
@@ -97,7 +67,7 @@ public:
      * @brief   Accède à la position de la LED sur les broches.
      * @return  La position de la LED sur les broches.
      */
-    PinPosition getPinPos();
+    LedPosition getLedPos();
     
     /**
      * @brief   Change le Timer qui gèrera la couleur ambre de la LED.
@@ -134,7 +104,7 @@ private:
     /**
      * @brief   Position de la LED sur les broches. Voir lib.h.
      */
-    const PinPosition _pinPos;
+    const LedPosition _ledPos;
     /**
      * @brief   Couleur actuelle de la LED.
      */

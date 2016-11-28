@@ -16,11 +16,11 @@
 #include "led.h"
 
 // ===============================
-// =   GESTION DE PIN_POSITION   =
+// =   GESTION DE LED_POSITION   =
 // ===============================
 
-volatile uint8_t* getPortPtr(PinPosition pinPos) {
-    switch (pinPos / 8) {
+volatile uint8_t* getPortPtr(LedPosition ledPos) {
+    switch (ledPos / 8) {
         case 0:  return &PORTA; break;
         case 1:  return &PORTB; break;
         case 2:  return &PORTC; break;
@@ -28,8 +28,8 @@ volatile uint8_t* getPortPtr(PinPosition pinPos) {
     }
 }
 
-uint8_t getPinVal(PinPosition pinPos) {
-    switch (pinPos / 8) {
+uint8_t getPinVal(LedPosition ledPos) {
+    switch (ledPos / 8) {
         case 0:  return PINA; break;
         case 1:  return PINB; break;
         case 2:  return PINC; break;
@@ -38,13 +38,13 @@ uint8_t getPinVal(PinPosition pinPos) {
 }
 
 __attribute__ ((always_inline))
-inline uint8_t getPinNumber(PinPosition pinPos) { return pinPos & 0x07; }
+inline uint8_t getPinNumber(LedPosition ledPos) { return ledPos & 0x07; }
 
 __attribute__ ((always_inline))
-inline uint8_t getMask(PinPosition pinPos) { return 0x3 << getPinNumber(pinPos); }
+inline uint8_t getMask(LedPosition ledPos) { return 0x3 << getPinNumber(ledPos); }
 
 __attribute__ ((always_inline))
-inline uint16_t getShiftedPos(PinPosition pinPos) { return 1 << (pinPos/2); }
+inline uint16_t getShiftedPos(LedPosition ledPos) { return 1 << (ledPos/2); }
 
 // ===============================
 // =   GESTION DES LED AMBRES    =
@@ -60,7 +60,7 @@ void switchAmberLedsColor(Timer* timer) {
     uint16_t curAmberLeds  = timer->_amberLeds;
     uint8_t nAmberLedsLeft = timer->_nAmberLeds;
     volatile uint8_t* curPort;
-    for (PinPosition portBeginNum = 0; portBeginNum < 32 && nAmberLedsLeft != 0; portBeginNum += 8) {
+    for (LedPosition portBeginNum = 0; portBeginNum < 32 && nAmberLedsLeft != 0; portBeginNum += 8) {
         curPort = getPortPtr(portBeginNum);
         uint8_t amberLedsMask = 0;
         
@@ -83,13 +83,13 @@ void switchAmberLedsColor(Timer* timer) {
 
 // PUBLIC:
 
-LED::LED(PinPosition pinPos, Timer* timer)
+LED::LED(LedPosition ledPos, Timer* timer)
     : _timer(timer),
-      _pinPos(pinPos),
-      _GREEN(LED_GREEN << getPinNumber(pinPos)),
-      _RED(LED_RED << getPinNumber(pinPos)),
-      _THIS_MASK(getMask(pinPos)),
-      _PORT(getPortPtr(pinPos))
+      _ledPos(ledPos),
+      _GREEN(LED_GREEN << getPinNumber(ledPos)),
+      _RED(LED_RED << getPinNumber(ledPos)),
+      _THIS_MASK(getMask(ledPos)),
+      _PORT(getPortPtr(ledPos))
 { }
 
 
@@ -114,8 +114,8 @@ LedColor LED::getColor() {
 }
 
 
-PinPosition LED::getPinPos() {
-    return _pinPos;
+LedPosition LED::getLedPos() {
+    return _ledPos;
 }
 
 
@@ -139,11 +139,11 @@ Timer* LED::getTimer() {
 void LED::_setColorAmber() {
     ++(_timer->_nAmberLeds);
     _MASK(*_PORT, _GREEN, _THIS_MASK);
-    _MASK(_timer->_amberLeds, getShiftedPos(_pinPos), getShiftedPos(_pinPos));
+    _MASK(_timer->_amberLeds, getShiftedPos(_ledPos), getShiftedPos(_ledPos));
 }
 
 void LED::_unsetColorAmber()  {
     --(_timer->_nAmberLeds);
     _MASK(*_PORT,  0x00,  _THIS_MASK);
-    _MASK(_timer->_amberLeds, 0x0, getShiftedPos(_pinPos));
+    _MASK(_timer->_amberLeds, 0x0, getShiftedPos(_ledPos));
 }
