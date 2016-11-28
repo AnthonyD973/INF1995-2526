@@ -25,13 +25,16 @@
 #include "ColorSnsr.h"
 #include "path.h"
 
-#ifndef COLOR_SEQ_MAX
-    #define COLOR_SEQ_MAX   3
-#endif // COLOR_SEQ_MAX
-
-#define LAST_COLORS_MAX 4
+#define LAST_COLORS_MAX 4 /**< @brief Nombre des dernières lectures à sauvegarder. */
 
 
+/**
+ * @brief   Classe utilisant ColorSnsr afin de faire avancer le robot jusqu'à
+ *      trouver la séquence de couleurs appropriée.
+ * 
+ * ColorSequenceDetector décide en fonction de la différence d'intensités
+ * relatives entre les couleurs.
+ */
 class ColorSequenceDetector {
 public:
     /**

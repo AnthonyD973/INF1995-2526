@@ -14,6 +14,6 @@
 *.kdev4
 
 #Dossiers doxygen
-lib/doxygen/html/*
-projet/src/doxygen/html/*
-projet/gas/doxygen/html/*
+lib/doxygen/doc/*
+projet/src/doxygen/doc/*
+projet/gas/doxygen/doc/*

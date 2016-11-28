@@ -31,7 +31,7 @@
  * @brief   Initialisation globale du microcontrôleur.
  * @param[in,out] engL  Moteur gauche. Doit être instancié dans main pour
  *      éviter qu'il soit détruit.
- * @param[in,out] engL  Moteur droit. Doit être instancié dans main pour
+ * @param[in,out] engR  Moteur droit. Doit être instancié dans main pour
  *      éviter qu'il soit détruit.
  * @param[in,out] led   LED libre. Doit être instancié dans main pour
  *      éviter qu'il soit détruit.
@@ -54,6 +54,7 @@ void globalInit(Engine& engL, Engine& engR, LED& led) {
     ColorSequenceDetector::init(&led);
 }
 
+/** @cond FALSE */ // Ne pas documenter cette fonction.
 int main() {
     Engine engL(T2CA);
     Engine engR(T2CB);
@@ -80,3 +81,4 @@ int main() {
     
     return 0;
 }
+/** @endcond */

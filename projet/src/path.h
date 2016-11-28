@@ -19,7 +19,7 @@
 #ifndef PATH_H
 #define PATH_H
 
-#define   NB_PATHS 3
+#define   NB_PATHS 3 /**< @brief Nombre de chemins. */
 
 #include <lib.h>
 #include <timer.h>
@@ -30,12 +30,16 @@
 #include "LineSnsr.h"
 #include "DistSnsr.h"
 
+/**
+ * @brief   Valeurs qui expriment l'état actuel de Path. Ces valeurs sont
+ *      utilisée en interne.
+ */
 typedef uint8_t PathState;
 
 // Constantes pour les vitesses
 const uint8_t
     V_MAX = 0x8F, /**< @brief Puissance maximale à transmettre aux moteurs. */
-    V_MOY = 0x6F, /**< @brief Puissance moyenne à transmettre aux moteurs. */
+    V_MOY = 0x6F, /**< @brief Puissance moyenne  à transmettre aux moteurs. */
     V_MIN = 0x00; /**< @brief Puissance minimale à transmettre aux moteurs. */
 
 /**

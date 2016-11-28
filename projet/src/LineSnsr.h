@@ -22,7 +22,9 @@
 
 #include "typedefs.h"
 
+/** @cond FALSE */ // Ne pas documenter cette macro.
 #define LINE_BITS_MASK 0x1F
+/** @endcond */
 
 /**
  * @brief   Classe qui permet de lire les valeurs binaires du capteur LSS05.

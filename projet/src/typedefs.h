@@ -17,7 +17,7 @@
 #define TYPEDEFS_H
 
 /**
- * @brief Valeurs qui expriment à la fois quel @link #Timer @endlink utiliser
+ * @brief Valeurs qui expriment à la fois quel Timer utiliser
  *      pour compter, et quel mode utiliser pour cela.
  * 
  * <b>Valeurs possibles:</b>

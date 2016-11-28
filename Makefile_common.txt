@@ -84,9 +84,7 @@ DEBUG?=-UDEBUG
 export DEBUG
 
 # Dossier dans lequel mettre la documentation de Doxygen.
-# ATTENTION: Si vous changez cette variable, vous devez aussi modifier
-# la variable 'OUTPUT_DIRECTORY' dans tous les Doxyfile, ainsi que le
-# fichier .gitignore.
+# Ne PAS changer cette variable SVP
 DOXYGEN_FOLDER:=doxygen
 
 	
@@ -222,7 +220,7 @@ clean:
 
 
 docs:
-	doxygen $(DOXYGEN_FOLDER)/Doxyfile
+	doxygen $(DOXYGEN_FOLDER)/src/Doxyfile
 	rm -rf $(DOXYGEN_FOLDER)/latex/
 
 # Execute, dans l'ordre, un 'make all' pour compiler ce qu'il

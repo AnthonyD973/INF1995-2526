@@ -23,14 +23,13 @@
 
 #include "typedefs.h"
 
-#ifndef COLOR_SEQ_MAX
-    #define COLOR_SEQ_MAX   3
-#endif // COLOR_SEQ_MAX
+#define COLOR_SEQ_MAX 3 /**< @brief Nombre de filtres sur lesquels lire l'intensité. */
 
+/** @cond FALSE */ // Ne pas documenter ces macros.
 #define RED_INDEX   0
 #define GREEN_INDEX 1
 #define BLUE_INDEX  2
-
+/** @endcond */
 
 /**
  * @class   ColorSnsr
