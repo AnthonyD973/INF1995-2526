@@ -31,7 +31,9 @@
  * @brief Change la couleur des leds présentement ambres gérées par un compteur.
  *      NOTE: Cette fonction n'est utilisée nulle part dans les libraires ; c'est une fonction
  *      préécrite que l'on peut utiliser dans les routines d'interruption.
- * @param[in,out] timer Compteur impliqué.
+ * @param[in,out] timer Compteur impliqué. E.g., si la routine d'interruption
+ *      qui utilise cette méthode est TIMER0_OVF_vec, alors timer doit valoir
+ *      &timer0.
  */
 void switchAmberLedsColor(Timer* timer);
 
@@ -39,6 +41,16 @@ void switchAmberLedsColor(Timer* timer);
 // =     LED     =
 // ===============
 
+/**
+ * @brief   Classe permettant, comme son nom l'indique, de contrôler une LED.
+ * 
+ * Règle particulière pour la LED ambre (<b>qui n'est pas utilisée dans le
+ * projet</b>):
+ * 
+ * La LED doit être associée à un Timer. La routine d'interruption TIMERN_OVF
+ * doit faire appel à la routine switchAmberLedsColor, qui se chargera
+ * d'effectivment inverser la couleur de la LED.
+ */
 class LED {
 public:
     /**
@@ -85,15 +97,11 @@ private:
     /**
      * @brief   Met la LED sur la couleur ambre et informe le Timer d'une
      *      nouvelle LED ambre à gérer.
-     * @param[in] timer Timer pour lequel l'interruption TIMER_N_OVF gèrera
-     *      la couleur ambre de la LED.
      */
     void _setColorAmber();
     /**
      * @brief   Met la LED sur la couleur ambre et informe le Timer qu'une LED
      *      n'est plus ambre.
-     * @param[in] timer Timer pour lequel l'interruption TIMER_N_OVF gèrera
-     *      la couleur ambre de la LED.
      */
     void _unsetColorAmber();
     

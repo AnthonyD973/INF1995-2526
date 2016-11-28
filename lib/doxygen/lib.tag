@@ -1,5 +1,45 @@
 <?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
 <tagfile>
+  <compound kind="file">
+    <name>led.h</name>
+    <path>/home/anthony973/Git/Git_Projects/INF1995/lib/</path>
+    <filename>led_8h</filename>
+    <includes id="typedefs_8h" name="typedefs.h" local="yes" imported="no">typedefs.h</includes>
+    <includes id="lib_8h" name="lib.h" local="yes" imported="no">lib.h</includes>
+    <class kind="class">LED</class>
+    <member kind="function">
+      <type>void</type>
+      <name>switchAmberLedsColor</name>
+      <anchorfile>led_8h.html</anchorfile>
+      <anchor>aae869a1311a1e5ec9e0b8fdbd0e94c5d</anchor>
+      <arglist>(Timer *timer)</arglist>
+    </member>
+  </compound>
+  <compound kind="file">
+    <name>lib.h</name>
+    <path>/home/anthony973/Git/Git_Projects/INF1995/lib/</path>
+    <filename>lib_8h</filename>
+    <includes id="led_8h" name="led.h" local="yes" imported="no">led.h</includes>
+  </compound>
+  <compound kind="file">
+    <name>typedefs.h</name>
+    <path>/home/anthony973/Git/Git_Projects/INF1995/lib/</path>
+    <filename>typedefs_8h</filename>
+    <member kind="typedef">
+      <type>uint8_t</type>
+      <name>LedColor</name>
+      <anchorfile>typedefs_8h.html</anchorfile>
+      <anchor>a637d23bfbbbe986c6e259d769ee5475f</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="typedef">
+      <type>uint8_t</type>
+      <name>LedPosition</name>
+      <anchorfile>typedefs_8h.html</anchorfile>
+      <anchor>a9f58cfc166a239e0e7eec5f421e0971a</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
   <compound kind="class">
     <name>Buzzer</name>
     <filename>classBuzzer.html</filename>
@@ -142,8 +182,8 @@
       <type></type>
       <name>LED</name>
       <anchorfile>classLED.html</anchorfile>
-      <anchor>a9e8e822e1705e73801e82f252de6a72c</anchor>
-      <arglist>(PinPosition pinPos, Timer *timer)</arglist>
+      <anchor>a7e3ee25fb287840737a4a3b84fec9e03</anchor>
+      <arglist>(LedPosition ledPos, Timer *timer)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
@@ -160,10 +200,10 @@
       <arglist>()</arglist>
     </member>
     <member kind="function">
-      <type>PinPosition</type>
-      <name>getPinPos</name>
+      <type>LedPosition</type>
+      <name>getLedPos</name>
       <anchorfile>classLED.html</anchorfile>
-      <anchor>af3ce283ab86c179159c5a5e96b788fae</anchor>
+      <anchor>a3f604ed963fff649490ff8d0871628fa</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="function">
@@ -202,10 +242,10 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
-      <type>const PinPosition</type>
-      <name>_pinPos</name>
+      <type>const LedPosition</type>
+      <name>_ledPos</name>
       <anchorfile>classLED.html</anchorfile>
-      <anchor>a654f972bf2ebeb160b6ef635d9702e71</anchor>
+      <anchor>acc1d584682ac12b279dec86092f0e3b7</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
