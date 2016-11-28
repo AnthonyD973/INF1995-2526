@@ -19,6 +19,7 @@
 
 #include "gas.h"
 
+/** @cond FALSE */ // Ne pas documenter cett fonction.
 int main(int argc, char* argv[]) {
 	setlocale(LC_ALL, ""); // Pour les accents
 	
@@ -26,3 +27,4 @@ int main(int argc, char* argv[]) {
 	
 	return 0;
 }
+/** @endcond */
