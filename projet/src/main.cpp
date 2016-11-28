@@ -45,7 +45,7 @@ void globalInit(Engine& engL, Engine& engR, LED& led) {
     
     UART::init(2400);
     CAN::init();
-    LineSnsr::init(&PORTA, &DDRA);
+    LineSnsr::init(&PINA, &PORTA, &DDRA);
     DistSnsr::init(PA7);
     ColorSnsr::init(T1_RISING_EDGE);
     Path::init(&engL, &engR);

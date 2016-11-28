@@ -51,7 +51,7 @@ void Path::doPath(uint8_t path) {
     uint8_t  instr;
     uint16_t instrAddr = pathAddrs_[path];
     
-    RAM::read(instrAddr++, &instr);
+    RAM::read(instrAddr, &instr);
     while (instr != ENP_OP) {
         switch (instr) {
          case INI_OP: ini_(); break;
@@ -60,7 +60,7 @@ void Path::doPath(uint8_t path) {
          case MDL_OP: mdl_(); break;
          default:     enp_(); break;
         }
-        RAM::read(instrAddr++, &instr);
+        RAM::read(++instrAddr, &instr);
     }
     
     enp_();

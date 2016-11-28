@@ -3,7 +3,7 @@
 LED* ColorSequenceDetector::LED_ = nullptr;
 ShapeColor ColorSequenceDetector::colorSequence_[COLOR_SEQ_MAX];
 uint8_t ColorSequenceDetector::colorSequenceCount_ = 0;
-ShapeColor ColorSequenceDetector::lastColors_[LAST_COLORS_MAX] = {NO_SHAPE_WHITE, NO_SHAPE_WHITE, NO_SHAPE_WHITE, NO_SHAPE_WHITE};
+ShapeColor ColorSequenceDetector::lastColors_[LAST_COLORS_MAX] = {NO_SHAPE_WHITE, NO_SHAPE_WHITE, NO_SHAPE_WHITE};
 uint8_t ColorSequenceDetector::lastColorsBeg_ = 0;
 
 
@@ -80,7 +80,7 @@ bool ColorSequenceDetector::hasColorChanged_(ShapeColor color) {
     bool hasChanged = (earliestColor != colorAfterEarliest);
     
     ShapeColor color1 = colorAfterEarliest;
-    for (uint8_t i = 2; i <= (LAST_COLORS_MAX - 1) && hasChanged; ++i) {
+    for (uint8_t i = 2; (i < LAST_COLORS_MAX) && hasChanged; ++i) {
         ShapeColor color2 = lastColors_[(lastColorsBeg_ + i) % LAST_COLORS_MAX];
         hasChanged = (color1 == color2);
         color1 = color2;
@@ -93,7 +93,7 @@ bool ColorSequenceDetector::isCorrectSequence_(const ShapeColor shapeSequence[CO
     bool isCorrectSeq = true;
     
     // On n'a besoin que de 2 couleurs pour savoir de quelle séquence il s'agit :D
-    for (uint8_t i = 0; i <= (COLOR_SEQ_MAX - 2) && isCorrectSeq; ++i) {
+    for (uint8_t i = 0; (i < (COLOR_SEQ_MAX - 1)) && isCorrectSeq; ++i) {
         isCorrectSeq = (shapeSequence[i] == colorSequence_[i]);
     }
     
@@ -121,4 +121,5 @@ void ColorSequenceDetector::playEndingTheme_() {
     Buzzer::setTone(72);
     _delay_ms(delayValue);
     Buzzer::clearTone();
+    _delay_ms(delayValue*6.0);
 }
