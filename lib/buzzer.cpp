@@ -24,7 +24,13 @@
 
 // NE PAS MODIFIER CES DEUX TABLEAUX
 
-// L'index 0 représente la fréquence pour la note midi 24 (C -3, ~32.7 Hz)
+/**
+ * @brief   Tableau de valeurs à mettre dans l'OCRNX pour générer une fréquence
+ *      donnée.
+ * 
+ * L'indice 0 représente la valeur du OCRNX pour la note midi 24
+ * (C-3, ~32.7 Hz)
+ */
 const uint8_t Buzzer::_FREQS[104]={
                                   239/4,225/4,213/4,201/4,190/4,179/4,169/4,159/4,150/4,142/4,134/4,127/4,
                                   119/4,113/4,106/4,100/4, 95/4, 89/4, 84/4, 80/4, 75/4, 71/4, 67/4, 63/4,
@@ -35,7 +41,14 @@ const uint8_t Buzzer::_FREQS[104]={
                                    60/4, 56/4, 53/4, 50/4, 47/4, 45/4, 42/4, 40/4, 38/4, 36/4, 34/4,253/4,
                                   239/4,225/4,213/4,201/4,190/4,179/4,169/4,159/4,150/4,142/4,134/4,127/4,
                                   119/4,113/4,106/4,100/4, 95/4, 89/4, 84/4, 80/4};
-const uint8_t Buzzer::_PRESCALER[52]={ // Optimisation de la mémoire : chaque octet est divisé en deux tranches de 4 bits.
+/**
+ * @brief   Tableau de valeurs de Prescale à utiliser dans le Timer pour
+ *      générer une fréquence donnée.
+ * 
+ * L'indice 0 représente la valeur du prescale pour les notes midi 24
+ * (les 4 bits de poids fort, C-3, ~32.7 Hz) et 25 (les 4 bits de poids faible).
+ */
+const uint8_t Buzzer::_PRESCALER[52]={
                                    0x5<<4|0x5, 0x5<<4|0x5, 0x5<<4|0x5, 0x5<<4|0x5, 0x5<<4|0x5, 0x5<<4|0x5,
                                    0x5<<4|0x5, 0x5<<4|0x5, 0x5<<4|0x5, 0x5<<4|0x5, 0x5<<4|0x5, 0x5<<4|0x5,
                                    0x4<<4|0x4, 0x4<<4|0x4, 0x4<<4|0x4, 0x4<<4|0x4, 0x4<<4|0x4, 0x4<<4|0x4,

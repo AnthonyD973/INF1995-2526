@@ -1,16 +1,16 @@
-/*
- * Classe permettant l'utilisation du piézo-électrique.
+/**
+ * @file    typedefs.h
+ * 
+ * @brief   Définition des Buzzer qui permet l'utilisation du piézo-électrique.
  *
- * Ecole Polytechnique de Montreal
- * Departement de genie informatique
- * Cours inf1995
+ * @authors Belhaddad, Emir Khaled
+ * @authors Dandenault, Vincent
+ * @authors Dentinger, Anthony
+ * @authors Younis, Gergi
+ * 
+ * @date Automne 2016
  *
- * Emir Khaled Belhaddad, Anthony Dentinger,
- * Gergi Younis et Vincent Dandenault
- * 2016
- *
- * Code qui n'est sous aucune license.
- *
+ * @copyright Code qui n'est sous aucune license.
  */
 
 #ifndef BUZZER_H
@@ -19,10 +19,10 @@
 #include "lib.h"
 #include "timer.h"
 
-#define NO_TONE 0x00
+#define NO_TONE 0x00 /**< @brief Valeur représentant une absence de son. */
 
 /**
- * @brief   Classe gérant le piezo-electrique.
+ * @brief   Classe gérant le piézo-électrique.
  */
 class Buzzer {
 public:
@@ -34,7 +34,7 @@ public:
     static void init(Timer* timer);
     
     /**
-     * @brief   Cette fonction fait la un lien entre la table midi et les
+     * @brief   Cette fonction fait le un lien entre la table midi et les
      *          fréquences à jouer sur le buzzer.
      *
      * @param[in]   midi    La note midi à jouer.
