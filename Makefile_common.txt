@@ -87,6 +87,10 @@ export DEBUG
 # Ne PAS changer cette variable SVP
 DOXYGEN_FOLDER:=doxygen
 
+# Dossier contenant les fichiers source de Doxygen.
+# Ne PAS changer cette variable SVP
+DOXYGEN_SRC:=$(DOXYGEN_FOLDER)/src
+
 	
 ####### Variables pour la creation d'une librairie #######
 
@@ -152,8 +156,8 @@ OBJDEPS:=$(patsubst %.c,$(GENDIR)/%.o,$(strip $(filter %.c, $(PRJSRC)))) \
 # make all, make install et make clean
 .PHONY: all install clean auto lib libauto docs
 
-# Make all permet simplement de compiler le projet
-#
+# Make all permet d'exécuter la cible précisée dans la variable 'RECIPE' des
+# Makefile individuels.
 all: $(RECIPE)
 
 compile:
@@ -220,7 +224,7 @@ clean:
 
 
 docs:
-	doxygen $(DOXYGEN_FOLDER)/src/Doxyfile
+	doxygen $(DOXYGEN_SRC)/Doxyfile
 	rm -rf $(DOXYGEN_FOLDER)/latex/
 
 # Execute, dans l'ordre, un 'make all' pour compiler ce qu'il

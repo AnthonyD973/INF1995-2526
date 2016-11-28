@@ -26,11 +26,11 @@ int main() {
     
     LED led(C4_C5, nullptr);
     
-    DDRA = DDRB = DDRC = 0xff;
+    DDRC = 0x30;
+    DDRD = 0x02;
     
     UART::init(2400);
     RAM::init();
-    
     
     // Recevoir taille à écrire en mémoire.
     led.setColor(LED_RED);
@@ -39,7 +39,6 @@ int main() {
     RAM::write(0, (uint8_t*)&size, 2);
     
     led.setColor(LED_GREEN);
-    
     
     // Recevoir données.
     for (uint16_t i = 2; i < size; ++i) {
