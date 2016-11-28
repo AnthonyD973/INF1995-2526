@@ -15,12 +15,18 @@
 
 #include "ColorSequenceDetector.h"
 
+LED* ColorSequenceDetector::LED_ = nullptr;
 ShapeColor ColorSequenceDetector::colorSequence_[COLOR_SEQ_MAX];
 uint8_t ColorSequenceDetector::colorSequenceCount_ = 0;
 ShapeColor ColorSequenceDetector::lastColors_[LAST_COLORS_MAX] = {NO_SHAPE_WHITE, NO_SHAPE_WHITE, NO_SHAPE_WHITE, NO_SHAPE_WHITE};
 uint8_t ColorSequenceDetector::lastColorsBeg_ = 0;
 
-void ColorSequenceDetector::checkSequence(const ShapeColor shapeSequence[3], LED& led) {
+
+void ColorSequenceDetector::init(LED* led) {
+    LED_ = led;
+}
+
+void ColorSequenceDetector::checkSequence(const ShapeColor shapeSequence[3]) {
     ShapeColor color = ColorSnsr::read();
     
     Path::forward();
@@ -40,52 +46,39 @@ void ColorSequenceDetector::checkSequence(const ShapeColor shapeSequence[3], LED
         
         // On n'a besoin que de 2 couleurs pour savoir de quelle séquence il s'agit :D
         while (colorSequenceCount_ < 2) {
-            color = findColorAndAct_(led);
+            color = findColorAndAct_();
         }
         
         if (isCorrectSequence_(shapeSequence)) {
             Buzzer::clearTone();
-            led.setColor(LED_OFF);
+            LED_->setColor(LED_OFF);
             Path::stop();
             break;
         }
         
-        UART::transmitHex(colorSequence_[0]);
-        UART::transmit(' ');
-        UART::transmitHex(shapeSequence[0]);
-        UART::transmit(' ');
-        UART::transmitHex(colorSequence_[1]);
-        UART::transmit(' ');
-        UART::transmitHex(shapeSequence[1]);
-        UART::transmit(' ');
-        UART::transmitHex(colorSequence_[2]);
-        UART::transmit(' ');
-        UART::transmitHex(shapeSequence[2]);
-        UART::transmit('\n');
-        
         // On vérifie un 3e changement de couleur, pour la forme ;)
         while(color != NO_SHAPE_WHITE) {
-            color = findColorAndAct_(led);
+            color = findColorAndAct_();
         }
         
         Buzzer::clearTone();
-        led.setColor(LED_OFF);
+        LED_->setColor(LED_OFF);
     }
     
     playEndingTheme_();
 }
 
-ShapeColor ColorSequenceDetector::findColorAndAct_(LED& led) {
+ShapeColor ColorSequenceDetector::findColorAndAct_() {
     ShapeColor color = ColorSnsr::read();
     
     if (hasColorChanged_(color)) {
         colorSequence_[colorSequenceCount_++] = color;
     
         switch(color) {
-         case OCTOGON_RED:  Buzzer::clearTone(); led.setColor(LED_RED);   break;
-         case CIRCLE_GREEN: Buzzer::clearTone(); led.setColor(LED_GREEN); break;
+         case OCTOGON_RED:  Buzzer::clearTone(); LED_->setColor(LED_RED);   break;
+         case CIRCLE_GREEN: Buzzer::clearTone(); LED_->setColor(LED_GREEN); break;
          case SQUARE_BLUE:  Buzzer::setTone(68); // fallthrough
-         default: led.setColor(LED_OFF);
+         default: LED_->setColor(LED_OFF);
         }
     }
     return color;

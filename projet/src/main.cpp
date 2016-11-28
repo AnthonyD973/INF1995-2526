@@ -27,6 +27,7 @@ void globalInit(Engine& engL, Engine& engR, LED& led) {
     Path::init(&engL, &engR);
     Buzzer::init(&timer0);
     ShapeDetector::init(&led);
+    ColorSequenceDetector::init(&led);
 }
 
 
@@ -48,7 +49,7 @@ int main() {
     shapeSequence[0] = ShapeDetector::checkShape();
     Path::doPath(2);
     
-    ColorSequenceDetector::checkSequence(shapeSequence, led);
+    ColorSequenceDetector::checkSequence(shapeSequence);
     
     for EVER {
         // Busy wait

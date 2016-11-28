@@ -34,6 +34,12 @@
 class ColorSequenceDetector {
 public:
     /**
+     * @brief   Initialise l'attribut @link #LED_ @endlink. À appeler au début
+     *      du programme.
+     * @param[in,out] led   LED à allumer lorsqu'une LED doit l'être.
+     */
+    static void init(LED* led);
+    /**
      * @brief   Fait le robot suivre la ligne jusqu'à ce qu'il rencontre la
      *      bonne séquence de couleurs.
      * @param[in] shapeSequence Séquence de couleur cherchée. L'indice 0
@@ -41,7 +47,7 @@ public:
      *      forme de la dernière pièce.
      * @param[in,out] led   LED à allumer lorsqu'une LED doit l'être.
      */
-    static void checkSequence(const ShapeColor shapeSequence[COLOR_SEQ_MAX], LED& led);
+    static void checkSequence(const ShapeColor shapeSequence[COLOR_SEQ_MAX]);
 
 private:
     /**
@@ -50,7 +56,7 @@ private:
      * @param[in,out] led   LED à allumer lorsqu'une LED doit l'être.
      * @return  La couleur actuelle.
      */
-    static ShapeColor findColorAndAct_(LED& led);
+    static ShapeColor findColorAndAct_();
     /**
      * @brief   Vérifie si la couleur a changé en comparant les valeurs des
      *      derniers résultats.
@@ -75,6 +81,10 @@ private:
      */
     static void playEndingTheme_();
     
+    /**
+     * @brief   LED à allumer lorsque la couleur est verte ou rouge.
+     */
+    static LED* LED_;
     /**
      * @brief   Séquence de couleurs du papier au-dessus duquel passe le robot.
      */
