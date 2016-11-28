@@ -215,7 +215,7 @@ install: $(HEXROMTRG)
 # Make clean permet d'effacer tout les fichiers generes
 # lors de la compilation
 clean:
-	$(REMOVE) $(TRG) $(TRG).map $(OBJDEPS) $(HEXTRG) $(GENDIR)/*.d \
+	$(REMOVE) $(TRG) *.map $(OBJDEPS) $(HEXTRG) $(GENDIR)/*.d \
 	$(GENDIR)/* $(GENDIR) $(LIBTRG) *.bin
 
 
