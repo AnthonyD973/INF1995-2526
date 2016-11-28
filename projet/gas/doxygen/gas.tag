@@ -1,5 +1,102 @@
 <?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
 <tagfile>
+  <compound kind="file">
+    <name>gas.h</name>
+    <path>/home/anthony973/Git/Git_Projects/INF1995/projet/gas/</path>
+    <filename>gas_8h</filename>
+    <class kind="class">GAS</class>
+    <member kind="typedef">
+      <type>unsigned char</type>
+      <name>Opcode</name>
+      <anchorfile>gas_8h.html</anchorfile>
+      <anchor>a8915a9fcfa3b7654398da037346cf7b1</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>const std::string</type>
+      <name>HELP</name>
+      <anchorfile>gas_8h.html</anchorfile>
+      <anchor>a44bc41b3869f7d1b6eb3f1e052befcdc</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>const std::string</type>
+      <name>EMAIL</name>
+      <anchorfile>gas_8h.html</anchorfile>
+      <anchor>affb753c0ffda6424fbac18615717cfc1</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>const std::string</type>
+      <name>INI</name>
+      <anchorfile>gas_8h.html</anchorfile>
+      <anchor>a3f668e597fe186053850141349c45ef8</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>const std::string</type>
+      <name>TNL</name>
+      <anchorfile>gas_8h.html</anchorfile>
+      <anchor>afc94044097fefa2cd4194b23d6f37615</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>const std::string</type>
+      <name>TNR</name>
+      <anchorfile>gas_8h.html</anchorfile>
+      <anchor>a9d1fbecef7fda5fb1cf35564b46544a7</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>const std::string</type>
+      <name>MDL</name>
+      <anchorfile>gas_8h.html</anchorfile>
+      <anchor>a978d597cd7ae51efed145521847a984a</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>const std::string</type>
+      <name>ENP</name>
+      <anchorfile>gas_8h.html</anchorfile>
+      <anchor>a93c73b79818ce7cac490249b801edfc9</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>const Opcode</type>
+      <name>INI_OP</name>
+      <anchorfile>gas_8h.html</anchorfile>
+      <anchor>a590a0c11f2b91ddbc19cacdf953de64f</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>const Opcode</type>
+      <name>TNL_OP</name>
+      <anchorfile>gas_8h.html</anchorfile>
+      <anchor>a0e6112ec6c50f8abca9b246e8fbd6a5f</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>const Opcode</type>
+      <name>TNR_OP</name>
+      <anchorfile>gas_8h.html</anchorfile>
+      <anchor>a9c438c770dbad5409b289b571836df60</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>const Opcode</type>
+      <name>MDL_OP</name>
+      <anchorfile>gas_8h.html</anchorfile>
+      <anchor>ac5864be7341f9dfdcac1ce7aac4d5465</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>const Opcode</type>
+      <name>ENP_OP</name>
+      <anchorfile>gas_8h.html</anchorfile>
+      <anchor>aa89a4eee484858e85e29a2eae74ab339</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
   <compound kind="class">
     <name>GAS</name>
     <filename>classGAS.html</filename>
@@ -91,7 +188,7 @@
       <type>static std::list&lt; unsigned char &gt;</type>
       <name>_instrs</name>
       <anchorfile>classGAS.html</anchorfile>
-      <anchor>abcf86e49403d8e697363ee7223cc5600</anchor>
+      <anchor>a13ac1eaf5d3e7383efe300e3b4bc8dea</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private" static="yes">

@@ -1,5 +1,5 @@
 
-.PHONY: clean
+.PHONY: all clean
 
 PRJNAME:=gas
 PRJSRC:=main.cpp gas.cpp

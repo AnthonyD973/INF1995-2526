@@ -1,9 +1,40 @@
+/**
+ * @file    gas.h
+ * 
+ * @brief   Définition de GAS dont la fonction principale est de compiler un
+ *      fichier d'instructions %GAS. Voir #Opcode pour plus de détails sur les
+ *      instructions possibles.
+ *
+ * @authors Belhaddad, Emir Khaled
+ * @authors Dandenault, Vincent
+ * @authors Dentinger, Anthony
+ * @authors Younis, Gergi
+ * 
+ * @date Automne 2016
+ *
+ * @copyright Code qui n'est sous aucune license.
+ */
+
 #ifndef GAS_H
 #define GAS_H
 
 #include <fstream>
 #include <string>
 #include <list>
+
+/**
+ * @brief   Type de valeurs qui expriment une instruction %GAS compilée.
+ * 
+ * <b>Valeurs possibles:</b>
+ * <ul>
+ * <li>#INI_OP</li>
+ * <li>#TNL_OP</li>
+ * <li>#TNR_OP</li>
+ * <li>#MDL_OP</li>
+ * <li>#ENP_OP</li>
+ * </ul>
+ */
+typedef unsigned char Opcode;
 
 // ---OPTIONS---
 const std::string
@@ -28,7 +59,7 @@ const std::string
                               suivant. */
 
 // ---OPCODE DES INSTRUCTIONS---
-const unsigned char
+const Opcode
     INI_OP = 0x10, /**< @brief Opcode de INI. */
     TNL_OP = 0x20, /**< @brief Opcode de TNL. */
     TNR_OP = 0x21, /**< @brief Opcode de TNR. */
@@ -44,7 +75,7 @@ const unsigned char
  * Le fichier s'organise comme suit:
  * <table>
  *     <tr>
- *         <th>Adresses</th>
+ *         <th>Adresse</th>
  *         <td class="gave">0</td>
  *         <td class="gave" width="30px">2</td><td class="gave" width="30px">...</td><td class="gave" width="90px">2*nPaths + 2</td>
  *         <td class="gave" witdh="120px">beg = 2*nPaths + 4</td><td class="gave" witdh="30px">...</td><td class="gave" witdh="30px">beg + nInstrs</td>
@@ -158,7 +189,7 @@ private:
      * L'en-tête s'organise comme suit:
      * <table>
      *     <tr>
-     *         <th>Adresses</th>
+     *         <th>Adresse</th>
      *         <td class="gave">0</td><td class="gave" width="30px">2</td><td class="gave" width="30px">...</td><td class="gave" width="90px">2*nPaths + 2</td>
      *     </tr>
      *     <tr>
@@ -187,9 +218,11 @@ private:
     static void _sendEmail(const std::string& email);
 };
 
+/** @cond FALSE */ // Ne pas documenter ces deux fonctions.
 std::string toLower(const std::string& str);
 
 template <class T>
 unsigned int computeLength(std::list<T> l);
+/** @endcond */
 
 #endif // GAS_H

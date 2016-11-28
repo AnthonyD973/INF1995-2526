@@ -8,7 +8,7 @@
 #include <iterator>
 #include <algorithm>
 
-std::list<unsigned char> GAS::_instrs = std::list<unsigned char>();
+std::list<Opcode> GAS::_instrs = std::list<Opcode>();
 std::list<unsigned short> GAS::_pathAddr;
 
 std::ifstream GAS::_iFile = std::ifstream();
@@ -98,7 +98,7 @@ void GAS::_compileInputFile() {
 
 
 void GAS::_emitCodeFromToken(std::string token) {
-    unsigned char curOp;
+    Opcode curOp;
     
     // Toutes les instructions ont 3 caractères
     if (token.length() != 3) {
