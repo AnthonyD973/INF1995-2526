@@ -17,8 +17,8 @@
 #define TYPEDEFS_H
 
 /**
- * @brief Valeurs qui expriment à la fois quel Timer utiliser
- *      pour compter, et quel mode utiliser pour cela.
+ * @brief Type de valeurs qui expriment à la fois quel Timer utiliser pour
+ *      compter, et quel mode utiliser pour cela.
  * 
  * <b>Valeurs possibles:</b>
  * <ul>
