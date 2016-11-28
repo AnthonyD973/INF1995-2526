@@ -32,6 +32,7 @@ ShapeColor ShapeDetector::checkShape() {
     while (readsCount++ < N_READS_TILL_QUARTER_TURN_) {
         curDist = DistSnsr::readAverage();
         updateMax_(curDist);
+        _delay_ms(100.0);
     }
     
     while (!(LineSnsr::read() & 0x02)) { } // Continuer à tourner tant que l'on

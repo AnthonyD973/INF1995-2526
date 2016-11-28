@@ -25,7 +25,7 @@
 #include "ColorSnsr.h"
 #include "path.h"
 
-#define LAST_COLORS_MAX 4 /**< @brief Nombre des dernières lectures à sauvegarder. */
+#define LAST_COLORS_MAX 3 /**< @brief Nombre des dernières lectures à sauvegarder. */
 
 
 /**

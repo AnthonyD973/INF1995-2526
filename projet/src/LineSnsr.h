@@ -44,7 +44,7 @@ public:
      * @param[in] ddr   Registre définissant les modes d'entrée/sortie des
      *      broches.
      */
-    static void init(volatile uint8_t* port, volatile uint8_t* ddr);
+    static void init(volatile uint8_t* pin, volatile uint8_t* port, volatile uint8_t* ddr);
 
     /**
      * @brief   Lit la valeur du suiveur de ligne pour donner la position du
@@ -64,9 +64,11 @@ public:
 
 private:
     /**
-     * @brief   Port d'où lire la sortie du capteur.
+     * @brief   Pin d'où lire les entrées du capteur.
      */
-    static volatile uint8_t* _PORT;
+    static volatile uint8_t* _PIN;  // PIN != PORT (Ils ont des fonctions
+                                    // différentes et ne retourne pas la même
+                                    // chose)
 
 };
 
