@@ -17,3 +17,7 @@
 lib/doxygen/doc/*
 projet/src/doxygen/doc/*
 projet/gas/doxygen/doc/*
+
+#Autres ignorés
+*.bak
+*.old
