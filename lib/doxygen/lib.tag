@@ -28,6 +28,13 @@
     <includes id="led_8h" name="led.h" local="yes" imported="no">led.h</includes>
   </compound>
   <compound kind="file">
+    <name>ram.h</name>
+    <path>/home/anthony973/Git/Git_Projects/INF1995/lib/</path>
+    <filename>ram_8h</filename>
+    <includes id="lib_8h" name="lib.h" local="yes" imported="no">lib.h</includes>
+    <class kind="class">RAM</class>
+  </compound>
+  <compound kind="file">
     <name>typedefs.h</name>
     <path>/home/anthony973/Git/Git_Projects/INF1995/lib/</path>
     <filename>typedefs_8h</filename>

@@ -1,3 +1,5 @@
+/** @cond FALSE */ // Ne pas documenter ce fichier
+
 /******************************************************************************/
 /*                                                                            */
 /* Ce code a ete modifie par Matthew Khouzam et Jerome Collin                 */
@@ -450,3 +452,5 @@ uint8_t RAM::_writePage(const uint16_t address, uint8_t *data,
 
   return rv;
 }
+
+/** @endcond */
