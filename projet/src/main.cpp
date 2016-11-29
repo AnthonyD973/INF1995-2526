@@ -13,6 +13,18 @@
  * @copyright Code qui n'est sous aucune license.
  */
 
+/**
+ * @mainpage BIENVENUE DANS LA DOCUMENTATION DE NOTRE PROJET
+ * @anchor  SRC_MAINPAGE
+ * 
+ * Notre répertoire Git contient trois documentations:
+ * <ol type="1">
+ *     <li>La documentation de notre [librairie](@ref LIB_MAINPAGE), située sous lib/ ;</li>
+ *     <li>La documentation de notre [compilateur GAS](@ref LIB_MAINPAGE), situé sous projet/gas/; </li>
+ *     <li>La documentation des [fichiers créés pour notre projet](@ref SRC_MAINPAGE), situés sous projet/src.</li>
+ * </ol>
+ */
+
 #include <lib.h>
 #include <timer.h>
 #include <led.h>
