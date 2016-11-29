@@ -50,6 +50,7 @@ void ColorSequenceDetector::checkSequence(const ShapeColor shapeSequence[3]) {
         LED_->setColor(LED_OFF);
     }
     
+    Path::stop();
     playEndingTheme_();
 }
 
