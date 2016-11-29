@@ -237,4 +237,45 @@ typedef uint8_t WGMode;
 #define    WGM1_PWM_F1    0x0E  /**< @brief Mode Fast-PWM, avec TOP = ICR1. */
 #define    WGM1_PWM_F2    0x0F  /**< @brief Mode Fast-PWM, avec TOP = OCR1A. */
 
+
+/**
+ * @brief Type de valeurs qui expriment ce que le moteur doit faire.
+ * 
+ * <b>Valeurs possibles:</b>
+ * <ul>
+ *     <li>#ENG_OFF</li>
+ *     <li>#ENG_FORWARD</li>
+ *     <li>#ENG_BACKWARD</li>
+ * </ul>
+ */
+typedef uint8_t EngineMode;
+#define    ENG_OFF      0x04 /**< @brief Le moteur doit être éteint. */
+#define    ENG_FORWARD  0x00 /**< @brief Le moteur doit avancer. */
+#define    ENG_BACKWARD 0x01 /**< @brief Le moteur doit reculer. */
+
+
+/**
+ * @brief Type de valeurs qui expriment quel Timer et quel canal de ce Timer
+ *      est utilisé.
+ * 
+ * <b>Valeurs possibles:</b>
+ * <ul>
+ *     <li>#T0CA</li>
+ *     <li>#T0CB</li>
+ *     <li>#T1CA</li>
+ *     <li>#T1CB</li>
+ *     <li>#T2CA</li>
+ *     <li>#T2CB</li>
+ * </ul>
+ */
+typedef uint8_t TimerChannelUsed;
+#define    T0CA 0 /**< @brief PWM utilsé : OC0A. On doit avoir <b>ENABLE</b>: PB3, <b>DIRECTION</b>: PB2 */
+#define    T0CB 1 /**< @brief PWM utilsé : OC0B. On doit avoir <b>ENABLE</b>: PB4, <b>DIRECTION</b>: PB5 */
+#define    T1CA 2 /**< @brief PWM utilsé : OC1A. On doit avoir <b>ENABLE</b>: PD5, <b>DIRECTION</b>: PD3 */
+#define    T1CB 3 /**< @brief PWM utilsé : OC1B. On doit avoir <b>ENABLE</b>: PD4, <b>DIRECTION</b>: PD2 */
+#define    T2CA 4 /**< @brief PWM utilsé : OC2A. On doit avoir <b>ENABLE</b>: PD7, <b>DIRECTION</b>: PD5 */
+#define    T2CB 5 /**< @brief PWM utilsé : OC2B. On doit avoir <b>ENABLE</b>: PD6, <b>DIRECTION</b>: PD4 */
+
+
+
 #endif // TYPEDEFS_LIB_H

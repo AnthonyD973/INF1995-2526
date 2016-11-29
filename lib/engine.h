@@ -1,16 +1,16 @@
-/*
- * Classe permettant l'utilisation des moteurs.
+/**
+ * @file    engine.h
+ * 
+ * @brief   Définition de la classe Engine qui permet de contrôler les moteurs.
  *
- * Ecole Polytechnique de Montreal
- * Departement de genie informatique
- * Cours inf1995
- *
- * Emir Khaled Belhaddad, Anthony Dentinger,
- * Gergi Younis et Vincent Dandenault
- * 2016
- *
- * Code qui n'est sous aucune license.
- *
+ * @authors Belhaddad, Emir Khaled
+ * @authors Dandenault, Vincent
+ * @authors Dentinger, Anthony
+ * @authors Younis, Gergi
+ * 
+ * @date Automne 2016
+ * 
+ * @copyright Code qui n'est sous aucune license.
  */
 
 #ifndef ENGINE_H
@@ -20,27 +20,12 @@
 
 class Engine;   // Résolution des dépendances circulaires (c'est du patchwork...)
 
-typedef uint8_t EngineMode;
-typedef uint8_t TimerChannelUsed;
-
 #include "lib.h"
 #include "timer.h"
 
-
-// ---EngineMode---
-#define    ENG_OFF      0x04
-#define    ENG_FORWARD  0x00
-#define    ENG_BACKWARD 0x01
-
-// ---TimerChannelUsed---                  | ENABLE | DIRECTION |
-#define    T0CA 0   // PWM utilisé = OC0A. |   PB3  |    PB2    |
-#define    T0CB 1   // PWM utilisé = OC0B. |   PB4  |    PB5    |
-#define    T1CA 2   // PWM utilisé = OC1A. |   PD5  |    PD3    |
-#define    T1CB 3   // PWM utilisé = OC1B. |   PD4  |    PD2    |
-#define    T2CA 4   // PWM utilisé = OC2A. |   PD7  |    PD5    |
-#define    T2CB 5   // PWM utilisé = OC2B. |   PD6  |    PD4    |
-
-
+/**
+ * @brief   Classe permettant de contrôler les moteurs.
+ */
 class Engine {
 public:
     /**
@@ -65,14 +50,37 @@ public:
      */
     void setMode(EngineMode mode);
     
+    /**
+     * @brief   Accède au Timer du moteur qui contrôle la puissance du moteur.
+     * @return  Un pointeur vers le Timer qui contrôle la puissance du moteur.
+     */
     Timer* getTimer();
     
 private:
+    /**
+     * @brief   Timer qui contrôle la puissance du moteur.
+     */
     Timer* _timer;
+    /**
+     * @brief   Définit si le moteur est branché sur le canal A du Timer.
+     */
     bool _isOnChannelA;
     
-    uint8_t _FORWARD, _BACKWARD;
+    /**
+     * @brief   Valeur à mettre sur le port lorsque le moteur doit avancer.
+     */
+    uint8_t _FORWARD;
+    /**
+     * @brief   Valeur à mettre sur le port lorsque le moteur doit reculer.
+     */
+    uint8_t _BACKWARD;
+    /**
+     * @brief   Masque du moteur sur le port sur lequel il est branché.
+     */
     uint8_t _THIS_MASK;
+    /**
+     * @brief   Port sur lequel le moteur est branché.
+     */
     volatile uint8_t* _PORT;
 };
 #endif // ENGINE_H
