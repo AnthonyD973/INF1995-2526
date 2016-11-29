@@ -247,7 +247,7 @@ void Path::tnr_() {
 
 void Path::mdl_() {
     forward();
-    _delay_ms(1200.0); // Dépasser la porte d'entrée dans la pièce.
+    _delay_ms(2000.0); // Dépasser la porte d'entrée dans la pièce.
     
     while (DistSnsr::readAverage() > MIDDLE_DIST_);
     engL_->setMode(ENG_BACKWARD);

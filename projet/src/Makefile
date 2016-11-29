@@ -59,7 +59,7 @@ LIBS=robot
 # la generation de l'executable final)
 LIBS_PATHS=$(REPO_ROOT_PATH)/lib
 
-DEBUG=-DDEBUG
+DEBUG=-UDEBUG
 
 
 %.bin: %.asmb

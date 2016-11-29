@@ -1,18 +1,21 @@
-/*
- * Fichier à inclure dans les fichiers d'en-tête de la librarie.
- *
- * Ecole Polytechnique de Montreal
- * Departement de genie informatique
- * Cours inf1995
- *
- * Emir Khaled Belhaddad, Anthony Dentinger,
- * Gergi Younis et Vincent Dandenault
- * 2016
- *
- * Code qui n'est sous aucune license.
- *
+/**
+ * @file    incl.h
+ * 
+ * @brief   Fichier à inclure dans les fichiers d'en-tête de la librarie.
+ * 
+ * @authors Belhaddad, Emir Khaled
+ * @authors Dandenault, Vincent
+ * @authors Dentinger, Anthony
+ * @authors Younis, Gergi
+ * 
+ * @date Automne 2016
+ * 
+ * @copyright Code qui n'est sous aucune license.
  */
 
+/**
+ * @brief Fréquence du microcontrôleur, en Hertz.
+ */
 #define F_CPU 8000000UL
 
 #include <avr/io.h>
@@ -21,5 +24,11 @@
 
 #include "typedefsLib.h"
 
-#define _MASKV(reg, value, mask) ((reg) & ~(mask)) | ((value) & (mask)) // Retourne la valeur d'un masque appliqué à certain bits
-#define _MASK(reg, value, mask) (reg = _MASKV(reg, value, mask)) // Change la valeur de certains bits d'un registre.
+/**
+ * @brief Retourne la valeur d'un registre lorsqu'on lui aura changé certains bits
+ */
+#define _MASKV(reg, value, mask) ((reg) & ~(mask)) | ((value) & (mask))
+/**
+ * @brief Change la valeur de certains bits d'un registre.
+ */
+#define _MASK(reg, value, mask) (reg = _MASKV(reg, value, mask))

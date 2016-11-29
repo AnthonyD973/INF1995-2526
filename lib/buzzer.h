@@ -1,5 +1,5 @@
 /**
- * @file    typedefs.h
+ * @file    buzzer.h
  * 
  * @brief   Définition des Buzzer qui permet l'utilisation du piézo-électrique.
  *
@@ -16,6 +16,7 @@
 #ifndef BUZZER_H
 #define BUZZER_H
 
+#include "incl.h"
 #include "lib.h"
 #include "timer.h"
 

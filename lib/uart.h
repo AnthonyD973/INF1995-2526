@@ -16,12 +16,13 @@
 
 #ifndef UART_H
 #define UART_H
-#ifdef  DEBUG
 
 #include "incl.h"
 #include "typedefsLib.h"
 
 typedef uint16_t size_t;
+
+#ifdef  DEBUG
 
 /**
  * @brief   Transmet des données via l'interface USART du microcontrôleur.
@@ -167,8 +168,6 @@ private:
 };
 
 #else // !DEBUG
-#include "incl.h"
-/** @cond FALSE */ // Ne pas documenter cette classe
 // Définition d'une classe UART qui ne fait rien pour optimiser la mémoire et
 // la performance.
 class UART {
@@ -192,6 +191,5 @@ public:
     static bool    _tra_empty(void) { return true; }
     static size_t  _tra_size(void) { return 0; }
 };
-/** @endcond */
 #endif // !DEBUG
 #endif // UART_H
