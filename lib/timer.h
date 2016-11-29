@@ -142,15 +142,22 @@ public:
 #endif // DOXYGEN
     inline virtual bool is8BitClock() { while (true) {} return false;};
     
+    /**
+     * @brief   Détermine si l'instance du Timer permet la fonctionnalité
+     *      asynchrone.
+     * @return  Si l'instance du Timer permet la fonctionnalité asynchrone.
+     */
 #ifndef DOXYGEN // Doxygen ne gère pas les __attribute__, alors nous devons les chacher lorsqu'on génère la documentation.
     __attribute__ ((always_inline))
 #endif // DOXYGEN
     inline virtual bool isAsync() { while (true) {} return false; }
     
     /**
-     * @brief   Retourne les positions des LED présentement ambres (et donc gérées par les interruptions du compteur).
-     * @return  Les positions des LED. Chaque bit correspond à une paire de broche.
-     *      Exemple : le bit 0 (LSB) correspond aux broches A0 et A1.
+     * @brief   Retourne les positions des LED présentement ambres (et donc
+     *      gérées par les interruptions du compteur).
+     * @return  Les positions des LED. Chaque bit correspond à une paire de
+     *      broche. <b>Exemple :</b> le bit 0 (LSB) correspond aux broches A0
+     *      et A1.
      */
     volatile uint16_t getAmberLeds();
 
