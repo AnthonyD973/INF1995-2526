@@ -2,7 +2,7 @@
  * @file    led.h
  * 
  * @brief   Définition de LED qui permet, comme son nom l'indique, d'utiliser
- *      une LED.
+ *      une %LED.
  *
  * @authors Belhaddad, Emir Khaled
  * @authors Dandenault, Vincent
@@ -18,7 +18,7 @@
 #define LED_H
 
 #include "incl.h"
-#include "typedefs.h"
+#include "typedefsLib.h"
 #include "lib.h"
 #include "timer.h"
 

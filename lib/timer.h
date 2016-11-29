@@ -17,6 +17,7 @@
 #define TIMER_H
 
 #include "incl.h"
+#include "typedefsLib.h"
 
 class Timer;    // Résolution des dépendances circulaires (ouais... bof, c'est du patchwork)
 class Timer0;   // Résolution des dépendances circulaires
@@ -31,33 +32,6 @@ extern Timer2 timer2;
 #include "led.h"
 #include "engine.h"
 #include "uart.h"
-
-// ---ComNX---
-
-// ---WGMode---               // Modes du Timer0 : [Voir Documentation p. 103]
-#define    WGM02_NORMAL    0x00 // Normal             (avec TOP = 0xFF)
-#define    WGM02_PWM_PC1   0x01 // PWM, Phase correct (avec TOP = 0xFF)
-#define    WGM02_CTC       0x02 // CTC                (avec TOP = OCR0A)
-#define    WGM02_PWM_F1    0x03 // Fast PWM           (avec TOP = 0xFF)
-#define    WGM02_PWM_PC2   0x05 // PWM, Phase correct (avec TOP = OCR0A)
-#define    WGM02_PWM_F2    0x07 // Fast PWM           (avec TOP = OCR0A)
-
-                           // Modes du Timer1 : [Voir Documentation p. 130]
-#define    WGM1_NORMAL    0x00 // Normal                         (avec TOP = 0xFFFF)
-#define    WGM1_PWM_PC_8  0x01 // PWM, Phase Correct 8-bit       (avec TOP = 0x00FF)
-#define    WGM1_PWM_PC_9  0x02 // PWM, Phase Correct 9-bit       (avec TOP = 0x01FF)
-#define    WGM1_PWM_PC_10 0x03 // PWM, Phase Correct 10-bit      (avec TOP = 0x03FF)
-#define    WGM1_CTC1      0x04 // CTC                            (avec TOP = OCR1A)
-#define    WGM1_PWM_F_8   0x05 // Fast PWM, 8-bit                (avec TOP = 0x00FF)
-#define    WGM1_PWM_F_9   0x06 // Fast PWM, 9-bit                (avec TOP = 0x01FF)
-#define    WGM1_PWM_F_10  0x07 // Fast PWM, 10-bit               (avec TOP = 0x03FF)
-#define    WGM1_PWM_PFC1  0x08 // PWM, Phase & Frequency Correct (avec TOP = ICR1)
-#define    WGM1_PWM_PFC2  0x09 // PWM, Phase & Frequency Correct (avec TOP = OCR1A)
-#define    WGM1_PWM_PC1   0x0A // PWM, Phase Correct             (avec TOP = ICR1)
-#define    WGM1_PWM_PC2   0x0B // PWM, Phase Correct             (avec TOP = OCR1A)
-#define    WGM1_CTC2      0x0C // CTC                            (avec TOP = ICR1)
-#define    WGM1_PWM_F1    0x0E // Fast PWM                       (avec TOP = ICR1)
-#define    WGM1_PWM_F2    0x0F // Fast PWM                       (avec TOP = OCR1A)
 
 // ===========================
 // =          TIMER          =

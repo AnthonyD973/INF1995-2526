@@ -18,10 +18,10 @@
 #define COLOR_SEQUENCE_DETECTOR_H
 
 #include <incl.h>
+#include "typedefs.h"
 #include <buzzer.h>
 #include <led.h>
 
-#include "typedefs.h"
 #include "ColorSnsr.h"
 #include "path.h"
 

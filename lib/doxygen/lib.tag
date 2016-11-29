@@ -10,7 +10,7 @@
     <name>led.h</name>
     <path>/home/anthony973/Git/Git_Projects/INF1995/lib/</path>
     <filename>led_8h</filename>
-    <includes id="typedefs_8h" name="typedefs.h" local="yes" imported="no">typedefs.h</includes>
+    <includes id="typedefsLib_8h" name="typedefsLib.h" local="yes" imported="no">typedefsLib.h</includes>
     <includes id="lib_8h" name="lib.h" local="yes" imported="no">lib.h</includes>
     <class kind="class">LED</class>
     <member kind="function">
@@ -35,203 +35,238 @@
     <class kind="class">RAM</class>
   </compound>
   <compound kind="file">
-    <name>typedefs.h</name>
+    <name>typedefsLib.h</name>
     <path>/home/anthony973/Git/Git_Projects/INF1995/lib/</path>
-    <filename>typedefs_8h</filename>
+    <filename>typedefsLib_8h</filename>
     <member kind="define">
       <type>#define</type>
       <name>UART_POLLING</name>
-      <anchorfile>typedefs_8h.html</anchorfile>
+      <anchorfile>typedefsLib_8h.html</anchorfile>
       <anchor>aabccfcfe3dc8a73fccb13e1110a35fce</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>UART_INTERRUPT</name>
-      <anchorfile>typedefs_8h.html</anchorfile>
+      <anchorfile>typedefsLib_8h.html</anchorfile>
       <anchor>ae2169f91efb9adeb6d6c8e217ff46fc4</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>LED_OFF</name>
-      <anchorfile>typedefs_8h.html</anchorfile>
+      <anchorfile>typedefsLib_8h.html</anchorfile>
       <anchor>a80700bb63bd56ebabbb4728aa433fd29</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>LED_GREEN</name>
-      <anchorfile>typedefs_8h.html</anchorfile>
+      <anchorfile>typedefsLib_8h.html</anchorfile>
       <anchor>aca338dbd19d7940923334629f6e5f3b7</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>LED_RED</name>
-      <anchorfile>typedefs_8h.html</anchorfile>
+      <anchorfile>typedefsLib_8h.html</anchorfile>
       <anchor>a31e20330f8ce94e0dd10b005a15c5898</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>LED_AMBER</name>
-      <anchorfile>typedefs_8h.html</anchorfile>
+      <anchorfile>typedefsLib_8h.html</anchorfile>
       <anchor>a0e72d9b104ee1fa873b85cb132aa02d1</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>A0_A1</name>
-      <anchorfile>typedefs_8h.html</anchorfile>
+      <anchorfile>typedefsLib_8h.html</anchorfile>
       <anchor>a86a076bae17bc9de04e32bcbd664c8ea</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>A2_A3</name>
-      <anchorfile>typedefs_8h.html</anchorfile>
+      <anchorfile>typedefsLib_8h.html</anchorfile>
       <anchor>aff2e5e6ba7e601fff160933afc98c353</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>A4_A5</name>
-      <anchorfile>typedefs_8h.html</anchorfile>
+      <anchorfile>typedefsLib_8h.html</anchorfile>
       <anchor>ad95c4f20ef570610d033fea8ee2be70c</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>A6_A7</name>
-      <anchorfile>typedefs_8h.html</anchorfile>
+      <anchorfile>typedefsLib_8h.html</anchorfile>
       <anchor>ad52cfdb1f7bb40f0cfad6b25dedb4292</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>B0_B1</name>
-      <anchorfile>typedefs_8h.html</anchorfile>
+      <anchorfile>typedefsLib_8h.html</anchorfile>
       <anchor>a22ad4db4cb21146507a5cbc8a53b47b1</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>B2_B3</name>
-      <anchorfile>typedefs_8h.html</anchorfile>
+      <anchorfile>typedefsLib_8h.html</anchorfile>
       <anchor>a05f679776c913fb202166051c325817c</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>B4_B5</name>
-      <anchorfile>typedefs_8h.html</anchorfile>
+      <anchorfile>typedefsLib_8h.html</anchorfile>
       <anchor>ab076fb68821af7370d30dd1a8aab8f92</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>B6_B7</name>
-      <anchorfile>typedefs_8h.html</anchorfile>
+      <anchorfile>typedefsLib_8h.html</anchorfile>
       <anchor>a8c60ef16d1b46ae15d4d09c13f1397a7</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>C0_C1</name>
-      <anchorfile>typedefs_8h.html</anchorfile>
+      <anchorfile>typedefsLib_8h.html</anchorfile>
       <anchor>aef451f1562751f6c9aeb394f40b1e0b9</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>C2_C3</name>
-      <anchorfile>typedefs_8h.html</anchorfile>
+      <anchorfile>typedefsLib_8h.html</anchorfile>
       <anchor>aeae845dc316ad3e8df5448597cdf3813</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>C4_C5</name>
-      <anchorfile>typedefs_8h.html</anchorfile>
+      <anchorfile>typedefsLib_8h.html</anchorfile>
       <anchor>acbaeed5f5579410bcec1b56acb96800e</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>C6_C7</name>
-      <anchorfile>typedefs_8h.html</anchorfile>
+      <anchorfile>typedefsLib_8h.html</anchorfile>
       <anchor>a9d03d09b1cfe7fa555ebcb82d3d65282</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>D0_D1</name>
-      <anchorfile>typedefs_8h.html</anchorfile>
+      <anchorfile>typedefsLib_8h.html</anchorfile>
       <anchor>ab9b3a87260b324304ba98f28803c2577</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>D2_D3</name>
-      <anchorfile>typedefs_8h.html</anchorfile>
+      <anchorfile>typedefsLib_8h.html</anchorfile>
       <anchor>aa2f6da88b64f4e48cb573661c9d31f35</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>D4_D5</name>
-      <anchorfile>typedefs_8h.html</anchorfile>
+      <anchorfile>typedefsLib_8h.html</anchorfile>
       <anchor>a9960b7220f4c1404968f83b1fadb0754</anchor>
       <arglist></arglist>
     </member>
     <member kind="define">
       <type>#define</type>
       <name>D6_D7</name>
-      <anchorfile>typedefs_8h.html</anchorfile>
+      <anchorfile>typedefsLib_8h.html</anchorfile>
       <anchor>a389188a79e637919a785acfb26d80dbe</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>DISCONNECTED</name>
+      <anchorfile>typedefsLib_8h.html</anchorfile>
+      <anchor>a257a6419ffa5ae98d448cd33751f6436</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>TOGGLE</name>
+      <anchorfile>typedefsLib_8h.html</anchorfile>
+      <anchor>a9507a94acc0da8956a17fec9532d45ba</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>CLEAR</name>
+      <anchorfile>typedefsLib_8h.html</anchorfile>
+      <anchor>a611cc9b5f655508482f3d7a9751c182a</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>SET</name>
+      <anchorfile>typedefsLib_8h.html</anchorfile>
+      <anchor>a59da1d65e87a723efe808dbabb4fc205</anchor>
       <arglist></arglist>
     </member>
     <member kind="typedef">
       <type>bool</type>
       <name>CommMode</name>
-      <anchorfile>typedefs_8h.html</anchorfile>
+      <anchorfile>typedefsLib_8h.html</anchorfile>
       <anchor>a93cafaf6ee4ff230577c10882a233418</anchor>
       <arglist></arglist>
     </member>
     <member kind="typedef">
       <type>uint8_t</type>
       <name>LedColor</name>
-      <anchorfile>typedefs_8h.html</anchorfile>
+      <anchorfile>typedefsLib_8h.html</anchorfile>
       <anchor>a637d23bfbbbe986c6e259d769ee5475f</anchor>
       <arglist></arglist>
     </member>
     <member kind="typedef">
       <type>uint8_t</type>
       <name>LedPosition</name>
-      <anchorfile>typedefs_8h.html</anchorfile>
+      <anchorfile>typedefsLib_8h.html</anchorfile>
       <anchor>a9f58cfc166a239e0e7eec5f421e0971a</anchor>
       <arglist></arglist>
     </member>
     <member kind="typedef">
       <type>uint8_t</type>
       <name>Prescale01</name>
-      <anchorfile>typedefs_8h.html</anchorfile>
+      <anchorfile>typedefsLib_8h.html</anchorfile>
       <anchor>aa01f83855add8e0ba7c13e158b050303</anchor>
       <arglist></arglist>
     </member>
     <member kind="typedef">
       <type>uint8_t</type>
       <name>Prescale2</name>
-      <anchorfile>typedefs_8h.html</anchorfile>
+      <anchorfile>typedefsLib_8h.html</anchorfile>
       <anchor>a0e5108aebb04731bb4da1b369598af9e</anchor>
       <arglist></arglist>
     </member>
     <member kind="typedef">
       <type>uint8_t</type>
       <name>ComNX</name>
-      <anchorfile>typedefs_8h.html</anchorfile>
+      <anchorfile>typedefsLib_8h.html</anchorfile>
       <anchor>ac7e0aac93e0e780eb284125d260f4d58</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="typedef">
+      <type>uint8_t</type>
+      <name>WGMode</name>
+      <anchorfile>typedefsLib_8h.html</anchorfile>
+      <anchor>a2bc21309334725eae48ac78047ceba15</anchor>
       <arglist></arglist>
     </member>
   </compound>

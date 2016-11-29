@@ -16,6 +16,8 @@
 #ifndef TYPEDEFS_H
 #define TYPEDEFS_H
 
+#include <incl.h>
+
 /**
  * @brief Type de valeurs qui expriment à la fois quel Timer utiliser pour
  *      compter, et quel mode utiliser pour cela.

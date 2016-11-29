@@ -19,7 +19,7 @@
 #ifdef  DEBUG
 
 #include "incl.h"
-#include "typedefs.h"
+#include "typedefsLib.h"
 
 typedef uint16_t size_t;
 
