@@ -9,14 +9,16 @@
 *.hex
 *.a
 
-# Pour KDevelop
+# Pour KDevelop et kate
 *.kdev_include_paths
 *.kdev4
+*.kate-swp
 
-#Dossiers doxygen
+#Doxygen
 lib/doxygen/doc/*
 projet/src/doxygen/doc/*
 projet/gas/doxygen/doc/*
+*.tag
 
 #Autres ignorés
 *.bak

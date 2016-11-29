@@ -12,6 +12,7 @@
     <filename>led_8h</filename>
     <includes id="typedefsLib_8h" name="typedefsLib.h" local="yes" imported="no">typedefsLib.h</includes>
     <includes id="lib_8h" name="lib.h" local="yes" imported="no">lib.h</includes>
+    <includes id="timer_8h" name="timer.h" local="yes" imported="no">timer.h</includes>
     <class kind="class">LED</class>
     <member kind="function">
       <type>void</type>
@@ -25,6 +26,7 @@
     <name>lib.h</name>
     <path>/home/anthony973/Git/Git_Projects/INF1995/lib/</path>
     <filename>lib_8h</filename>
+    <includes id="timer_8h" name="timer.h" local="yes" imported="no">timer.h</includes>
     <includes id="led_8h" name="led.h" local="yes" imported="no">led.h</includes>
   </compound>
   <compound kind="file">
@@ -33,6 +35,18 @@
     <filename>ram_8h</filename>
     <includes id="lib_8h" name="lib.h" local="yes" imported="no">lib.h</includes>
     <class kind="class">RAM</class>
+  </compound>
+  <compound kind="file">
+    <name>timer.h</name>
+    <path>/home/anthony973/Git/Git_Projects/INF1995/lib/</path>
+    <filename>timer_8h</filename>
+    <includes id="lib_8h" name="lib.h" local="yes" imported="no">lib.h</includes>
+    <includes id="led_8h" name="led.h" local="yes" imported="no">led.h</includes>
+    <includes id="uart_8h" name="uart.h" local="yes" imported="no">uart.h</includes>
+    <class kind="class">Timer</class>
+    <class kind="class">Timer0</class>
+    <class kind="class">Timer1</class>
+    <class kind="class">Timer2</class>
   </compound>
   <compound kind="file">
     <name>typedefsLib.h</name>
@@ -194,6 +208,118 @@
     </member>
     <member kind="define">
       <type>#define</type>
+      <name>P01_NO_CLK</name>
+      <anchorfile>typedefsLib_8h.html</anchorfile>
+      <anchor>a0358c3a9ddc919be3018b0e5a294ef38</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>P01_CLK1</name>
+      <anchorfile>typedefsLib_8h.html</anchorfile>
+      <anchor>a5f80408478a2a1b1b938cf64c91b8eef</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>P01_CLK8</name>
+      <anchorfile>typedefsLib_8h.html</anchorfile>
+      <anchor>ab500da4c683b7613458e90ca33c17519</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>P01_CLK64</name>
+      <anchorfile>typedefsLib_8h.html</anchorfile>
+      <anchor>ad52575a2fbc14b706d95123841706f44</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>P01_CLK256</name>
+      <anchorfile>typedefsLib_8h.html</anchorfile>
+      <anchor>aca60ef81b17e0c0c2501b79865cebb3c</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>P01_CLK1024</name>
+      <anchorfile>typedefsLib_8h.html</anchorfile>
+      <anchor>a0c30f42f03cbce8aa9f5b9f14e9cc61d</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>P01_EXT_CLK_FALLING_EDGE</name>
+      <anchorfile>typedefsLib_8h.html</anchorfile>
+      <anchor>afc5e535bf3d226520e6200a0c5a96ee7</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>P01_EXT_CLK_RISING_EDGE</name>
+      <anchorfile>typedefsLib_8h.html</anchorfile>
+      <anchor>a53b9a4e085781feb252428123096eeb5</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>P2_NO_CLK</name>
+      <anchorfile>typedefsLib_8h.html</anchorfile>
+      <anchor>a54fbfe9e5fabb71e3ca63e24dbdf8b07</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>P2_CLK1</name>
+      <anchorfile>typedefsLib_8h.html</anchorfile>
+      <anchor>adcc928a089b19f892dbc453437a9a80e</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>P2_CLK8</name>
+      <anchorfile>typedefsLib_8h.html</anchorfile>
+      <anchor>adf4472281b137e0a4cbfbd237fc74212</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>P2_CLK32</name>
+      <anchorfile>typedefsLib_8h.html</anchorfile>
+      <anchor>a287426bdab098bd936dd460ef5730e8b</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>P2_CLK64</name>
+      <anchorfile>typedefsLib_8h.html</anchorfile>
+      <anchor>a1d2373e7d43bad9301884803abe42ab3</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>P2_CLK128</name>
+      <anchorfile>typedefsLib_8h.html</anchorfile>
+      <anchor>a8fe218990ca09534d9d59503b36c2a1c</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>P2_CLK256</name>
+      <anchorfile>typedefsLib_8h.html</anchorfile>
+      <anchor>aa20731d2e78f4f96c164afb3b81eb50d</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>P2_CLK1024</name>
+      <anchorfile>typedefsLib_8h.html</anchorfile>
+      <anchor>af1cbd61e6fe2800f5a4a1c954b4b3471</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
       <name>DISCONNECTED</name>
       <anchorfile>typedefsLib_8h.html</anchorfile>
       <anchor>a257a6419ffa5ae98d448cd33751f6436</anchor>
@@ -218,6 +344,153 @@
       <name>SET</name>
       <anchorfile>typedefsLib_8h.html</anchorfile>
       <anchor>a59da1d65e87a723efe808dbabb4fc205</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>WGM02_NORMAL</name>
+      <anchorfile>typedefsLib_8h.html</anchorfile>
+      <anchor>a03312ef8dc0004257d6f2bddcb717424</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>WGM02_PWM_PC1</name>
+      <anchorfile>typedefsLib_8h.html</anchorfile>
+      <anchor>a177fe8d3b14d9c319ca2fb6b6c176722</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>WGM02_CTC</name>
+      <anchorfile>typedefsLib_8h.html</anchorfile>
+      <anchor>a19fe3c14eef219a1e4e06cfe3d7d450c</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>WGM02_PWM_F1</name>
+      <anchorfile>typedefsLib_8h.html</anchorfile>
+      <anchor>afdc697749791fd197386ef2191470b29</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>WGM02_PWM_PC2</name>
+      <anchorfile>typedefsLib_8h.html</anchorfile>
+      <anchor>ac6399cbf42771bbd2e274a64ea119193</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>WGM02_PWM_F2</name>
+      <anchorfile>typedefsLib_8h.html</anchorfile>
+      <anchor>a9f1538bd85c2ce4cdb5599aca3a9f691</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>WGM1_NORMAL</name>
+      <anchorfile>typedefsLib_8h.html</anchorfile>
+      <anchor>a6654a5de873e71061a093961694cd0e6</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>WGM1_PWM_PC_8</name>
+      <anchorfile>typedefsLib_8h.html</anchorfile>
+      <anchor>ad04deb4a3cb34f32fc23048f7cfb04c1</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>WGM1_PWM_PC_9</name>
+      <anchorfile>typedefsLib_8h.html</anchorfile>
+      <anchor>a232f8c47c22585299f09c8a3fa5b22df</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>WGM1_PWM_PC_10</name>
+      <anchorfile>typedefsLib_8h.html</anchorfile>
+      <anchor>a386e7592356835d5ea28781c88beb77d</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>WGM1_CTC1</name>
+      <anchorfile>typedefsLib_8h.html</anchorfile>
+      <anchor>a88626ced4ec887429b0ad1466eaaaac5</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>WGM1_PWM_F_8</name>
+      <anchorfile>typedefsLib_8h.html</anchorfile>
+      <anchor>aa26a8d39f6d4c3f4cd5947c95f919b57</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>WGM1_PWM_F_9</name>
+      <anchorfile>typedefsLib_8h.html</anchorfile>
+      <anchor>a06701796575b052e26c885394e107adf</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>WGM1_PWM_F_10</name>
+      <anchorfile>typedefsLib_8h.html</anchorfile>
+      <anchor>a2f3f31b7e2df135b28ec59fbe669c8e1</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>WGM1_PWM_PFC1</name>
+      <anchorfile>typedefsLib_8h.html</anchorfile>
+      <anchor>ae9015e23f96efcff6c6028de741d3b6a</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>WGM1_PWM_PFC2</name>
+      <anchorfile>typedefsLib_8h.html</anchorfile>
+      <anchor>a7eb64570dee5146917db068a2efa68c1</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>WGM1_PWM_PC1</name>
+      <anchorfile>typedefsLib_8h.html</anchorfile>
+      <anchor>a02edb740e631d16a81f36b131e56082e</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>WGM1_PWM_PC2</name>
+      <anchorfile>typedefsLib_8h.html</anchorfile>
+      <anchor>aaf81f5e3b3a7c599bd85211cf96d06fd</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>WGM1_CTC2</name>
+      <anchorfile>typedefsLib_8h.html</anchorfile>
+      <anchor>a397845dac85dce2dc41a3cc47f630697</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>WGM1_PWM_F1</name>
+      <anchorfile>typedefsLib_8h.html</anchorfile>
+      <anchor>ace5610f5363ac57255a1d55ac2934d0f</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>WGM1_PWM_F2</name>
+      <anchorfile>typedefsLib_8h.html</anchorfile>
+      <anchor>a873146d124b0ac4279f45d45517394bb</anchor>
       <arglist></arglist>
     </member>
     <member kind="typedef">

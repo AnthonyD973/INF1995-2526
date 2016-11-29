@@ -18,7 +18,6 @@
 #define LED_H
 
 #include "incl.h"
-#include "typedefsLib.h"
 #include "lib.h"
 #include "timer.h"
 

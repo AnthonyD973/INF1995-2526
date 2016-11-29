@@ -28,10 +28,8 @@
  * </ul>
  */
 typedef bool CommMode;
-#define UART_POLLING    true  /**< @brief L'UART doit transmettre/recevoir par
-                                         scrutation. */
-#define UART_INTERRUPT  false /**< @brief L'UART doit transmettre/recevoir par
-                                         interruption. */
+#define UART_POLLING    true  /**< @brief L'UART doit transmettre/recevoir par scrutation. */
+#define UART_INTERRUPT  false /**< @brief L'UART doit transmettre/recevoir par interruption. */
 
 /**
  * @brief Type de valeurs qui expriment la couleur d'une LED.
@@ -113,14 +111,14 @@ typedef uint8_t LedPosition;
  * </ul>
  */
 typedef uint8_t Prescale01;
-#define    P01_NO_CLK  0x0
-#define    P01_CLK1    0x1
-#define    P01_CLK8    0x2
-#define    P01_CLK64   0x3
-#define    P01_CLK256  0x4
-#define    P01_CLK1024 0x5
-#define    P01_EXT_CLK_FALLING_EDGE 0x6
-#define    P01_EXT_CLK_RISING_EDGE 0x7
+#define    P01_NO_CLK  0x0 /**< @brief Aucune horloge. */
+#define    P01_CLK1    0x1 /**< @brief Horloge du microcontrôleur. */
+#define    P01_CLK8    0x2 /**< @brief Horloge du microcontrôleur, divisé par 8.    */
+#define    P01_CLK64   0x3 /**< @brief Horloge du microcontrôleur, divisé par 64.   */
+#define    P01_CLK256  0x4 /**< @brief Horloge du microcontrôleur, divisé par 256.  */
+#define    P01_CLK1024 0x5 /**< @brief Horloge du microcontrôleur, divisé par 1024. */
+#define    P01_EXT_CLK_FALLING_EDGE 0x6 /**< @brief Horloge externe. Le Timer devient un compteur de fronts desendants. */
+#define    P01_EXT_CLK_RISING_EDGE 0x7  /**< @brief Horloge externe. Le Timer devient un compteur de fronts montants. */
 
 
 /**
@@ -140,14 +138,14 @@ typedef uint8_t Prescale01;
  * </ul>
  */
 typedef uint8_t Prescale2;
-#define    P2_NO_CLK  0x0
-#define    P2_CLK1    0x1
-#define    P2_CLK8    0x2
-#define    P2_CLK32   0x3
-#define    P2_CLK64   0x4
-#define    P2_CLK128  0x5
-#define    P2_CLK256  0x6
-#define    P2_CLK1024 0x7
+#define    P2_NO_CLK  0x0 /**< @brief Horloge du microcontrôleur, divisé par 8. */
+#define    P2_CLK1    0x1 /**< @brief Horloge du microcontrôleur, divisé par 8. */
+#define    P2_CLK8    0x2 /**< @brief Horloge du microcontrôleur, divisé par 8. */
+#define    P2_CLK32   0x3 /**< @brief Horloge du microcontrôleur, divisé par 8. */
+#define    P2_CLK64   0x4 /**< @brief Horloge du microcontrôleur, divisé par 8. */
+#define    P2_CLK128  0x5 /**< @brief Horloge du microcontrôleur, divisé par 8. */
+#define    P2_CLK256  0x6 /**< @brief Horloge du microcontrôleur, divisé par 8. */
+#define    P2_CLK1024 0x7 /**< @brief Horloge du microcontrôleur, divisé par 8. */
 
 /**
  * @brief   '<i>Compare Output Mode</i>'. Type de valeurs qui expriment
@@ -163,20 +161,16 @@ typedef uint8_t Prescale2;
  * </ul>
  */
 typedef uint8_t ComNX;
-#define    DISCONNECTED 0x0 /**< @brief Déconnecter la sortie du Timer. Le
-                                        signal ne se rendra plus aux broches. */
-#define    TOGGLE       0x1 /**< @brief Inverser le signal lors de
-                                        l'égalité.
+#define    DISCONNECTED 0x0 /**< @brief Déconnecter la sortie du Timer. Le signal ne se rendra plus aux broches. */
+#define    TOGGLE       0x1 /**< @brief Inverser le signal lors de l'égalité.
                              * @warning Dans certains modes (ex: Fast-PWM et
                              * PC-PWM du Timer0 avec WGM02 = 0), TOGGLE est
                              * équivalent à #DISCONNECTED. <br> Également,
                              * pour COMNB, TOGGLE peut ne pas être supporté
                              * par le microcontrôleur.
                              */
-#define    CLEAR        0x2 /**< @brief Mettre le signal à 0 lors de
-                                        l'égalité. */
-#define    SET          0x3 /**< @brief Mettre le signal à 1 lors de
-                                        l'égalité. */
+#define    CLEAR        0x2 /**< @brief Mettre le signal à 0 lors de l'égalité. */
+#define    SET          0x3 /**< @brief Mettre le signal à 1 lors de l'égalité. */
 
 
 /**
@@ -184,57 +178,63 @@ typedef uint8_t ComNX;
  *      expriment le genre de signal souhaité, ainsi que le maximum que le
  *      Timer doit atteindre.
  * 
+ * Modes du Timer1 : [C.f. Documentation d'Atmel p. 130]
+ * 
  * <b>Valeurs possibles:</b>
- * <dl>
- *     <dt>Pour les Timer0 et Timer2:</dt>
- *     <dd>#WGM02_NORMAL </dd>
- *     <dd>#WGM02_PWM_PC1</dd>
- *     <dd>#WGM02_CTC    </dd>
- *     <dd>#WGM02_PWM_F1 </dd>
- *     <dd>#WGM02_PWM_PC2</dd>
- *     <dd>#WGM02_PWM_F2 </dd>
- *     
- *     <dt>Pour le Timer1:</dt>
- *     <dd>#WGM1_NORMAL   </dd>
- *     <dd>#WGM1_PWM_PC_8 </dd>
- *     <dd>#WGM1_PWM_PC_9 </dd>
- *     <dd>#WGM1_PWM_PC_10</dd>
- *     <dd>#WGM1_CTC1     </dd>
- *     <dd>#WGM1_PWM_F_8  </dd>
- *     <dd>#WGM1_PWM_F_9  </dd>
- *     <dd>#WGM1_PWM_F_10 </dd>
- *     <dd>#WGM1_PWM_PFC1 </dd>
- *     <dd>#WGM1_PWM_PFC2 </dd>
- *     <dd>#WGM1_PWM_PC1  </dd>
- *     <dd>#WGM1_PWM_PC2  </dd>
- *     <dd>#WGM1_CTC2     </dd>
- *     <dd>#WGM1_PWM_F1   </dd>
- *     <dd>#WGM1_PWM_F2   </dd>
- * </dl>
+ * <ul>
+ *     <li>Pour les Timer0 et Timer2:
+ *     <ul>
+ *         <li>#WGM02_NORMAL </li>
+ *         <li>#WGM02_PWM_PC1</li>
+ *         <li>#WGM02_CTC    </li>
+ *         <li>#WGM02_PWM_F1 </li>
+ *         <li>#WGM02_PWM_PC2</li>
+ *         <li>#WGM02_PWM_F2 </li>
+ *     </ul>
+ *     </li>
+ *     <li>Pour le Timer1:
+ *     <ul>
+ *             <li>#WGM1_NORMAL   </li>
+ *             <li>#WGM1_PWM_PC_8 </li>
+ *             <li>#WGM1_PWM_PC_9 </li>
+ *             <li>#WGM1_PWM_PC_10</li>
+ *             <li>#WGM1_CTC1     </li>
+ *             <li>#WGM1_PWM_F_8  </li>
+ *             <li>#WGM1_PWM_F_9  </li>
+ *             <li>#WGM1_PWM_F_10 </li>
+ *             <li>#WGM1_PWM_PFC1 </li>
+ *             <li>#WGM1_PWM_PFC2 </li>
+ *             <li>#WGM1_PWM_PC1  </li>
+ *             <li>#WGM1_PWM_PC2  </li>
+ *             <li>#WGM1_CTC2     </li>
+ *             <li>#WGM1_PWM_F1   </li>
+ *             <li>#WGM1_PWM_F2   </li>
+ *     </ul>
+ *     </li>
+ * </ul>
  */
 typedef uint8_t WGMode;
-#define    WGM02_NORMAL    0x00 /**< @brief Mode Normal, TOP = 0xFF. */
-#define    WGM02_PWM_PC1   0x01 /**< @brief Mode Normal, TOP = 0xFF. */// PWM, Phase correct (avec TOP = 0xFF)
-#define    WGM02_CTC       0x02 /**< @brief Mode Normal, TOP = 0xFF. */// CTC                (avec TOP = OCR0A)
-#define    WGM02_PWM_F1    0x03 /**< @brief Mode Normal, TOP = 0xFF. */// Fast PWM           (avec TOP = 0xFF)
-#define    WGM02_PWM_PC2   0x05 /**< @brief Mode Normal, TOP = 0xFF. */// PWM, Phase correct (avec TOP = OCR0A)
-#define    WGM02_PWM_F2    0x07 /**< @brief Mode Normal, TOP = 0xFF. */// Fast PWM           (avec TOP = OCR0A)
+#define    WGM02_NORMAL    0x00 /**< @brief Mode Normal, avec TOP = 0xFF. */
+#define    WGM02_PWM_PC1   0x01 /**< @brief Mode Phase-correct PWM, avec TOP = 0xFF. */
+#define    WGM02_CTC       0x02 /**< @brief Mode Clear Timer Counter, avec  TOP = OCRNA. */
+#define    WGM02_PWM_F1    0x03 /**< @brief Mode Normal, avec  TOP = 0xFF. */
+#define    WGM02_PWM_PC2   0x05 /**< @brief Mode Phase-correct PWM, avec  TOP = OCRNA. */
+#define    WGM02_PWM_F2    0x07 /**< @brief Mode Fast-PWM, avec  TOP = OCRNA. */
 
-                           // Modes du Timer1 : [Voir Documentation p. 130]
-#define    WGM1_NORMAL    0x00 /**< @brief Mode Normal, TOP = 0xFF. */// Normal                         (avec TOP = 0xFFFF)
-#define    WGM1_PWM_PC_8  0x01 /**< @brief Mode Normal, TOP = 0xFF. */// PWM, Phase Correct 8-bit       (avec TOP = 0x00FF)
-#define    WGM1_PWM_PC_9  0x02 /**< @brief Mode Normal, TOP = 0xFF. */// PWM, Phase Correct 9-bit       (avec TOP = 0x01FF)
-#define    WGM1_PWM_PC_10 0x03 /**< @brief Mode Normal, TOP = 0xFF. */// PWM, Phase Correct 10-bit      (avec TOP = 0x03FF)
-#define    WGM1_CTC1      0x04 // CTC                            (avec TOP = OCR1A)
-#define    WGM1_PWM_F_8   0x05 // Fast PWM, 8-bit                (avec TOP = 0x00FF)
-#define    WGM1_PWM_F_9   0x06 // Fast PWM, 9-bit                (avec TOP = 0x01FF)
-#define    WGM1_PWM_F_10  0x07 // Fast PWM, 10-bit               (avec TOP = 0x03FF)
-#define    WGM1_PWM_PFC1  0x08 // PWM, Phase & Frequency Correct (avec TOP = ICR1)
-#define    WGM1_PWM_PFC2  0x09 // PWM, Phase & Frequency Correct (avec TOP = OCR1A)
-#define    WGM1_PWM_PC1   0x0A // PWM, Phase Correct             (avec TOP = ICR1)
-#define    WGM1_PWM_PC2   0x0B // PWM, Phase Correct             (avec TOP = OCR1A)
-#define    WGM1_CTC2      0x0C // CTC                            (avec TOP = ICR1)
-#define    WGM1_PWM_F1    0x0E // Fast PWM                       (avec TOP = ICR1)
-#define    WGM1_PWM_F2    0x0F // Fast PWM                       (avec TOP = OCR1A)
+#define    WGM1_NORMAL    0x00  /**< @brief Mode Normal, avec TOP = 0xFFFF. */
+#define    WGM1_PWM_PC_8  0x01  /**< @brief Mode Phase-Correct PWM, avec TOP = 0x00FF. */
+#define    WGM1_PWM_PC_9  0x02  /**< @brief Mode Phase-Correct PWM, avec TOP = 0x01FF. */
+#define    WGM1_PWM_PC_10 0x03  /**< @brief Mode Phase-Correct PWM, avec TOP = 0x03FF. */
+#define    WGM1_CTC1      0x04  /**< @brief Mode Clear Timer Counter, avec TOP = OCR1A. */
+#define    WGM1_PWM_F_8   0x05  /**< @brief Mode Fast-PWM, avec TOP = 0x00FF. */
+#define    WGM1_PWM_F_9   0x06  /**< @brief Mode Fast-PWM, avec TOP = 0x01FF. */
+#define    WGM1_PWM_F_10  0x07  /**< @brief Mode Fast-PWM, avec TOP = 0x03FF. */
+#define    WGM1_PWM_PFC1  0x08  /**< @brief Mode Phase & Frequency Correct PWM, avec TOP = ICR1. */
+#define    WGM1_PWM_PFC2  0x09  /**< @brief Mode Phase & Frequency Correct PWM, avec TOP = OCR1A. */
+#define    WGM1_PWM_PC1   0x0A  /**< @brief Mode Phase-Correct PWM, avec TOP = ICR1. */
+#define    WGM1_PWM_PC2   0x0B  /**< @brief Mode Phase-Correct PWM, avec TOP = OCR1A. */
+#define    WGM1_CTC2      0x0C  /**< @brief Mode Clear Timer Counter, avec TOP = ICR1. */
+#define    WGM1_PWM_F1    0x0E  /**< @brief Mode Fast-PWM, avec TOP = ICR1. */
+#define    WGM1_PWM_F2    0x0F  /**< @brief Mode Fast-PWM, avec TOP = OCR1A. */
 
 #endif // TYPEDEFS_LIB_H

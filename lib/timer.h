@@ -1,28 +1,28 @@
-/*
- * Classe permettant l'utilisation des minuteries du microcontrôleur.
+/**
+ * @file    timer.h
+ * 
+ * @brief   Définition des classes Timer, Timer0, Timer1 et Timer2 qui
+ *      permettent l'utilisation des minuteries du microcontrôleur.
  *
- * Ecole Polytechnique de Montreal
- * Departement de genie informatique
- * Cours inf1995
+ * @authors Belhaddad, Emir Khaled
+ * @authors Dandenault, Vincent
+ * @authors Dentinger, Anthony
+ * @authors Younis, Gergi
+ * 
+ * @date Automne 2016
  *
- * Emir Khaled Belhaddad, Anthony Dentinger,
- * Gergi Younis et Vincent Dandenault
- * 2016
- *
- * Code qui n'est sous aucune license.
- *
+ * @copyright Code qui n'est sous aucune license.
  */
 
 #ifndef TIMER_H
 #define TIMER_H
 
 #include "incl.h"
-#include "typedefsLib.h"
 
-class Timer;    // Résolution des dépendances circulaires (ouais... bof, c'est du patchwork)
-class Timer0;   // Résolution des dépendances circulaires
-class Timer1;   // Résolution des dépendances circulaires
-class Timer2;   // Résolution des dépendances circulaires
+class Timer;  // Résolution des dépendances circulaires (ouais... bof, c'est du patchwork)
+class Timer0; // Résolution des dépendances circulaires
+class Timer1; // Résolution des dépendances circulaires
+class Timer2; // Résolution des dépendances circulaires
 
 extern Timer0 timer0;
 extern Timer1 timer1;
