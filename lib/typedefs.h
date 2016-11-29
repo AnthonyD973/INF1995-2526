@@ -95,4 +95,81 @@ typedef uint8_t LedPosition;
 #define    D4_D5 28 /**< @brief La LED est placée sur les broches D4 et D5. */
 #define    D6_D7 30 /**< @brief La LED est placée sur les broches D6 et D7. */
 
+
+/**
+ * @brief   Type de valeurs qui expriment la valeur de division d'horloge d'un
+ *      Timer0 ou d'un Timer1.
+ * 
+ * <b>Valeurs possibles:</b>
+ * <ul>
+ *     <li>#P01_NO_CLK </li>
+ *     <li>#P01_CLK1   </li>
+ *     <li>#P01_CLK8   </li>
+ *     <li>#P01_CLK64  </li>
+ *     <li>#P01_CLK256 </li>
+ *     <li>#P01_CLK1024</li>
+ *     <li>#P01_EXT_CLK_FALLING_EDGE <b style="color:#A00">!!Nouvelle valeur comparé à #Prescale2!!</b></li>
+ *     <li>#P01_EXT_CLK_RISING_EDGE  <b style="color:#A00">!!Nouvelle valeur comparé à #Prescale2!!</b></li>
+ * </ul>
+ */
+typedef uint8_t Prescale01;
+#define    P01_NO_CLK  0x0
+#define    P01_CLK1    0x1
+#define    P01_CLK8    0x2
+#define    P01_CLK64   0x3
+#define    P01_CLK256  0x4
+#define    P01_CLK1024 0x5
+#define    P01_EXT_CLK_FALLING_EDGE 0x6
+#define    P01_EXT_CLK_RISING_EDGE 0x7
+
+
+/**
+ * @brief   Type de valeurs qui expriment la valeur de division d'horloge d'un
+ *      Timer2.
+ * 
+ * <b>Valeurs possibles:</b>
+ * <ul>
+ *     <li>#P2_NO_CLK </li>
+ *     <li>#P2_CLK1   </li>
+ *     <li>#P2_CLK8   </li>
+ *     <li>#P2_CLK32  <b style="color:#A00">!!Nouvelle valeur comparé à #Prescale01!!</b></li>
+ *     <li>#P2_CLK64  </li>
+ *     <li>#P2_CLK128 <b style="color:#A00">!!Nouvelle valeur comparé à #Prescale01!!</b></li>
+ *     <li>#P2_CLK256 </li>
+ *     <li>#P2_CLK1024</li>
+ * </ul>
+ */
+typedef uint8_t Prescale2;
+#define    P2_NO_CLK  0x0
+#define    P2_CLK1    0x1
+#define    P2_CLK8    0x2
+#define    P2_CLK32   0x3
+#define    P2_CLK64   0x4
+#define    P2_CLK128  0x5
+#define    P2_CLK256  0x6
+#define    P2_CLK1024 0x7
+
+/**
+ * @brief   COM : '<i>Compare Output Mode</i>'. Type de valeurs qui expriment
+ *      la manière dont le signal de sortie du @link Timer TimerN @endlink
+ *      réagit à une égalité entre OcrNX et TnctN.
+ * 
+ * <b>Valeurs possibles:</b>
+ * <ul>
+ *     <li>#DISCONNECTED</li>
+ *     <li>#TOGGLE</li>
+ *     <li>#CLEAR</li>
+ *     <li>#SET</li>
+ * </ul>
+ */
+typedef uint8_t ComNX;
+#define    DISCONNECTED 0x0
+#define    TOGGLE       0x1   // ATTENTION: Dans certains modes (ex: Fast-PWM et PC-PWM du Timer0 avec WGM02 = 0), TOGGLE est équivalent à DISCONNECTED.
+                              // Également, pour COMNB, TOGGLE peut ne pas être supporté par le microcontrôleur.
+#define    CLEAR        0x2
+#define    SET          0x3
+
+
+typedef uint8_t WGMode; // Waveform Generation Mode
+
 #endif // TYPEDEFS_H

@@ -23,11 +23,6 @@ class Timer0;   // Résolution des dépendances circulaires
 class Timer1;   // Résolution des dépendances circulaires
 class Timer2;   // Résolution des dépendances circulaires
 
-typedef uint8_t Prescale01;
-typedef uint8_t Prescale2;
-typedef uint8_t ComNX;  // Compare Output Mode
-typedef uint8_t WGMode; // Waveform Generation Mode
-
 extern Timer0 timer0;
 extern Timer1 timer1;
 extern Timer2 timer2;
@@ -37,33 +32,7 @@ extern Timer2 timer2;
 #include "engine.h"
 #include "uart.h"
 
-
-// ---Prescale01---
-#define    P01_NO_CLK  0x0
-#define    P01_CLK1    0x1
-#define    P01_CLK8    0x2
-#define    P01_CLK64   0x3
-#define    P01_CLK256  0x4
-#define    P01_CLK1024 0x5
-#define    P01_EXT_CLK_FALLING_EDGE 0x6
-#define    P01_EXT_CLK_RISING_EDGE 0x7
-
-// ---Prescale2---
-#define    P2_NO_CLK  0x0
-#define    P2_CLK1    0x1
-#define    P2_CLK8    0x2
-#define    P2_CLK32   0x3 // Nouvelle valeur comparé à P01
-#define    P2_CLK64   0x4
-#define    P2_CLK128  0x5 // Nouvelle valeur comparé à P01
-#define    P2_CLK256  0x6
-#define    P2_CLK1024 0x7
-
 // ---ComNX---
-#define    DISCONNECTED 0x0
-#define    TOGGLE       0x1   // ATTENTION: Dans certains modes (ex: Fast-PWM et PC-PWM du Timer0 avec WGM02 = 0), TOGGLE est équivalent à DISCONNECTED.
-                              // Également, pour COMNB, TOGGLE peut ne pas être supporté par le microcontrôleur.
-#define    CLEAR        0x2
-#define    SET          0x3
 
 // ---WGMode---               // Modes du Timer0 : [Voir Documentation p. 103]
 #define    WGM02_NORMAL    0x00 // Normal             (avec TOP = 0xFF)
@@ -144,15 +113,27 @@ public:
      */
     virtual void setTcntN(uint16_t tcntN) { while (true) {} };
     
+    /**
+     * @brief   Accède à la valeur de OcrNA.
+     * @return  La valeur actuelle de OcrNA.
+     */
     virtual uint16_t getOcrNA() { while (true) {} };
+    /**
+     * @brief   Accède à la valeur de OcrNB.
+     * @return  La valeur actuelle de OcrNB.
+     */
     virtual uint16_t getOcrNb() { while (true) {} };
     
+    /**
+     * @brief   Accède à la valeur de TcntN.
+     * @return  La valeur actuelle de TcntN.
+     */
     virtual uint16_t getTcntN() { while (true) {} };
     
   
     /**
      * @brief   Permet l'interruption TOVN (voir doc. p. 103).
-     * NOTE: L'interruption TOVN est permise par défaut dans le constructeur.
+     * @note L'interruption TOVN est permise par défaut dans le constructeur.
      */
     virtual void allowOVFI() { while (true) {} };
     /**
@@ -166,7 +147,7 @@ public:
     
     /**
      * @brief   Empêche l'interruption TOVN (voir doc. p. 103).
-     * NOTE: L'interruption TOVN est permise par défaut dans le constructeur.
+     * @note L'interruption TOVN est permise par défaut dans le constructeur.
      */
     virtual void denyOVFI() { while (true) {} };
     /**
@@ -178,7 +159,13 @@ public:
      */
     virtual void denyOCIB() { while (true) {} };
     
+    /**
+     * @brief   Détermine si l'instance du Timer est à 8 bits ou à 16 bits.
+     * @return  Si l'instance du Timer est à 8 bits.
+     */
+#ifndef DOXYGEN // Doxygen ne gère pas les __attribute__, alors nous devons les chacher lorsqu'on génère la documentation.
     __attribute__ ((always_inline))
+#endif // DOXYGEN
     inline virtual bool is8BitClock() { while (true) {} return false; };
     
     /**
@@ -252,7 +239,9 @@ public:
     virtual void denyOCIA();
     virtual void denyOCIB();
     
+#ifndef DOXYGEN // Doxygen ne gère pas les __atribute__, alors nous devons les chacher lorsqu'on génère la documentation.
     __attribute__ ((always_inline))
+#endif // DOXYGEN
     inline virtual bool is8BitClock() { return true; }
 };
 
@@ -294,7 +283,9 @@ public:
     virtual void denyOCIA();
     virtual void denyOCIB();
     
+#ifndef DOXYGEN // Doxygen ne gère pas les __atribute__, alors nous devons les chacher lorsqu'on génère la documentation.
     __attribute__ ((always_inline))
+#endif // DOXYGEN
     inline virtual bool is8BitClock() { return false; }
 };
 
@@ -336,7 +327,9 @@ public:
     virtual void denyOCIA();
     virtual void denyOCIB();
     
+#ifndef DOXYGEN // Doxygen ne gère pas les __atribute__, alors nous devons les chacher lorsqu'on génère la documentation.
     __attribute__ ((always_inline))
+#endif // DOXYGEN
     inline virtual bool is8BitClock() { return true; }
 };
 

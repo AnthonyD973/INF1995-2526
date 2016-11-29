@@ -213,6 +213,27 @@
       <anchor>a9f58cfc166a239e0e7eec5f421e0971a</anchor>
       <arglist></arglist>
     </member>
+    <member kind="typedef">
+      <type>uint8_t</type>
+      <name>Prescale01</name>
+      <anchorfile>typedefs_8h.html</anchorfile>
+      <anchor>aa01f83855add8e0ba7c13e158b050303</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="typedef">
+      <type>uint8_t</type>
+      <name>Prescale2</name>
+      <anchorfile>typedefs_8h.html</anchorfile>
+      <anchor>a0e5108aebb04731bb4da1b369598af9e</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="typedef">
+      <type>uint8_t</type>
+      <name>ComNX</name>
+      <anchorfile>typedefs_8h.html</anchorfile>
+      <anchor>ac7e0aac93e0e780eb284125d260f4d58</anchor>
+      <arglist></arglist>
+    </member>
   </compound>
   <compound kind="file">
     <name>uart.h</name>
@@ -520,6 +541,27 @@
       <arglist>(uint16_t tcntN)</arglist>
     </member>
     <member kind="function" virtualness="virtual">
+      <type>virtual uint16_t</type>
+      <name>getOcrNA</name>
+      <anchorfile>classTimer.html</anchorfile>
+      <anchor>a5fdd0aeecad055a3c5674edd51ea3014</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual uint16_t</type>
+      <name>getOcrNb</name>
+      <anchorfile>classTimer.html</anchorfile>
+      <anchor>ae0dc6698f4ace75cfcf289d73933a414</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual uint16_t</type>
+      <name>getTcntN</name>
+      <anchorfile>classTimer.html</anchorfile>
+      <anchor>a56e0a7f6e92599f4bd778f4be138bd30</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
       <type>virtual void</type>
       <name>allowOVFI</name>
       <anchorfile>classTimer.html</anchorfile>
@@ -559,6 +601,13 @@
       <name>denyOCIB</name>
       <anchorfile>classTimer.html</anchorfile>
       <anchor>a7a553c99b1ae0e4574fc0e7133f5a6ee</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual bool</type>
+      <name>is8BitClock</name>
+      <anchorfile>classTimer.html</anchorfile>
+      <anchor>a41818fe2ab0715acfaf0e3e139078f3a</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="function">
@@ -665,6 +714,27 @@
       <arglist>(uint16_t tcnt0)</arglist>
     </member>
     <member kind="function" virtualness="virtual">
+      <type>virtual uint16_t</type>
+      <name>getOcrNA</name>
+      <anchorfile>classTimer0.html</anchorfile>
+      <anchor>ad74fa384fd5815d64551fe86fe509290</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual uint16_t</type>
+      <name>getOcrNb</name>
+      <anchorfile>classTimer0.html</anchorfile>
+      <anchor>a3cc4462d924e9f83f53eb0161ef934bc</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual uint16_t</type>
+      <name>getTcntN</name>
+      <anchorfile>classTimer0.html</anchorfile>
+      <anchor>a38f05e3394dd68edf014b7ea89c91c03</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
       <type>virtual void</type>
       <name>allowOVFI</name>
       <anchorfile>classTimer0.html</anchorfile>
@@ -704,6 +774,13 @@
       <name>denyOCIB</name>
       <anchorfile>classTimer0.html</anchorfile>
       <anchor>aa961406021ed7a507c1b3bc7c0946283</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual bool</type>
+      <name>is8BitClock</name>
+      <anchorfile>classTimer0.html</anchorfile>
+      <anchor>a56f7ec30ce97048dd13e5f45e375adf9</anchor>
       <arglist>()</arglist>
     </member>
   </compound>
@@ -768,6 +845,27 @@
       <arglist>(uint16_t tcnt1)</arglist>
     </member>
     <member kind="function" virtualness="virtual">
+      <type>virtual uint16_t</type>
+      <name>getOcrNA</name>
+      <anchorfile>classTimer1.html</anchorfile>
+      <anchor>afda3438f63f161129b8dcc0872caa2b2</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual uint16_t</type>
+      <name>getOcrNb</name>
+      <anchorfile>classTimer1.html</anchorfile>
+      <anchor>a1a6961a5bd18ebc3396c14f24d7a88a1</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual uint16_t</type>
+      <name>getTcntN</name>
+      <anchorfile>classTimer1.html</anchorfile>
+      <anchor>a10d27b811d84c668a765ebb45f7a68fa</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
       <type>virtual void</type>
       <name>allowOVFI</name>
       <anchorfile>classTimer1.html</anchorfile>
@@ -807,6 +905,13 @@
       <name>denyOCIB</name>
       <anchorfile>classTimer1.html</anchorfile>
       <anchor>af0fc673a0f3eb3b436e7be4e3e093911</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual bool</type>
+      <name>is8BitClock</name>
+      <anchorfile>classTimer1.html</anchorfile>
+      <anchor>adbdf348339d4b63df923341b28519492</anchor>
       <arglist>()</arglist>
     </member>
   </compound>
@@ -871,6 +976,27 @@
       <arglist>(uint16_t tcnt2)</arglist>
     </member>
     <member kind="function" virtualness="virtual">
+      <type>virtual uint16_t</type>
+      <name>getOcrNA</name>
+      <anchorfile>classTimer2.html</anchorfile>
+      <anchor>a3d6943379e7aa5004c52d674a35f29c5</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual uint16_t</type>
+      <name>getOcrNb</name>
+      <anchorfile>classTimer2.html</anchorfile>
+      <anchor>a3c43324a6fdb89a98dd59c6debc424db</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual uint16_t</type>
+      <name>getTcntN</name>
+      <anchorfile>classTimer2.html</anchorfile>
+      <anchor>aaba95cae1a702527bf7611b6d4a577eb</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
       <type>virtual void</type>
       <name>allowOVFI</name>
       <anchorfile>classTimer2.html</anchorfile>
@@ -910,6 +1036,13 @@
       <name>denyOCIB</name>
       <anchorfile>classTimer2.html</anchorfile>
       <anchor>adff2261e544044d9f66c7ece538937e9</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual bool</type>
+      <name>is8BitClock</name>
+      <anchorfile>classTimer2.html</anchorfile>
+      <anchor>a73d553d6563b51c0bc0e43e9fb2428c3</anchor>
       <arglist>()</arglist>
     </member>
   </compound>
