@@ -154,7 +154,7 @@ OBJDEPS:=$(patsubst %.c,$(GENDIR)/%.o,$(strip $(filter %.c, $(PRJSRC)))) \
 # En plus de la commande make qui permet de compiler
 # votre projet, vous pouvez utilisez les commandes
 # make all, make install et make clean
-.PHONY: all install clean auto lib libauto docs
+.PHONY: all install clean auto lib libauto doc docs
 
 # Make all permet d'exécuter la cible précisée dans la variable 'RECIPE' des
 # Makefile individuels.
@@ -220,12 +220,21 @@ install: $(HEXROMTRG)
 # lors de la compilation
 clean:
 	$(REMOVE) $(TRG) *.map $(OBJDEPS) $(HEXTRG) $(GENDIR)/*.d \
-	$(GENDIR)/* $(GENDIR) $(LIBTRG) *.bin
+	$(GENDIR)/* $(GENDIR) $(LIBTRG) *.bin $(DOXYGEN_FOLDER)/doc \
+	$(DOXYGEN_FOLDER)/*.tag
 
 
-docs:
+doc:
 	doxygen $(DOXYGEN_SRC)/Doxyfile
 	rm -rf $(DOXYGEN_FOLDER)/latex/
+
+docs:
+	$(MAKE) -C $(REPO_ROOT_PATH)/lib doc
+	$(MAKE) -C $(REPO_ROOT_PATH)/projet/gas doc
+	$(MAKE) -C $(REPO_ROOT_PATH)/projet/src doc
+	$(MAKE) -C $(REPO_ROOT_PATH)/lib doc        # Une deuximème fois pour inclure les tags.
+	$(MAKE) -C $(REPO_ROOT_PATH)/projet/gas doc
+	$(MAKE) -C $(REPO_ROOT_PATH)/projet/src doc
 
 # Execute, dans l'ordre, un 'make all' pour compiler ce qu'il
 # y a a compiler, un 'make install' pour transferer le programme
