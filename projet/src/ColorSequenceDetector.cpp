@@ -58,7 +58,7 @@ ShapeColor ColorSequenceDetector::findColorAndAct_() {
     ShapeColor color = ColorSnsr::read();
     
     if (hasColorChanged_(color)) {
-        if (ColorSequenceCount <= 2) { // Éviter qu'une lecture de 4 couleurs
+        if (colorSequenceCount_ <= 2) { // Éviter qu'une lecture de 4 couleurs
                                        // d'affilée ne 'casse' le programme.
             colorSequence_[colorSequenceCount_++] = color;
         }
