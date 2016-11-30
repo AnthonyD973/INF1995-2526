@@ -23,7 +23,7 @@ ShapeColor ShapeDetector::checkShape() {
     UART::transmit(' ');
     
     
-    Path::turn(ROT_LEFT, 0x8F);
+    Path::turn(ROT_LEFT, V_MAX);
     
     _delay_ms(200.0); // S'assurer que l'on est sorti de la ligne.
     
@@ -34,6 +34,9 @@ ShapeColor ShapeDetector::checkShape() {
         updateMax_(curDist);
         _delay_ms(100.0);
     }
+    
+    Path::turn(ROT_LEFT, V_MOY); // Tourner plus lentement pour éviter de
+                                 // dépasser la ligne.
     
     while (!(LineSnsr::read() & 0x02)) { } // Continuer à tourner tant que l'on
                                            // n'a pas détecté la ligne.

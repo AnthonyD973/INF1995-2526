@@ -58,7 +58,10 @@ ShapeColor ColorSequenceDetector::findColorAndAct_() {
     ShapeColor color = ColorSnsr::read();
     
     if (hasColorChanged_(color)) {
-        colorSequence_[colorSequenceCount_++] = color;
+        if (ColorSequenceCount <= 2) { // Éviter qu'une lecture de 4 couleurs
+                                       // d'affilée ne 'casse' le programme.
+            colorSequence_[colorSequenceCount_++] = color;
+        }
     
         switch(color) {
          case OCTOGON_RED:  Buzzer::clearTone(); LED_->setColor(LED_RED);   break;

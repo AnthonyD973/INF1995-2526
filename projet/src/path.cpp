@@ -139,11 +139,13 @@ void Path::updateDirection_() {
 
 bool Path::isBranch_(uint8_t input) {
     switch(input) {
-     case S_B_L1: // fallthrough
-     case S_B_L2: // fallthrough
-     case S_B_R1: // fallthrough
-     case S_B_R2: return true;
-     default:     return false;
+     case S_B_L1:    // fallthrough
+     case S_B_L2:    // fallthrough
+     case S_FCOR_L1: // fallthrough
+     case S_B_R1:    // fallthrough
+     case S_B_R2:    // fallthrough
+     case S_FCOR_R1: return true;
+     default:        return false;
     }
 }
 
@@ -206,7 +208,7 @@ void Path::tnl_() {
     stop();
     engL_->setPower(ENG_FORWARD, V_MAX);
     engR_->setPower(ENG_FORWARD, V_MAX);
-    _delay_ms(1100.0); // S'avancer jusqu'à ce que les roues soient vis-à-vis
+    _delay_ms(1000.0); // S'avancer jusqu'à ce que les roues soient vis-à-vis
                        // du branchement.
     
     turn(ROT_LEFT, V_MAX);
@@ -230,7 +232,7 @@ void Path::tnr_() {
     stop();
     engL_->setPower(ENG_FORWARD, V_MAX);
     engR_->setPower(ENG_FORWARD, V_MAX);
-    _delay_ms(1100.0); // S'avancer jusqu'à ce que les roues soient vis-à-vis
+    _delay_ms(1000.0); // S'avancer jusqu'à ce que les roues soient vis-à-vis
                        // du branchement.
     
     turn(ROT_RIGHT, V_MAX);

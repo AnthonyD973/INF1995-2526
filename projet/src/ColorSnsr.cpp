@@ -36,18 +36,18 @@ void ColorSnsr::init(TimerExternalClock tec) {
 }
 
 ShapeColor ColorSnsr::read() {
-    uint16_t colorsIntesity[COLOR_SEQ_MAX];
+    uint16_t colorsIntensity[COLOR_SEQ_MAX];
     
     // Prendre une mesure avec la LED allumée...
     _MASK(PORTB, 0xFF, _LED_MASK);
-    _readColors<EqualFunctor>(colorsIntesity);
+    _readColors<EqualFunctor>(colorsIntensity);
     
     // ...une mesure sans, et faire la différence entre les deux pour annuler
     // l'effet de la lumière ambiante.
     _MASK(PORTB, 0, _LED_MASK);
-    _readColors<MinusEqualFunctor>(colorsIntesity);
+    _readColors<MinusEqualFunctor>(colorsIntensity);
     
-    return _decideWhichColor(colorsIntesity);
+    return _decideWhichColor(colorsIntensity);
 }
 
 // PRIVATE
