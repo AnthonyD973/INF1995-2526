@@ -37,6 +37,12 @@ extern Timer2 timer2;
 // =          TIMER          =
 // ===========================
 
+/**
+ * @brief   Classe qui permet l'utilisation des minuteries/compteurs
+ *      du microcontrôleur. Timer est une classe abstraite utilisée pour
+ *      effectuer du polymorphisme, de manière à ce que d'autres classes
+ *      puissent fonctionner indémendamment du compteur utilisé.
+ */
 class Timer {
     
     friend class LED;
@@ -191,6 +197,10 @@ private:
 // =         TIMER 0         =
 // ===========================
 
+/**
+ * @brief   Classe qui permet l'utilisation de la minuterie/compteur 0
+ *      du microcontrôleur. Timer0 est un compteur 8 bits.
+ */
 class Timer0 : public Timer {
 public:
     /**
@@ -229,7 +239,9 @@ public:
     __attribute__ ((always_inline))
 #endif // DOXYGEN
     inline virtual bool is8BitClock() { return true; }
+#ifndef DOXYGEN // Doxygen ne gère pas les __attribute__, alors nous devons les chacher lorsqu'on génère la documentation.
     __attribute__ ((always_inline))
+#endif // DOXYGEN
     inline virtual bool isAsync() { return false; }
 };
 
@@ -237,6 +249,10 @@ public:
 // =         TIMER 1         =
 // ===========================
 
+/**
+ * @brief   Classe qui permet l'utilisation de la minuterie/compteur 1
+ *      du microcontrôleur. Timer1 est un compteur 16 bits.
+ */
 class Timer1 : public Timer {
 public:
     /**
@@ -275,7 +291,9 @@ public:
     __attribute__ ((always_inline))
 #endif // DOXYGEN
     inline virtual bool is8BitClock() { return false; }
+#ifndef DOXYGEN // Doxygen ne gère pas les __attribute__, alors nous devons les chacher lorsqu'on génère la documentation.
     __attribute__ ((always_inline))
+#endif // DOXYGEN
     inline virtual bool isAsync() { return false; }
 };
 
@@ -283,6 +301,11 @@ public:
 // =         TIMER 2         =
 // ===========================
 
+/**
+ * @brief   Classe qui permet l'utilisation de la minuterie/compteur 2
+ *      du microcontrôleur. Timer2 est un compteur 8 bits avec une
+ *      fonctionnalité asynchrone que nous n'utiliserons pas dans ce projet.
+ */
 class Timer2 : public Timer {
 public:
     /**
@@ -321,7 +344,9 @@ public:
     __attribute__ ((always_inline))
 #endif // DOXYGEN
     inline virtual bool is8BitClock() { return true; }
+#ifndef DOXYGEN // Doxygen ne gère pas les __attribute__, alors nous devons les chacher lorsqu'on génère la documentation.
     __attribute__ ((always_inline))
+#endif // DOXYGEN
     inline virtual bool isAsync() { return true; }
 };
 

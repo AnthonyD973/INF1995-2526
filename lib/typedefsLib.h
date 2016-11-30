@@ -138,14 +138,14 @@ typedef uint8_t Prescale01;
  * </ul>
  */
 typedef uint8_t Prescale2;
-#define    P2_NO_CLK  0x0 /**< @brief Horloge du microcontrôleur, divisé par 8. */
-#define    P2_CLK1    0x1 /**< @brief Horloge du microcontrôleur, divisé par 8. */
-#define    P2_CLK8    0x2 /**< @brief Horloge du microcontrôleur, divisé par 8. */
-#define    P2_CLK32   0x3 /**< @brief Horloge du microcontrôleur, divisé par 8. */
-#define    P2_CLK64   0x4 /**< @brief Horloge du microcontrôleur, divisé par 8. */
-#define    P2_CLK128  0x5 /**< @brief Horloge du microcontrôleur, divisé par 8. */
-#define    P2_CLK256  0x6 /**< @brief Horloge du microcontrôleur, divisé par 8. */
-#define    P2_CLK1024 0x7 /**< @brief Horloge du microcontrôleur, divisé par 8. */
+#define    P2_NO_CLK  0x0 /**< @brief Aucune horloge. */
+#define    P2_CLK1    0x1 /**< @brief Horloge du microcontrôleur. */
+#define    P2_CLK8    0x2 /**< @brief Horloge du microcontrôleur, divisé par 8.    */
+#define    P2_CLK32   0x3 /**< @brief Horloge du microcontrôleur, divisé par 32.   */
+#define    P2_CLK64   0x4 /**< @brief Horloge du microcontrôleur, divisé par 64.   */
+#define    P2_CLK128  0x5 /**< @brief Horloge du microcontrôleur, divisé par 128.  */
+#define    P2_CLK256  0x6 /**< @brief Horloge du microcontrôleur, divisé par 256.  */
+#define    P2_CLK1024 0x7 /**< @brief Horloge du microcontrôleur, divisé par 1024. */
 
 /**
  * @brief   '<i>Compare Output Mode</i>'. Type de valeurs qui expriment
