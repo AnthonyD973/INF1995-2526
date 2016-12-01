@@ -20,7 +20,9 @@
 #include "incl.h"
 #include "typedefsLib.h"
 
+/** @cond FALSE */ // Ne pas documenter ce typedef
 typedef uint16_t size_t;
+/** @endcond */
 
 #ifdef  DEBUG
 
@@ -47,7 +49,7 @@ public:
     static void init(uint16_t baud);
     /**
      * @brief   Cette fonction assigne le mode de communication de l'UART.
-     * @param[int]  commMode    Le mode de communication.
+     * @param[in]  commMode    Le mode de communication.
      */
     static void setMode(CommMode commMode);
     /**

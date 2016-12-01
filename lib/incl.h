@@ -12,6 +12,8 @@
  * 
  * @copyright Code qui n'est sous aucune license.
  */
+#ifndef INCL_H
+#define INCL_H
 
 /**
  * @brief Fréquence du microcontrôleur, en Hertz.
@@ -32,3 +34,5 @@
  * @brief Change la valeur de certains bits d'un registre.
  */
 #define _MASK(reg, value, mask) (reg = _MASKV(reg, value, mask))
+
+#endif // INCL_H

@@ -24,9 +24,9 @@ class Timer0; // Résolution des dépendances circulaires
 class Timer1; // Résolution des dépendances circulaires
 class Timer2; // Résolution des dépendances circulaires
 
-extern Timer0 timer0;
-extern Timer1 timer1;
-extern Timer2 timer2;
+extern Timer0 timer0; /**< @brief Objet représentant un %Timer0 utilisé pour le polymorphisme. */
+extern Timer1 timer1; /**< @brief Objet représentant un %Timer1 utilisé pour le polymorphisme. */
+extern Timer2 timer2; /**< @brief Objet représentant un %Timer2 utilisé pour le polymorphisme. */
 
 #include "lib.h"
 #include "led.h"

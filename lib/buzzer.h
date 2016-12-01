@@ -38,7 +38,7 @@ public:
      * @brief   Cette fonction fait le un lien entre la table midi et les
      *          fréquences à jouer sur le buzzer.
      *
-     * @param[in]   midi    La note midi à jouer.
+     * @param[in]   midiTone    La note midi à jouer.
      */
     static void setTone(uint8_t midiTone);
     /**
