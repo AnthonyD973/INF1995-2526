@@ -30,11 +30,16 @@ uint8_t DistSnsr::read() {
 }
 
 uint8_t DistSnsr::readAverage() {
-    static const uint8_t nReads = 32;
+    static const uint8_t nReads = 16;
+    static const uint8_t nReads2 = 8;
     
     uint16_t sum = 0;
     for (uint8_t i = 0; i < nReads; ++i) {
-        sum += read();
+        uint16_t sum2 = 0;
+        for (uint8_t j = 0; j < nReads2; ++j) {
+            sum2 += read();
+        }
+        sum += sum2/nReads2;
     }
     
     return sum/nReads;

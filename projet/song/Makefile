@@ -70,6 +70,7 @@ compile_song:
 	$(MAKE) -C song_data
 	$(MAKE) install
 	$(REPO_ROOT_PATH)/serieViaUSB_ubuntu -e -s 8 -h -f song_data/song.bin
+	$(MAKE) -C song_data clean
 
 
 -include $(shell git rev-parse --show-toplevel)/Makefile_common.txt

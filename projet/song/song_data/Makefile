@@ -66,10 +66,10 @@ DEBUG=-DDEBUG
 	$(REPO_ROOT_PATH)/progmem_ubuntu -o $@ $<
 
 song: song2bin
-	./song2bin song.bin
+	./song2bin.bin song.bin
 
 song2bin: song2bin.cpp NeverGonnaGiveYouUp.h
-	g++ -I. -funsigned-bitfields -funsigned-char -std=c++11 -o $@ $<
+	g++ -I. -funsigned-bitfields -funsigned-char -std=c++11 -o $@.bin $<
 
 
 -include $(shell git rev-parse --show-toplevel)/Makefile_common.txt

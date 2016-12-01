@@ -24,7 +24,7 @@ Engine* Path::engL_ = nullptr;
 Engine* Path::engR_ = nullptr;
 volatile PathState Path::currPathState_ = S_STOP;
 
-const uint8_t Path::MIDDLE_DIST_ = 0x5E;
+const uint8_t Path::MIDDLE_DIST_ = 0x54;
 uint16_t Path::pathAddrs_[NB_PATHS];
 
 
@@ -214,7 +214,7 @@ void Path::tnl_() {
     turn(ROT_LEFT, V_MAX);
     _delay_ms(500.0); // Quitter la ligne
     
-    while (!(LineSnsr::read() & 0x02)); // Attendre de trouver la ligne vers
+    while (!(LineSnsr::read() & 0x01)); // Attendre de trouver la ligne vers
                                         // laquelle on tourne.
     forward();
     _delay_ms(500.0); // S'assurer d'être stable sur la ligne pour éviter de
@@ -238,7 +238,7 @@ void Path::tnr_() {
     turn(ROT_RIGHT, V_MAX);
     _delay_ms(500.0); // Quitter la ligne
     
-    while (!(LineSnsr::read() & 0x08)); // Attendre de trouver la ligne vers
+    while (!(LineSnsr::read() & 0x10)); // Attendre de trouver la ligne vers
                                         // laquelle on tourne.
     
     forward();
