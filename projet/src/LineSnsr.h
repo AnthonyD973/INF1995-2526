@@ -39,7 +39,8 @@ class LineSnsr {
 public:
     /**
      * @brief   Initialisation du détecteur. À appeler au début du programme.
-     *
+     * 
+     * @param[in] pin   Registre permettant de connaître la valeur actuelle sur les broches.
      * @param[in] port  Registre vers lequel écrire les valeurs sur les broches.
      * @param[in] ddr   Registre définissant les modes d'entrée/sortie des
      *      broches.

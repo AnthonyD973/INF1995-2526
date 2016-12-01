@@ -1,5 +1,5 @@
 /**
- * @file    main.cpp
+ * @file    src/main.cpp
  * 
  * @brief   Fichier principal du projet.
  * 

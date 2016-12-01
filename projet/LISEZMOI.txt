@@ -1,52 +1,5 @@
-Pour faire fonctionner le programme, il vous faut tout d'abord transférer le
-bytecode des chemins dans la mémoire externe du robot afin que l'interpréteur
-puisse les lire. Le programme a aussi besoin d'avoir la chanson à jouer
-lorsque le robot a fini le parcourt. Il faut donc aussi transférer la chanson
-dans la mémoire.
+Pour débuter, ouvrez un terminal, allez vers le dossier projet/src et exécutez la commande:
 
+    $ make docs
 
-Pour transférer les chemins, ouvrez un terminal dans le répertoire
-projet/gas/ puis entrez les commandes:
-
-    $ make
-    $ ./gas input.txt paths.bin
-
-Par la suite, copiez le fichier projet/gas/paths.bin dans le répertoire
-projet/src/transfert/ . Par la suite, assurez-vous que le robot est branché et
-prêt à recevoire des données et rendez vous dans le répertoire
-projet/src/transfert/ pour entrer les commandes qui suivent:
-
-    $ make install
-
-Si la Del libre est branché sur le port C (le + sur la broche 6 et le - sur la
-boche 5), vous devriez la voir allumée et de couleur rouge. Ensuite, faite la
-commande suivante (le programme serieViaUSB doit être installé):
-
-    $ serieViaUSB -e -h -s 8 -f paths.bin
-
-La Del devrait clignoté faiblement avant de s'éteindre. Maintenant, les chemins
-sont normalement transférés dans la mémoire et visible pour l'interpréteur.
-
-
-Pour transférer la chanson de fin, tout ce que vous devez faire est d'ouvrir un
-terminal dans le répertoire projet/song/ et d'entrer la commande:
-
-    $ make
-
-Le processus est automatisé. La chanson qui se trouve dans le code du
-sous-répertoire song_data/ est tout d'abord compilée en un fichier binaire pour
-ensuite être transféré à l'aide du programme dans le répertoire projet/song/ .
-Lors du transfert, la Del devrait clignoté entre vert et rouge puis, à la fin du
-transfert, devrait s'éteindre.
-
-
-Finalement, lorsque toutes les données ont été transférées dans la mémoire
-externe, il ne reste plus qu'a envoyer le programme principale dans la mémoire
-flash. Pour ce faire, vous devez ouvrir un terminal dans le répertoire
-projet/src/ puis entrer la commande:
-
-    $ make install
-
-Le programme se compile et s'install automatiquement. Il ne reste plus qu'a
-placer le robot sur la ligne de départ, enclancher les moteur et démarrer le
-robot!
+Ensuite, ouvrez le fichier projet/src/doxygen/doc/index.html

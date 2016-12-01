@@ -1,5 +1,5 @@
 /**
- * @file    main.cpp
+ * @file    gas/main.cpp
  * 
  * @brief   Fichier principal du compilateur %GAS.
  * 
