@@ -17,9 +17,7 @@ volatile uint16_t Timer::getAmberLeds() {
 // PROTECTED:
 
 Timer::Timer() :_nAmberLeds(0)
-{
-    UART::transmitCStr("Timer::Timer\n");
-}
+{ }
 
 // ===========================
 // =         TIMER 0         =

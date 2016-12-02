@@ -64,7 +64,7 @@ DEBUG=-DDEBUG
 
 
 transfert: paths.bin install
-	$(REPO_ROOT_PATH)/serieViaUSB_ubuntu -e -h -s 8 -f $<
+	sleep 0.2; $(REPO_ROOT_PATH)/serieViaUSB_ubuntu -e -h -s 8 -f $<
 
 
 -include $(shell git rev-parse --show-toplevel)/Makefile_common.txt

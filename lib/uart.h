@@ -174,7 +174,7 @@ private:
 // la performance.
 class UART {
 public:
-    static const size_t BUFFER_SIZE = 0;
+    static const size_t BUFFER_SIZE = 1;
     static void init(uint16_t baud) { }
     static void setMode(CommMode commMode) { }
     static void transmit(uint8_t data) { }
@@ -182,16 +182,16 @@ public:
     static void transmitCStr(const char* str) { }
     static void transmitBin(uint8_t data) { }
     static void transmitHex(uint8_t data) { }
-    static uint8_t receive(void) { return 0; }
+    static uint8_t receive() { return 0; }
     static void receive(uint8_t* data, size_t n) { }
-    static void emptyRecBuffer(void) { }
+    static void emptyRecBuffer() { }
     
     static void    _rec_push_back(volatile uint8_t data) { }
-    static bool    _rec_full(void) { return true; }
-    static size_t  _rec_size(void) { return 0; }
-    static volatile uint8_t _tra_pop(void) { return 0; }
-    static bool    _tra_empty(void) { return true; }
-    static size_t  _tra_size(void) { return 0; }
+    static bool    _rec_full() { return true; }
+    static size_t  _rec_size() { return 0; }
+    static volatile uint8_t _tra_pop() { return 0; }
+    static bool    _tra_empty() { return true; }
+    static size_t  _tra_size() { return 0; }
 };
 #endif // !DEBUG
 #endif // UART_H

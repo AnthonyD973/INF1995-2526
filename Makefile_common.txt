@@ -161,7 +161,7 @@ OBJDEPS:=$(patsubst %.c,$(GENDIR)/%.o,$(strip $(filter %.c, $(PRJSRC)))) \
 # En plus de la commande make qui permet de compiler
 # votre projet, vous pouvez utilisez les commandes
 # make all, make install et make clean
-.PHONY: all install everything clean auto lib libauto doc docs
+.PHONY: all install everything clean auto doc docs
 
 # ==============================
 # =      CIBLES GÉNÉRALES      =
@@ -239,7 +239,7 @@ executable: $(GENDIR) $(OBJDEPS)
 # Make install permet de compiler le projet puis
 # d'ecrire le programme en memoire flash dans votre
 # microcontroleur. Celui-ci doit etre branche par cable USB
-install:
+install: $(HEXROMTRG)
 	$(AVRDUDE) -c $(AVRDUDE_PROGRAMMERID) \
 	-p $(MCU) -P -e -U flash:w:$(HEXROMTRG)
 
@@ -255,6 +255,7 @@ libRobot:
 	@echo "+-----------------------------+"
 	@echo "| COMPILATION DE LA LIBRAIRIE |"
 	@echo "+-----------------------------+"
+	$(MAKE) -C $(REPO_ROOT_PATH)/lib clean
 	$(MAKE) -C $(REPO_ROOT_PATH)/lib
 
 # La cible lib permet de produire une librairie .a
