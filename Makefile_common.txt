@@ -83,6 +83,13 @@ HEXFORMAT=ihex
 DEBUG?=-UDEBUG
 export DEBUG
 
+####### Variables pour les dossiers du projet #######
+
+LIB_FOLDER=$(REPO_ROOT_PATH)/lib
+SRC_FOLDER=$(REPO_ROOT_PATH)/projet/src
+GAS_FOLDER=$(REPO_ROOT_PATH)/projet/gas
+SONG_FOLDER=$(REPO_ROOT_PATH)/projet/song
+
 # Dossier dans lequel mettre la documentation de Doxygen.
 # Ne PAS changer cette variable SVP
 DOXYGEN_FOLDER:=doxygen
@@ -154,31 +161,40 @@ OBJDEPS:=$(patsubst %.c,$(GENDIR)/%.o,$(strip $(filter %.c, $(PRJSRC)))) \
 # En plus de la commande make qui permet de compiler
 # votre projet, vous pouvez utilisez les commandes
 # make all, make install et make clean
-.PHONY: all install clean auto lib libauto doc docs
+.PHONY: all install everything clean auto lib libauto doc docs
+
+# ==============================
+# =      CIBLES GÉNÉRALES      =
+# ==============================
 
 # Make all permet d'exécuter la cible précisée dans la variable 'RECIPE' des
 # Makefile individuels.
 all: $(RECIPE)
 
-compile:
-	$(MAKE) $(TRG)
 
-# Implementation de la cible
-$(TRG): libRobot
-	@echo "+-----------------------------+"
-	@echo "| COMPILATION DE L'EXÉCUTABLE |"
-	@echo "+-----------------------------+"
-	$(MAKE) executable
-	$(CC) $(LDFLAGS) -o $(TRG) $(OBJDEPS) \
-	-lm $(LIBSCMD) $(LIBSPATHSCMD)
+# Make clean permet d'effacer tout les fichiers generes
+# lors de la compilation
+clean:
+	$(REMOVE) $(TRG) *.map $(OBJDEPS) $(HEXTRG) $(GENDIR)/*.d \
+	$(GENDIR)/* $(GENDIR) $(LIBTRG) *.bin $(DOXYGEN_FOLDER)/doc \
+	$(DOXYGEN_FOLDER)/*.tag
 
-libRobot:
-	@echo "+-----------------------------+"
-	@echo "| COMPILATION DE LA LIBRAIRIE |"
-	@echo "+-----------------------------+"
-	$(MAKE) -C $(REPO_ROOT_PATH)/lib
 
-executable: $(GENDIR) $(OBJDEPS)
+# Cible permettant d'exécuter automatiquement tout ce qui est nécessaire pour
+# faire fonctionner le robot.
+everything:
+
+	$(MAKE) -C $(GAS_FOLDER)                   # Compiler le compilateur (hah!) puis transférer les chemins.
+	cd $(GAS_FOLDER); \
+	./gas input.txt paths.bin; \
+	cp paths.bin $(SRC_FOLDER)/transfert/
+	$(MAKE) install -C $(SRC_FOLDER)/transfert # Transférer les chemins
+	cd $(SRC_FOLDER)/transfert; \
+	$(REPO_ROOT_PATH)/serieViaUSB_ubuntu -e -h -s 8 -f paths.bin
+	
+	
+	$(MAKE) -C $(SONG_FOLDER)                  # Compiler et transférer les chansons pour la fin de l'épreuve.
+	$(MAKE) install -C $(SRC_FOLDER)           # Compiler et installer le programme du projet
 
 $(GENDIR):
 	mkdir $(GENDIR)
@@ -202,6 +218,45 @@ $(GENDIR)/%.hex: $(GENDIR)/%.out $(GENDIR)
 	$(OBJCOPY) -j .text -j .data \
 		-O $(HEXFORMAT) $< $@
 
+# ==============================
+# = CIBLES POUR LA COMPILATION =
+# ==============================
+
+compile:
+	$(MAKE) $(TRG)
+
+# Implementation de la cible
+$(TRG): libRobot
+	@echo "+-----------------------------+"
+	@echo "| COMPILATION DE L'EXÉCUTABLE |"
+	@echo "+-----------------------------+"
+	$(MAKE) executable
+	$(CC) $(LDFLAGS) -o $(TRG) $(OBJDEPS) \
+	-lm $(LIBSCMD) $(LIBSPATHSCMD)
+
+executable: $(GENDIR) $(OBJDEPS)
+
+# Make install permet de compiler le projet puis
+# d'ecrire le programme en memoire flash dans votre
+# microcontroleur. Celui-ci doit etre branche par cable USB
+install:
+	$(AVRDUDE) -c $(AVRDUDE_PROGRAMMERID) \
+	-p $(MCU) -P -e -U flash:w:$(HEXROMTRG)
+
+
+# Nettoie, compile, transfert et nettoie.
+auto: clean all install clean
+
+# ==============================
+# =  CIBLES POUR LA LIBRAIRIE  =
+# ==============================
+
+libRobot:
+	@echo "+-----------------------------+"
+	@echo "| COMPILATION DE LA LIBRAIRIE |"
+	@echo "+-----------------------------+"
+	$(MAKE) -C $(REPO_ROOT_PATH)/lib
+
 # La cible lib permet de produire une librairie .a
 # que l'on peut reutiliser ailleurs
 lib: $(LIBTRG)
@@ -209,38 +264,26 @@ lib: $(LIBTRG)
 $(LIBTRG): $(GENDIR) $(OBJDEPS)
 	$(AR) $(ARFLAGS) $@ $(OBJDEPS)
 
-# Make install permet de compiler le projet puis
-# d'ecrire le programme en memoire flash dans votre
-# microcontroleur. Celui-ci doit etre branche par cable USB
-install: $(HEXROMTRG)
-	$(AVRDUDE) -c $(AVRDUDE_PROGRAMMERID) \
-	-p $(MCU) -P -e -U flash:w:$(HEXROMTRG)
+# ==============================
+# =    CIBLES POUR DOXYGEN     =
+# ==============================
 
-# Make clean permet d'effacer tout les fichiers generes
-# lors de la compilation
-clean:
-	$(REMOVE) $(TRG) *.map $(OBJDEPS) $(HEXTRG) $(GENDIR)/*.d \
-	$(GENDIR)/* $(GENDIR) $(LIBTRG) *.bin $(DOXYGEN_FOLDER)/doc \
-	$(DOXYGEN_FOLDER)/*.tag
-
-
+# Crée une documentation.
 doc:
 	doxygen $(DOXYGEN_SRC)/Doxyfile
 	rm -rf $(DOXYGEN_FOLDER)/latex/
 
+# Crée les trois documentations
 docs:
-	$(MAKE) -C $(REPO_ROOT_PATH)/lib doc
-	$(MAKE) -C $(REPO_ROOT_PATH)/projet/gas doc
-	$(MAKE) -C $(REPO_ROOT_PATH)/projet/src doc
-	$(MAKE) -C $(REPO_ROOT_PATH)/lib doc        # Une deuximème fois pour inclure les tags.
-	$(MAKE) -C $(REPO_ROOT_PATH)/projet/gas doc
-	$(MAKE) -C $(REPO_ROOT_PATH)/projet/src doc
+	$(MAKE) -C $(LIB_FOLDER) doc
+	$(MAKE) -C $(GAS_FOLDER) doc
+	$(MAKE) -C $(SRC_FOLDER) doc
+	
+	# Une deuximème fois pour inclure les tagfiles.
+	$(MAKE) -C $(LIB_FOLDER) doc
+	$(MAKE) -C $(GAS_FOLDER) doc
+	$(MAKE) -C $(SRC_FOLDER) doc
 
-# Execute, dans l'ordre, un 'make all' pour compiler ce qu'il
-# y a a compiler, un 'make install' pour transferer le programme
-# compiles et un 'make clean' pour que les ficher generes ne
-# soient pas transferes dans l'entrepot git par erreur.
-auto: all install
 
 # Pour plus d'information sur les phony target, consulter:
 # http://bit.ly/1WBQe61
